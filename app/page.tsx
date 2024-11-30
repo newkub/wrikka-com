@@ -7,6 +7,13 @@ import { useEffect, useState } from "react";
 
 const cards = [
   {
+    title: "สั่งซื้อคอร์สเรียน",
+    description: "course.wrikka.com",
+    image: "https://res.cloudinary.com/daldcdwqs/image/upload/f_auto/v1732942577/learn-wrikka-com/hfuxgfyeg3ycdqyi6pzk.webp",
+    link: "https://course.wrikka.com/",
+    icon: "ph:chalkboard-teacher-fill"
+  },
+  {
     title: "เรียนรู้เพิ่มเติม จ่ายครั้งเดียวเข้าถึงได้ทั้งหมด",
     description: "learn.wrikka.com",
     image: "https://res.cloudinary.com/daldcdwqs/image/upload/f_auto/v1732946890/learn-wrikka-com/htvmczcdkqg08gcl0abe.webp",
@@ -19,7 +26,7 @@ const cards = [
     image: "https://res.cloudinary.com/daldcdwqs/image/upload/f_auto/v1732942577/learn-wrikka-com/hfuxgfyeg3ycdqyi6pzk.webp",
     link: "https://blog.wrikka.com/",
     icon: "ph:book-bookmark-fill"
-  }
+  },
 ];
 
 export default function Home() {
@@ -42,7 +49,7 @@ export default function Home() {
     const night = document.querySelector('.night');
     if (night) {
       // Add small stars
-      for (let i = 0; i < 100; i++) {
+      for (let i = 0; i < 50; i++) {
         const star = document.createElement('div');
         star.className = 'star-small';
         star.style.left = `${Math.random() * 100}%`;
@@ -50,7 +57,7 @@ export default function Home() {
         night.appendChild(star);
       }
       // Add medium stars
-      for (let i = 0; i < 50; i++) {
+      for (let i = 0; i < 25; i++) {
         const star = document.createElement('div');
         star.className = 'star-medium';
         star.style.left = `${Math.random() * 100}%`;
@@ -62,7 +69,7 @@ export default function Home() {
 
   return (
     <main 
-      className="min-h-screen bg-gradient-to-b from-black via-[#050505] to-black text-white p-8 overflow-hidden relative"
+      className="min-h-screen bg-gradient-to-b from-black via-[#050505] to-black text-white p-4 md:p-8 overflow-hidden relative"
       style={{
         '--mouse-x': `${mousePosition.x}%`,
         '--mouse-y': `${mousePosition.y}%`,
@@ -81,25 +88,27 @@ export default function Home() {
       
       {/* Shooting Stars */}
       <div className="shooting-stars">
-        {[...Array(10)].map((_, i) => (
+        {[...Array(5)].map((_, i) => (
           <div key={i} className="shooting-star" />
         ))}
       </div>
 
-      <div className="relative">
+      <div className="relative w-full">
         {/* Gradient Orbs */}
         <div className="absolute top-0 -left-4 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob"></div>
         <div className="absolute top-0 -right-4 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
         <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
         
-        <div className="max-w-4xl mx-auto relative">
+        <div className="max-w-7xl mx-auto relative px-4 pt-8">
           {/* Main Title */}
           <div className="text-center mb-12">
-            <h1 className="text-4xl font-bold mb-8 bg-clip-text text-transparent bg-gradient-to-r from-gray-200 via-white to-gray-200">wrikka.com</h1>
+            <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-300 to-white">
+              wrikka.com
+            </h1>
           </div>
 
           {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {cards.map((card, index) => (
               <Link 
                 key={index} 
