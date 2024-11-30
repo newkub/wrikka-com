@@ -1,7 +1,6 @@
 /** @type {import('next').NextConfig} */
 
-module.exports = {
-  output: 'export',
+const nextConfig = {
   images: {
     remotePatterns: [
       {
@@ -10,7 +9,6 @@ module.exports = {
         pathname: '/**',
       },
     ],
-    unoptimized: true,
   },
   webpack: (config, { isServer }) => {
     if (!isServer) {
@@ -21,4 +19,6 @@ module.exports = {
     }
     return config;
   },
-}
+};
+
+module.exports = nextConfig;
