@@ -3,9 +3,8 @@
 import Link from "next/link";
 import Image from "next/image";
 import { Icon } from "@iconify/react";
-import { useEffect, useState } from "react";
 
-const cards = [
+const blocks = [
   {
     title: "สั่งซื้อคอร์สเรียน",
     description: "course.wrikka.com",
@@ -30,113 +29,35 @@ const cards = [
 ];
 
 export default function Home() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 100,
-        y: (e.clientY / window.innerHeight) * 100,
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  useEffect(() => {
-    // Create background stars
-    const night = document.querySelector('.night');
-    if (night) {
-      // Add small stars
-      for (let i = 0; i < 50; i++) {
-        const star = document.createElement('div');
-        star.className = 'star-small';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        night.appendChild(star);
-      }
-      // Add medium stars
-      for (let i = 0; i < 25; i++) {
-        const star = document.createElement('div');
-        star.className = 'star-medium';
-        star.style.left = `${Math.random() * 100}%`;
-        star.style.top = `${Math.random() * 100}%`;
-        night.appendChild(star);
-      }
-    }
-  }, []);
-
   return (
-    <main 
-      className="min-h-screen bg-gradient-to-b from-black via-[#050505] to-black text-white p-4 md:p-8 overflow-hidden relative"
-      style={{
-        '--mouse-x': `${mousePosition.x}%`,
-        '--mouse-y': `${mousePosition.y}%`,
-      } as React.CSSProperties}
-    >
-      {/* Interactive background glow */}
-      <div 
-        className="absolute pointer-events-none inset-0 transition-opacity duration-300"
-        style={{
-          background: `radial-gradient(600px circle at ${mousePosition.x}% ${mousePosition.y}%, rgba(255,255,255,0.06), transparent 40%)`,
-        }}
-      />
+    <main className="min-h-screen bg-white text-foreground p-4 md:p-8">
+      <div className="max-w-7xl mx-auto px-4 pt-8">
+        {/* Main Title */}
+        <div className="text-center mb-12">
+          <h1 className="text-3xl md:text-4xl font-bold mb-2 text-gray-800">
+            wrikka.com
+          </h1>
+        </div>
 
-      {/* Background stars */}
-      <div className="night" />
-      
-      {/* Shooting Stars */}
-      <div className="shooting-stars">
-        {[...Array(5)].map((_, i) => (
-          <div key={i} className="shooting-star" />
-        ))}
-      </div>
-
-      <div className="relative w-full">
-        {/* Gradient Orbs */}
-        <div className="absolute top-0 -left-4 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob"></div>
-        <div className="absolute top-0 -right-4 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-2000"></div>
-        <div className="absolute -bottom-8 left-20 w-72 h-72 bg-gray-800/20 rounded-full mix-blend-soft-light filter blur-3xl opacity-30 animate-blob animation-delay-4000"></div>
-        
-        <div className="max-w-7xl mx-auto relative px-4 pt-8">
-          {/* Main Title */}
-          <div className="text-center mb-12">
-            <h1 className="text-3xl md:text-4xl font-bold mb-2 bg-clip-text text-transparent bg-gradient-to-r from-white via-gray-300 to-white">
-              wrikka.com
-            </h1>
-          </div>
-
-          {/* Cards Grid */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {cards.map((card, index) => (
-              <Link 
-                key={index} 
-                href={card.link}
-                className="group block"
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <div className="backdrop-blur-md bg-white/[0.08] rounded-2xl overflow-hidden border border-white/[0.08] transition-all duration-300 group-hover:scale-[1.02] group-hover:bg-white/[0.12] group-hover:border-white/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:shadow-[0_8px_30px_rgba(255,255,255,0.1)]">
-                  <div className="relative w-full" style={{ paddingTop: '56.25%' }}>
-                    <Image
-                      src={card.image}
-                      alt={card.title}
-                      fill
-                      className="object-cover"
-                    />
-                  </div>
-                  <div className="p-4 text-center">
-                    <div className="flex items-center justify-center gap-2 mb-2">
-                      <Icon icon={card.icon} className="w-6 h-6 text-gray-300" />
-                      <h2 className="text-2xl font-bold text-white">{card.description}</h2>
-                    </div>
-                    <p className="text-gray-400 text-sm">{card.title}</p>
-                  </div>
+        {/* Blocks Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {blocks.map((block, index) => (
+            <Link 
+              key={index} 
+              href={block.link}
+              className="block-link block transition-all duration-300"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <div className="bg-white border border-gray-200 p-6 h-full">
+                <div className="flex items-center gap-3 mb-4">
+                  <Icon icon={block.icon} className="w-8 h-8 text-gray-700" />
+                  <h2 className="text-xl font-bold text-gray-800">{block.description}</h2>
                 </div>
-              </Link>
-            ))}
-          </div>
+                <p className="text-gray-600 mt-2">{block.title}</p>
+              </div>
+            </Link>
+          ))}
         </div>
       </div>
     </main>
