@@ -49,6 +49,14 @@ body {
   margin-bottom: 1rem;
 }
 
+.prose pre {
+  background-color: #1a1a1a;
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  margin: 1rem 0;
+}
+
 .prose code {
   background-color: rgba(0, 0, 0, 0.1);
   padding: 0.2rem 0.4rem;
@@ -56,8 +64,18 @@ body {
   font-family: monospace;
 }
 
+.prose pre code {
+  background-color: transparent;
+  padding: 0;
+  color: #e5e7eb;
+}
+
 .dark .prose code {
   background-color: rgba(255, 255, 255, 0.1);
+}
+
+.dark .prose pre {
+  background-color: #000000;
 }
 
 .container {
