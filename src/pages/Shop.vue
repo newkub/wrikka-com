@@ -1,34 +1,32 @@
 <script setup lang="ts">
+import Card from '../components/Card.vue'
+
 const products = [
   {
-    id: 1,
-    name: 'Developer T-Shirt',
+    title: 'Developer T-Shirt',
     price: 29.99,
-    image: 'https://picsum.photos/seed/product1/400/400',
+    image: 'https://picsum.photos/seed/product1/400/225',
     description: 'Comfortable cotton t-shirt with cool developer designs',
     link: 'https://example.com/shop/dev-tshirt'
   },
   {
-    id: 2,
-    name: 'Code Mug',
+    title: 'Code Mug',
     price: 19.99,
-    image: 'https://picsum.photos/seed/product2/400/400',
+    image: 'https://picsum.photos/seed/product2/400/225',
     description: 'Ceramic mug with programming jokes',
     link: 'https://example.com/shop/code-mug'
   },
   {
-    id: 3,
-    name: 'Laptop Stickers Pack',
+    title: 'Laptop Stickers Pack',
     price: 12.99,
-    image: 'https://picsum.photos/seed/product3/400/400',
+    image: 'https://picsum.photos/seed/product3/400/225',
     description: 'Set of 10 programming-themed stickers',
     link: 'https://example.com/shop/stickers'
   },
   {
-    id: 4,
-    name: 'Mechanical Keyboard',
+    title: 'Mechanical Keyboard',
     price: 149.99,
-    image: 'https://picsum.photos/seed/product4/400/400',
+    image: 'https://picsum.photos/seed/product4/400/225',
     description: 'RGB mechanical keyboard with custom switches',
     link: 'https://example.com/shop/keyboard'
   }
@@ -36,22 +34,15 @@ const products = [
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4">
+  <div class="max-w-[var(--max-content-width)] mx-auto px-4">
     <h1 class="text-3xl font-bold mb-8">Shop</h1>
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-      <a v-for="product in products" 
-         :key="product.id"
-         :href="product.link"
-         target="_blank"
-         rel="noopener noreferrer"
-         class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-        <img :src="product.image" :alt="product.name" class="w-full aspect-square object-cover" />
-        <div class="p-4">
-          <h3 class="text-lg font-semibold mb-2">{{ product.name }}</h3>
-          <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">{{ product.description }}</p>
-          <p class="text-primary-color font-bold text-lg">${{ product.price }}</p>
-        </div>
-      </a>
+      <Card
+        v-for="product in products"
+        :key="product.title"
+        v-bind="product"
+        :onClick="() => window.open(product.link, '_blank')"
+      />
     </div>
   </div>
 </template>
