@@ -18,6 +18,9 @@
 }
 
 body {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
   color: var(--text-color);
   background-color: var(--background-color);
   transition: color 0.3s, background-color 0.3s;
@@ -81,6 +84,13 @@ body {
 
 .dark .prose pre {
   background-color: #000000;
+}
+
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1rem;
 }
 
 .container {

@@ -1,25 +1,32 @@
 <script setup lang="ts">
-import Navigation from '../components/Navigation.vue'
-import ThemeToggle from '../components/ThemeToggle.vue'
-import HelloWorld from '../components/HelloWorld.vue'
+import { ref, onMounted } from 'vue'
 
-const components = [
-  {
-    name: 'Navigation',
-    description: 'Main navigation component with theme toggle',
-    component: Navigation
-  },
-  {
-    name: 'ThemeToggle',
-    description: 'Dark/Light mode toggle button',
-    component: ThemeToggle
-  },
-  {
-    name: 'HelloWorld',
-    description: 'Example component with counter',
-    component: HelloWorld
+interface ComponentInfo {
+  name: string
+  description: string
+  component: any
+}
+
+const components = ref<ComponentInfo[]>([])
+
+const loadComponents = async () => {
+  const componentFiles = import.meta.glob('../components/*.vue')
+
+  for (const path in componentFiles) {
+    const componentName = path.split('/').pop()?.replace('.vue', '') || ''
+    const component = await componentFiles[path]()
+
+    components.value.push({
+      name: componentName,
+      description: `${componentName} component`,
+      component: component.default
+    })
   }
-]
+}
+
+onMounted(() => {
+  loadComponents()
+})
 </script>
 
 <template>

@@ -10,21 +10,24 @@ const projects = [
     description: 'A full-featured online shopping platform built with Vue.js and Node.js',
     image: 'https://picsum.photos/seed/project1/400/225',
     github: 'https://github.com/username/ecommerce',
-    website: 'https://demo-ecommerce.example.com'
+    website: 'https://demo-ecommerce.example.com',
+    to: '/projects/ecommerce'
   },
   {
     title: 'Task Management App',
     description: 'A collaborative task management tool with real-time updates',
     image: 'https://picsum.photos/seed/project2/400/225',
     github: 'https://github.com/username/taskapp',
-    website: 'https://demo-taskapp.example.com'
+    website: 'https://demo-taskapp.example.com',
+    to: '/projects/taskapp'
   },
   {
     title: 'Weather Dashboard',
     description: 'Real-time weather information with interactive maps',
     image: 'https://picsum.photos/seed/project3/400/225',
     github: 'https://github.com/username/weather',
-    website: 'https://demo-weather.example.com'
+    website: 'https://demo-weather.example.com',
+    to: '/projects/weather'
   }
 ]
 </script>
@@ -41,7 +44,7 @@ const projects = [
           { label: 'GitHub', url: project.github, icon: 'i-carbon-logo-github' },
           { label: 'Website', url: project.website, icon: 'i-carbon-link' }
         ]"
-        :onClick="() => window.open(project.website, '_blank')"
+        :onClick="() => router.push(project.to)"
       />
     </div>
   </div>
