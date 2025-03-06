@@ -38,7 +38,6 @@ const products = [
 <template>
   <div class="max-w-4xl mx-auto px-4">
     <h1 class="text-3xl font-bold mb-8">Shop</h1>
-    
     <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
       <a v-for="product in products" 
          :key="product.id"
@@ -46,9 +45,10 @@ const products = [
          target="_blank"
          rel="noopener noreferrer"
          class="bg-white dark:bg-gray-800 rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-shadow">
-        <img :src="product.image" :alt="product.name" class="w-full h-40 object-cover" />
+        <img :src="product.image" :alt="product.name" class="w-full aspect-square object-cover" />
         <div class="p-4">
-          <h3 class="text-lg font-semibold mb-1">{{ product.name }}</h3>
+          <h3 class="text-lg font-semibold mb-2">{{ product.name }}</h3>
+          <p class="text-gray-600 dark:text-gray-300 text-sm mb-2">{{ product.description }}</p>
           <p class="text-primary-color font-bold text-lg">${{ product.price }}</p>
         </div>
       </a>

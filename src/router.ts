@@ -4,6 +4,7 @@ import Projects from './pages/Projects.vue'
 import Shop from './pages/Shop.vue'
 import Blog from './pages/Blog.vue'
 import BlogPost from './pages/BlogPost.vue'
+import Components from './pages/Components.vue'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -13,5 +14,6 @@ export const router = createRouter({
     { path: '/shop', component: Shop },
     { path: '/blog', component: Blog },
     { path: '/blog/:id', component: BlogPost },
+    { path: '/components', component: Components },
   ],
 })

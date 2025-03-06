@@ -12,7 +12,7 @@ const skills = [
 </script>
 
 <template>
-  <div class="max-w-4xl mx-auto px-4 min-h-screen flex flex-col justify-center">
+  <div class="max-w-4xl mx-auto px-4 py-12 min-h-[calc(100vh-4rem)] flex items-center">
     <div class="grid md:grid-cols-2 gap-12 items-center">
       <section class="text-center space-y-4">
         <img src="https://api.dicebear.com/6.x/avataaars/svg?seed=Felix" alt="Avatar" 
