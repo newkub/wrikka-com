@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue'
+import Tokens from './Tokens.vue'
 
 interface ComponentInfo {
   name: string
@@ -7,7 +8,13 @@ interface ComponentInfo {
   component: any
 }
 
-const components = ref<ComponentInfo[]>([])
+const components = ref<ComponentInfo[]>([
+  {
+    name: 'Tokens',
+    description: 'Token management interface',
+    component: Tokens
+  }
+])
 
 const loadComponents = async () => {
   const componentFiles = import.meta.glob('../components/*.vue')

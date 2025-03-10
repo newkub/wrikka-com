@@ -8,7 +8,6 @@ const routes = [
   { name: 'Shop', path: '/shop', icon: 'i-carbon-shopping-cart', color: 'text-purple-700 dark:text-purple-300' },
   { name: 'Blog', path: '/blog', icon: 'i-carbon-blog', color: 'text-orange-700 dark:text-orange-300' },
   { name: 'Components', path: '/components', icon: 'i-carbon-cube', color: 'text-pink-700 dark:text-pink-300' },
-  { name: 'Tokens', path: '/tokens', icon: 'i-carbon-money', color: 'text-yellow-700 dark:text-yellow-300' },
 ]
 </script>
 

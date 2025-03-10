@@ -5,7 +5,6 @@ import Shop from './pages/Shop.vue'
 import Blog from './pages/Blog.vue'
 import BlogPost from './pages/BlogPost.vue'
 import Components from './pages/Components.vue'
-import Tokens from './pages/Tokens.vue'
 
 export const router = createRouter({
   history: createWebHistory(),
@@ -16,6 +15,5 @@ export const router = createRouter({
     { path: '/blog', component: Blog },
     { path: '/blog/:id', component: BlogPost },
     { path: '/components', component: Components },
-    { path: '/tokens', component: Tokens },
   ],
 })
