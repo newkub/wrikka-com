@@ -21,6 +21,7 @@
     "@iconify-json/carbon": "^1.2.8",
     "@iconify-json/logos": "^1.2.4",
     "@iconify-json/vscode-icons": "^1.2.16",
+    "@types/node": "^20.11.24",
     "typescript": "^5.8.2",
     "unocss": "^0.53.1",
     "vite": "6.2.0",

@@ -2,7 +2,6 @@
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import Card from '../components/Card.vue'
-import Code from '../components/Code.vue'
 import { marked } from 'marked'
 import gettingStarted from '../../content/blog/getting-started.md?raw'
 import unocssLayouts from '../../content/blog/unocss-layouts.md?raw'
@@ -37,24 +36,11 @@ const post = computed(() => posts.find(p => p.id === Number.parseInt(route.param
 const relatedPosts = computed(() => posts.filter(p => p.id !== Number.parseInt(route.params.id as string)))
 
 const processContent = (content: string) => {
-  const sections = content.split('```')
-  return sections.map((section, index) => {
-    if (index % 2 === 1) {
-      const [lang, ...code] = section.split('\n')
-      return {
-        type: 'code',
-        lang: lang.trim(),
-        content: code.join('\n').trim()
-      }
-    }
-    return {
-      type: 'text',
-      content: marked(section)
-    }
-  })
+  // Simply return the marked content
+  return marked(content)
 }
 
-const contentSections = computed(() => post.value ? processContent(post.value.content) : [])
+const contentHtml = computed(() => post.value ? processContent(post.value.content) : '')
 
 const headings = computed(() => {
   const headings: { id: string; text: string; level: number }[] = []
@@ -194,16 +180,7 @@ const scrollToSection = (id: string) => {
             </div>
           </div>
           
-          <div class="prose dark:prose-invert max-w-none">
-            <template v-for="(section, index) in contentSections" :key="index">
-              <Code v-if="section.type === 'code'"
-                    :code="section.content"
-                    :lang="section.lang"
-                    :filename="`example.${section.lang}`"
-              />
-              <div v-else v-html="section.content"></div>
-            </template>
-          </div>
+          <div class="prose dark:prose-invert max-w-none" v-html="contentHtml"></div>
         </article>
 
         <div class="mt-16">
