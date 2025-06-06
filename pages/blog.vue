@@ -11,7 +11,7 @@
 </template>
 
 <script setup lang="ts">
-import Card from '~/components/Card.vue'
+import Card from "~/components/Card.vue";
 // Logic สำหรับหน้า blog
 </script>
 
