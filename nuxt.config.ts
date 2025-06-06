@@ -7,5 +7,5 @@ export default defineNuxtConfig({
 		// ตั้งค่า UnoCSS
 		configFile: "./uno.config.ts",
 	},
-	css: ["@unocss/reset/tailwind.css"],
+	css: ["@unocss/reset/tailwind.css", "~/assets/css/global.css"],
 });
