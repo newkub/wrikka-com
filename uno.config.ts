@@ -7,7 +7,7 @@ import {
 	transformerVariantGroup,
 	transformerDirectives,
 } from "unocss";
-import { createLocalFontProcessor } from '@unocss/preset-web-fonts/local';
+import { createLocalFontProcessor } from "@unocss/preset-web-fonts/local";
 
 export default defineConfig({
 	presets: [
@@ -23,16 +23,16 @@ export default defineConfig({
 		}),
 		presetTypography(),
 		presetWebFonts({
-			provider: 'none',
+			provider: "none",
 			fonts: {
-				sans: ['Noto Sans Thai', 'sans-serif'],
+				sans: ["Noto Sans Thai", "sans-serif"],
 				mono: "Fira Code",
 			},
 			processors: createLocalFontProcessor({
-				cacheDir: 'node_modules/.cache/unocss/fonts',
-				fontAssetsDir: 'public/assets/fonts',
-				fontServeBaseUrl: '/assets/fonts'
-			})
+				cacheDir: "node_modules/.cache/unocss/fonts",
+				fontAssetsDir: "public/assets/fonts",
+				fontServeBaseUrl: "/assets/fonts",
+			}),
 		}),
 	],
 	transformers: [transformerVariantGroup(), transformerDirectives()],
