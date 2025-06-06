@@ -1,0 +1,3 @@
+- class ใน .vue ทั้งหมดใช้จาก uno.config.ts theme
+- icon ใช้จาก iconify json mdi จาก unocss และถ้าเป็นไปได้ ไม่ต้องใช้ svg
+- class ใช้ unocss ทั้งหมด ไม่ใช้ css เลย
