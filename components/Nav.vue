@@ -17,7 +17,7 @@ const toggleDark = useToggle(isDark);
 
 
 <template>
-  <nav class="sticky top-0 bg-background dark:bg-background-block p-4 flex items-center">
+  <nav class="sticky top-0 bg-background p-4 flex items-center">
     <!-- Logo ด้านซ้าย -->
     <div class="flex-shrink-0">
       <NuxtLink to="/" class="flex items-center">
@@ -32,7 +32,7 @@ const toggleDark = useToggle(isDark);
           v-for="item in items" 
           :key="item.to" 
           :to="item.to"
-          class="px-4 py-2 text-text dark:text-text-secondary hover:text-primary flex items-center gap-2"
+          class="px-4 py-2 text-text hover:text-primary flex items-center gap-2"
           :class="{ '!text-primary font-medium': $route.path === item.to }"
         >
           <div v-if="item.icon" :class="item.icon" class="w-5 h-5" />
@@ -45,10 +45,11 @@ const toggleDark = useToggle(isDark);
     <div class="flex-shrink-0">
       <button 
         @click="toggleDark()"
-        class="p-2 rounded hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors"
+        class="rounded p-1.5 transition-colors hover:bg-gray-100 dark:hover:bg-gray-800"
         aria-label="Toggle dark mode"
       >
-        <div class="i-mdi-white-balance-sunny dark:i-mdi-moon w-6 h-6 text-text dark:text-text-secondary" />
+        <div v-if="isDark" class="i-mdi-moon-waning-crescent w-6 h-6 text-primary" />
+        <div v-else class="i-mdi-white-balance-sunny w-6 h-6 text-amber-500" />
       </button>
     </div>
   </nav>
