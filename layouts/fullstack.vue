@@ -10,13 +10,7 @@ const route = useRoute();
     <slot name="header" />
     
     <div class="flex flex-1">
-      <aside class="w-64 border-r p-4">
-        <slot name="sidebar" />
-      </aside>
-      
-      <main class="flex-1 p-4">
-        <slot />
-      </main>
+      <slot />
     </div>
     
   </div>

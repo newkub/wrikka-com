@@ -34,34 +34,34 @@
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref } from "vue";
 
 const changelogItems = ref([
-  {
-    version: "v1.0.0",
-    date: "2025-06-01",
-    changes: ["เปิดตัวเว็บไซต์ครั้งแรก", "เพิ่มระบบแสดงข่าวสาร", "เพิ่มระบบแสดงบล็อก"],
-  },
-  {
-    version: "v0.5.0",
-    date: "2025-05-15",
-    changes: ["พัฒนาระบบหลังบ้าน", "ออกแบบ UI เริ่มต้น"],
-  },
-  {
-    version: "v0.1.0",
-    date: "2025-05-01",
-    changes: ["เริ่มต้นโปรเจค", "ตั้งค่าโครงสร้างพื้นฐาน"],
-  },
+	{
+		version: "v1.0.0",
+		date: "2025-06-01",
+		changes: ["เปิดตัวเว็บไซต์ครั้งแรก", "เพิ่มระบบแสดงข่าวสาร", "เพิ่มระบบแสดงบล็อก"],
+	},
+	{
+		version: "v0.5.0",
+		date: "2025-05-15",
+		changes: ["พัฒนาระบบหลังบ้าน", "ออกแบบ UI เริ่มต้น"],
+	},
+	{
+		version: "v0.1.0",
+		date: "2025-05-01",
+		changes: ["เริ่มต้นโปรเจค", "ตั้งค่าโครงสร้างพื้นฐาน"],
+	},
 ]);
 
 const formatDate = (dateString: string) => {
-  const options: Intl.DateTimeFormatOptions = { 
-    year: 'numeric', 
-    month: 'long', 
-    day: 'numeric',
-    timeZone: 'Asia/Bangkok'
-  };
-  return new Date(dateString).toLocaleDateString('th-TH', options);
+	const options: Intl.DateTimeFormatOptions = {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+		timeZone: "Asia/Bangkok",
+	};
+	return new Date(dateString).toLocaleDateString("th-TH", options);
 };
 </script>
 
