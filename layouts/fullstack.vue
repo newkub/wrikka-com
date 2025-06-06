@@ -3,7 +3,6 @@ import { ref } from "vue";
 import { useRoute } from "vue-router";
 
 const route = useRoute();
-const showToc = ref(true);
 </script>
 
 <template>
@@ -15,19 +14,14 @@ const showToc = ref(true);
         <slot name="sidebar" />
       </aside>
       
-      <article class="flex-1 p-4 max-w-3xl mx-auto">
+      <main class="flex-1 p-4">
         <slot />
-      </article>
-      
-      <aside 
-        v-if="showToc" 
-        class="w-64 border-l p-4"
-      >
-        <slot name="toc" />
-      </aside>
+      </main>
     </div>
     
-    <slot name="footer" />
   </div>
 </template>
 
+<style>
+/* Styles will be handled by UnoCSS */
+</style>
