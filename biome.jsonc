@@ -6,23 +6,16 @@
 		"useIgnoreFile": true
 	},
 	"files": {
-		"ignoreUnknown": false,
-		"ignore": ["auto-imports.d.ts"]
+		"ignoreUnknown": false
+		
 	},
 	"formatter": {
-		"enabled": true,
-		"indentStyle": "tab"
-	},
-	"organizeImports": {
 		"enabled": true
 	},
 	"linter": {
 		"enabled": true,
 		"rules": {
-			"recommended": true,
-			"style": {
-				"useNodejsImportProtocol": "off"
-			}
+			"recommended": true
 		}
 	}
-}
+}	
