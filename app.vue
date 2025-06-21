@@ -104,7 +104,7 @@ function toggleDark() {
   <div class="min-h-screen bg-gray-50 dark:bg-[#181a20] transition-colors duration-300">
     <Transition name="fade" mode="out-in">
       <div v-if="isMounted" class="animate-fade-in">
-    <header class="p-4 flex justify-center items-center gap-6">
+    <header class="p-3 sm:p-4 flex flex-wrap justify-center items-center gap-3 sm:gap-4 md:gap-6">
       <!-- GitHub - สีเทาเข้ม -->
       <a :href="socialLinks.github" target="_blank" rel="noopener noreferrer" class="text-gray-500 hover:text-gray-900 dark:text-slate-400 dark:hover:text-slate-200 transition-colors">
         <div class="i-mdi-github w-6 h-6" />
@@ -143,10 +143,10 @@ function toggleDark() {
       </button>
     </header>
 
-    <main class="container mx-auto  max-w-7xl">
-      <h1 class="text-3xl font-bold mb-8 text-gray-900 dark:text-slate-100 text-center">My Projects</h1>
+    <main class="container mx-auto px-3 sm:px-4 md:px-6 max-w-7xl py-6 sm:py-8">
+      <h1 class="text-2xl sm:text-3xl font-bold mb-6 sm:mb-8 text-gray-900 dark:text-slate-100 text-center">My Projects</h1>
       
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 auto-rows-fr">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4 auto-rows-fr">
         <a 
           v-for="project in projects" 
           :key="project.id" 
@@ -167,9 +167,9 @@ function toggleDark() {
             </div>
             
             <!-- Project Content -->
-            <div class="p-6 flex-1 flex flex-col">
-              <h2 class="text-xl font-bold text-gray-900 dark:text-gray-100 mb-2">{{ project.title }}</h2>
-              <p class="text-gray-600 dark:text-gray-400 flex-1">{{ project.description }}</p>
+            <div class="p-4 sm:p-5 md:p-6 flex-1 flex flex-col">
+              <h2 class="text-lg sm:text-xl font-bold text-gray-900 dark:text-gray-100 mb-1 sm:mb-2">{{ project.title }}</h2>
+              <p class="text-sm sm:text-base text-gray-600 dark:text-gray-400 flex-1">{{ project.description }}</p>
               
               <!-- Project Links -->
               <div class="flex gap-2 mt-3">
