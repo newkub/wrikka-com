@@ -1,36 +1,46 @@
+<script setup lang="ts">
+import { useColorMode } from "@vueuse/core";
+
+// Add subtle entrance animation
+onMounted(() => {
+	document.body.classList.add("animate-fade-in");
+});
+</script>
+
 <template>
-  <div class="app-container">
+  <div class="min-h-screen bg-gradient-to-br from-slate-50 to-blue-50 dark:from-slate-900 dark:to-blue-900 font-sans">
+    <div class="fixed inset-0 bg-[radial-gradient(circle_at_1px_1px,rgb(148_163_184_/_0.15)_1px,transparent_0)] [background-size:20px_20px] pointer-events-none" />
+    
     <Transition 
       name="page" 
       mode="out-in"
       appear
+      :duration="{ enter: 400, leave: 200 }"
     >
-      <NuxtPage />
+      <NuxtPage class="relative z-10" />
     </Transition>
   </div>
 </template>
 
 <style>
-/* Page transition animations */
-.page-enter-active,
+/* Page transition animations - ใช้ UnoCSS ไม่ได้ต้องใช้ CSS */
+.page-enter-active {
+  transition: all 400ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .page-leave-active {
-  transition: all var(--transition-normal) ease-in-out;
+  transition: all 200ms cubic-bezier(0.4, 0, 0.2, 1);
 }
 
 .page-enter-from {
   opacity: 0;
-  transform: translateY(20px) scale(0.98);
+  transform: translateY(16px) scale(0.98);
+  filter: blur(4px);
 }
 
 .page-leave-to {
   opacity: 0;
-  transform: translateY(-20px) scale(1.02);
-}
-
-.page-enter-to,
-.page-leave-from {
-  opacity: 1;
-  transform: translateY(0) scale(1);
+  transform: translateY(-8px) scale(1.01);
 }
 
 /* Smooth scrolling */
@@ -40,112 +50,42 @@ html {
 
 /* Enhanced focus states */
 :focus-visible {
-  outline: 2px solid var(--color-primary);
+  outline: 2px solid #3b82f6;
   outline-offset: 2px;
-  border-radius: var(--rounded-sm);
+  border-radius: 4px;
 }
 
 /* Motion preferences */
 @media (prefers-reduced-motion: reduce) {
   .page-enter-active,
   .page-leave-active {
-    transition: opacity var(--transition-fast) ease-in-out;
+    transition: opacity 150ms ease-in-out;
   }
   
   .page-enter-from,
   .page-leave-to {
     transform: none;
+    filter: none;
   }
   
   html {
     scroll-behavior: auto;
   }
-  
-  * {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
 }
 
-/* Loading skeleton animation */
-@keyframes skeleton-loading {
-  0% {
-    background-position: -200px 0;
+/* Global animations */
+@keyframes fade-in {
+  from { 
+    opacity: 0; 
+    transform: translateY(8px);
   }
-  100% {
-    background-position: calc(200px + 100%) 0;
-  }
-}
-
-.skeleton-loading {
-  background: linear-gradient(90deg, 
-    var(--color-border) 0%, 
-    var(--color-border-light) 50%, 
-    var(--color-border) 100%
-  );
-  background-size: 200px 100%;
-  animation: skeleton-loading 1.5s infinite;
-}
-
-/* Enhanced hover states */
-.hover-lift {
-  transition: transform var(--transition-fast) ease-out, 
-              box-shadow var(--transition-fast) ease-out;
-}
-
-.hover-lift:hover {
-  transform: translateY(-2px);
-  box-shadow: var(--shadow-lg);
-}
-
-/* Bounce animation for interactive elements */
-@keyframes bounce-in {
-  0% {
-    opacity: 0;
-    transform: scale(0.3);
-  }
-  50% {
-    transform: scale(1.05);
-  }
-  70% {
-    transform: scale(0.9);
-  }
-  100% {
-    opacity: 1;
-    transform: scale(1);
-  }
-}
-
-.bounce-in {
-  animation: bounce-in 0.6s cubic-bezier(0.68, -0.55, 0.265, 1.55);
-}
-
-/* Fade in up animation */
-@keyframes fade-in-up {
-  from {
-    opacity: 0;
-    transform: translateY(30px);
-  }
-  to {
-    opacity: 1;
+  to { 
+    opacity: 1; 
     transform: translateY(0);
   }
 }
 
-.fade-in-up {
-  animation: fade-in-up 0.8s ease-out;
+.animate-fade-in {
+  animation: fade-in 600ms ease-out;
 }
-
-/* Stagger animation utility */
-.stagger-children > * {
-  animation: fade-in-up 0.6s ease-out both;
-}
-
-.stagger-children > *:nth-child(1) { animation-delay: 0.1s; }
-.stagger-children > *:nth-child(2) { animation-delay: 0.2s; }
-.stagger-children > *:nth-child(3) { animation-delay: 0.3s; }
-.stagger-children > *:nth-child(4) { animation-delay: 0.4s; }
-.stagger-children > *:nth-child(5) { animation-delay: 0.5s; }
-.stagger-children > *:nth-child(6) { animation-delay: 0.6s; }
 </style>

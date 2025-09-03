@@ -1,21 +1,21 @@
 export interface BlogPost {
-  id: number
-  title: string
-  slug: string
-  excerpt: string
-  content: string
-  date: string
-  readingTime: number
+	id: number;
+	title: string;
+	slug: string;
+	excerpt: string;
+	content: string;
+	date: string;
+	readingTime: number;
 }
 
 // Mock blog data - ในอนาคตสามารถเชื่อมต่อกับ CMS หรือ markdown files
 const blogPosts: BlogPost[] = [
-  {
-    id: 1,
-    title: "เริ่มต้นกับ Vue 3 และ Nuxt 3",
-    slug: "getting-started-with-vue3-nuxt3",
-    excerpt: "เรียนรู้พื้นฐานการใช้งาน Vue 3 และ Nuxt 3 สำหรับพัฒนาเว็บแอปพลิเคชันสมัยใหม่",
-    content: `
+	{
+		id: 1,
+		title: "เริ่มต้นกับ Vue 3 และ Nuxt 3",
+		slug: "getting-started-with-vue3-nuxt3",
+		excerpt: "เรียนรู้พื้นฐานการใช้งาน Vue 3 และ Nuxt 3 สำหรับพัฒนาเว็บแอปพลิเคชันสมัยใหม่",
+		content: `
       <h2>Vue 3 และ Nuxt 3 คืออะไร?</h2>
       <p>Vue 3 เป็น JavaScript framework ที่ช่วยในการพัฒนา user interfaces ในขณะที่ Nuxt 3 เป็น meta-framework ที่สร้างขึ้นบน Vue 3</p>
       
@@ -44,15 +44,16 @@ const increment = () =&gt; count.value++
       
       <p>การเริ่มต้นใช้งาน Vue 3 และ Nuxt 3 จะช่วยให้คุณพัฒนาแอปพลิเคชันที่มีประสิทธิภาพและใช้งานง่าย</p>
     `,
-    date: "2024-01-15",
-    readingTime: 5
-  },
-  {
-    id: 2,
-    title: "UnoCSS: Utility-First CSS Framework ใหม่",
-    slug: "unocss-utility-first-css-framework",
-    excerpt: "ทำความรู้จักกับ UnoCSS framework ที่มาแทนที่ Tailwind CSS พร้อมประสิทธิภาพที่ดีกว่า",
-    content: `
+		date: "2024-01-15",
+		readingTime: 5,
+	},
+	{
+		id: 2,
+		title: "UnoCSS: Utility-First CSS Framework ใหม่",
+		slug: "unocss-utility-first-css-framework",
+		excerpt:
+			"ทำความรู้จักกับ UnoCSS framework ที่มาแทนที่ Tailwind CSS พร้อมประสิทธิภาพที่ดีกว่า",
+		content: `
       <h2>UnoCSS คืออะไร?</h2>
       <p>UnoCSS เป็น utility-first CSS framework ที่สร้างโดย Anthony Fu มาเพื่อแก้ไขข้อจำกัดของ Tailwind CSS</p>
       
@@ -84,15 +85,15 @@ export default defineConfig({
         <p>UnoCSS ให้ประสิทธิภาพและความยืดหยุ่นที่เหนือกว่า framework อื่นๆ</p>
       </blockquote>
     `,
-    date: "2024-01-08",
-    readingTime: 7
-  },
-  {
-    id: 3,
-    title: "TypeScript Best Practices สำหรับ Vue Developer",
-    slug: "typescript-best-practices-vue-developer",
-    excerpt: "เทคนิคและแนวปฏิบัติที่ดีในการใช้ TypeScript กับ Vue.js เพื่อโค้ดที่มีคุณภาพ",
-    content: `
+		date: "2024-01-08",
+		readingTime: 7,
+	},
+	{
+		id: 3,
+		title: "TypeScript Best Practices สำหรับ Vue Developer",
+		slug: "typescript-best-practices-vue-developer",
+		excerpt: "เทคนิคและแนวปฏิบัติที่ดีในการใช้ TypeScript กับ Vue.js เพื่อโค้ดที่มีคุณภาพ",
+		content: `
       <h2>ทำไมต้องใช้ TypeScript กับ Vue?</h2>
       <p>TypeScript ช่วยให้เราเขียนโค้ด Vue ที่มีความปลอดภัยมากขึ้น และลดข้อผิดพลาดในการพัฒนา</p>
       
@@ -153,27 +154,29 @@ export function useApi&lt;T&gt;(url: string) {
       
       <p>การใช้ TypeScript อย่างถูกต้องจะช่วยให้โครงการมีความเสถียรและบำรุงรักษาได้ง่าย</p>
     `,
-    date: "2024-01-01",
-    readingTime: 8
-  }
-]
+		date: "2024-01-01",
+		readingTime: 8,
+	},
+];
 
 export const useBlogPosts = () => {
-  return useAsyncData('blog-posts', async () => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 500))
-    return blogPosts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-  })
-}
+	return useAsyncData("blog-posts", async () => {
+		// Simulate API delay
+		await new Promise((resolve) => setTimeout(resolve, 500));
+		return blogPosts.sort(
+			(a, b) => new Date(b.date).getTime() - new Date(a.date).getTime(),
+		);
+	});
+};
 
 export const useBlogPost = (slug: string) => {
-  return useAsyncData(`blog-post-${slug}`, async () => {
-    // Simulate API delay
-    await new Promise(resolve => setTimeout(resolve, 300))
-    const post = blogPosts.find(p => p.slug === slug)
-    if (!post) {
-      throw new Error('Post not found')
-    }
-    return post
-  })
-}
+	return useAsyncData(`blog-post-${slug}`, async () => {
+		// Simulate API delay
+		await new Promise((resolve) => setTimeout(resolve, 300));
+		const post = blogPosts.find((p) => p.slug === slug);
+		if (!post) {
+			throw new Error("Post not found");
+		}
+		return post;
+	});
+};
