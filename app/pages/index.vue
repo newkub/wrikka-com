@@ -36,47 +36,53 @@ const projects = ref<Project[]>([
 	{
 		id: 1,
 		title: "learn.wrikka.com",
-		description: "Learning platform and documentation with interactive tutorials",
-		image: "https://images.unsplash.com/photo-1509869175650-a1d97972541a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+		description:
+			"Learning platform and documentation with interactive tutorials",
+		image:
+			"https://images.unsplash.com/photo-1509869175650-a1d97972541a?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 		github: "https://github.com/wrikka/learn",
 		website: "https://learn.wrikka.com",
-		gradient: "from-purple-500 to-pink-500"
+		gradient: "from-purple-500 to-pink-500",
 	},
 	{
 		id: 2,
 		title: "Git Interactive CLI",
 		description: "Modern command-line interface for streamlined Git workflows",
-		image: "https://images.unsplash.com/photo-1562907550-096d3bf9b25c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+		image:
+			"https://images.unsplash.com/photo-1562907550-096d3bf9b25c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 		github: "https://github.com/wrikka/git-interactive-cli",
 		npm: "https://npmjs.com/package/@wrikka/git-interactive-cli",
-		gradient: "from-blue-500 to-cyan-500"
+		gradient: "from-blue-500 to-cyan-500",
 	},
 	{
 		id: 3,
 		title: "Build Package",
 		description: "Zero-config package builder with intelligent optimization",
-		image: "https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+		image:
+			"https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 		github: "https://github.com/wrikka/build-package",
 		npm: "https://npmjs.com/package/@wrikka/build-package",
-		gradient: "from-green-500 to-emerald-500"
+		gradient: "from-green-500 to-emerald-500",
 	},
 	{
 		id: 4,
 		title: "UI Components",
 		description: "Beautiful, accessible components built with modern standards",
-		image: "https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+		image:
+			"https://images.unsplash.com/photo-1551650975-87deedd944c3?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 		github: "https://github.com/wrikka/ui",
 		npm: "https://npmjs.com/package/@wrikka/ui",
 		website: "https://ui.wrikka.com",
-		gradient: "from-orange-500 to-red-500"
+		gradient: "from-orange-500 to-red-500",
 	},
 	{
 		id: 5,
 		title: "Development Blog",
 		description: "Technical insights, tutorials and development experiences",
-		image: "https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
+		image:
+			"https://images.unsplash.com/photo-1486312338219-ce68d2c6f44d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80",
 		website: "/blog",
-		gradient: "from-indigo-500 to-purple-500"
+		gradient: "from-indigo-500 to-purple-500",
 	},
 ]);
 
