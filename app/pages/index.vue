@@ -1,85 +1,63 @@
 <script setup lang="ts">
-import { useDark } from '@vueuse/core'
-
-const navItems = [
-  { name: 'Learn', icon: 'i-mdi-book-open-variant' },
-  { name: 'Projects', icon: 'i-mdi-folder-multiple' },
-  { name: 'Blog', icon: 'i-mdi-post' }
-]
-
-const toggleDark = useDark({ 
-  selector: 'html', 
-  attribute: 'class', 
-  valueDark: 'dark', 
-  valueLight: 'light' 
+// SEO Meta
+useHead({
+  title: 'Wrikka | Full-Stack Developer',
+  meta: [
+    { name: 'description', content: 'Full-Stack Developer ที่หลงใหลในการสร้างสรรค์เว็บไซต์และแอปพลิเคชัน' },
+    { property: 'og:title', content: 'Wrikka | Full-Stack Developer' },
+    { property: 'og:description', content: 'Full-Stack Developer ที่หลงใหลในการสร้างสรรค์เว็บไซต์และแอปพลิเคชัน' }
+  ]
 })
 </script>
 
 <template>
-  <div>
-    <!-- Navigation Menu -->
-    <nav class="bg-surface shadow-sm sticky top-0 z-10">
-      <div class="container mx-auto px-4 py-3 flex items-center">
-        <!-- Left Space -->
-        <div class="flex-1"></div>
-        
-        <!-- Center Menu -->
-        <div class="flex space-x-6 justify-center">
-          <NuxtLink 
-            v-for="item in navItems" 
-            :key="item.name" 
-            :to="'/' + item.name.toLowerCase()"
-            class="flex items-center gap-2 text-primary hover:text-accent px-3 py-2 rounded-md text-sm font-medium transition-colors"
-          >
-            <div :class="item.icon + ' w-5 h-5'" />
-            {{ item.name }}
-          </NuxtLink>
-        </div>
-        
-        <!-- Right Section -->
-        <div class="flex-1 flex justify-end items-center gap-4">
-          <!-- Theme Toggle -->
-          <button 
-            @click="toggleDark()"
-            class="p-2 rounded-full hover:bg-gray-100 dark:hover:bg-gray-700 transition-colors"
-            aria-label="Toggle dark mode"
-          >
-            <div class="i-mdi-white-balance-sunny dark:i-mdi-moon-waning-crescent w-5 h-5" />
-          </button>
-          
-          <!-- Social Icons -->
-          <div class="flex space-x-4">
-            <a href="#" class="text-gray-500 hover:text-blue-400 transition-colors">
-              <div class="i-mdi-twitter w-5 h-5" />
-            </a>
-            <a href="#" class="text-gray-500 hover:text-blue-600 transition-colors">
-              <div class="i-mdi-facebook w-5 h-5" />
-            </a>
-            <a href="#" class="text-gray-500 hover:text-gray-700 transition-colors">
-              <div class="i-mdi-github w-5 h-5" />
-            </a>
-          </div>
-        </div>
-      </div>
-    </nav>
+  <div class="min-h-screen bg-surface dark:bg-surface-dark flex flex-col justify-center items-center relative overflow-hidden pt-20">
+    <!-- Background decoration -->
+    <div class="absolute inset-0 opacity-5 dark:opacity-10">
+      <div class="absolute top-1/4 left-1/4 w-96 h-96 bg-accent rounded-full blur-3xl animate-pulse"></div>
+      <div class="absolute bottom-1/4 right-1/4 w-80 h-80 bg-menu-learn rounded-full blur-3xl animate-pulse delay-1000"></div>
+      <div class="absolute top-3/4 left-1/2 w-64 h-64 bg-menu-project rounded-full blur-3xl animate-pulse delay-2000"></div>
+    </div>
 
-    <!-- Main Content -->
-    <div class="container mx-auto p-4">
-      <h1 class="text-4xl font-bold mb-8 text-center text-primary">My Projects</h1>
-      
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-        <div 
-          v-for="i in 8" :key="i"
-          class="bg-surface rounded-lg shadow-md p-4 hover:shadow-lg transition-shadow duration-300"
-        >
-          <img 
-            :src="`https://picsum.photos/seed/${i}/300/200`" 
-            alt="Project cover"
-            class="w-full h-40 object-cover rounded mb-3"
-            loading="lazy"
+    <!-- Main Content Container -->
+    <div class="relative z-10 w-full max-w-4xl mx-auto px-6 py-8">
+      <!-- Profile Section -->
+      <div class="text-center mb-12">
+        <!-- Avatar -->
+        <div class="w-32 h-32 mx-auto mb-6 relative">
+          <div class="w-full h-full bg-gradient-to-br from-accent to-menu-project rounded-full p-1 shadow-2xl">
+            <div class="w-full h-full bg-surface dark:bg-surface-dark rounded-full flex items-center justify-center">
+              <div class="i-mdi-account w-16 h-16 text-accent dark:text-accent-dark" />
+            </div>
+          </div>
+          <div class="absolute -bottom-2 -right-2 w-8 h-8 bg-green-500 rounded-full border-4 border-surface dark:border-surface-dark"></div>
+        </div>
+
+        <!-- Name & Title -->
+        <h1 class="text-4xl md:text-5xl font-bold text-primary dark:text-primary-dark mb-3">
+          Wrikka
+        </h1>
+        <p class="text-xl text-secondary dark:text-secondary-dark mb-6">
+          Full-Stack Developer & Creator
+        </p>
+
+        <!-- Brief Description -->
+        <p class="text-lg text-secondary dark:text-secondary-dark max-w-2xl mx-auto leading-relaxed mb-12">
+          หลงใหลในการสร้างสรรค์เว็บไซต์และแอปพลิเคชันที่สวยงาม ใช้งานง่าย และตอบโจทย์ผู้ใช้งาน
+        </p>
+      </div>
+
+      <!-- Skills & Tech Stack -->
+      <div class="text-center">
+        <h3 class="text-lg font-semibold text-primary dark:text-primary-dark mb-6">Tech Stack</h3>
+        <div class="flex flex-wrap justify-center gap-3">
+          <span
+            v-for="tech in ['Vue.js', 'Nuxt.js', 'TypeScript', 'Node.js', 'Python', 'PostgreSQL']"
+            :key="tech"
+            class="px-4 py-2 bg-surface-100 dark:bg-surface-100-dark text-secondary dark:text-secondary-dark rounded-full text-sm font-medium border border-surface-200 dark:border-surface-200-dark hover:border-accent dark:hover:border-accent-dark transition-colors"
           >
-          <h3 class="text-lg font-semibold text-primary">Project {{ i }}</h3>
-          <p class="text-secondary mt-2">Description for project {{ i }}</p>
+            {{ tech }}
+          </span>
         </div>
       </div>
     </div>

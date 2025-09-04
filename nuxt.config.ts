@@ -8,8 +8,7 @@ export default defineNuxtConfig({
   modules: [
     "@unocss/nuxt",
     "@vueuse/nuxt",
-    '@nuxt/content',
-    '@nuxt/content'
+    "@unocss/nuxt"
   ],
   css: ["@unocss/reset/tailwind-compat.css"],
   nitro: {
