@@ -1,20 +1,18 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 export default defineNuxtConfig({
-	srcDir: "app/",
 	compatibilityDate: "2025-05-15",
-	devtools: { enabled: false },
+	devtools: { enabled: true },
 	modules: [
 		"@unocss/nuxt",
 		"@vueuse/nuxt",
 		"@pinia/nuxt",
 		"@nuxt/content",
 	],
-	nitro: {
-		preset: "cloudflare",
+	typescript: {
+		strict: true,
+		typeCheck: true,
 	},
-	content: {
-		database: {
-			driver: "fs",
-		},
+	nitro: {
+		preset: "cloudflare_module",
 	},
 });

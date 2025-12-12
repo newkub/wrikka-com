@@ -7,8 +7,12 @@ export const useBlogStore = defineStore("blog", {
 	}),
 	actions: {
 		async fetchPosts() {
-			if (this.posts.length) return;
-			const posts = await queryContent<BlogPost>("/blog").find();
+			if (this.posts.length > 0) return;
+			const posts = await $fetch<BlogPost[]>("/api/_content/query", {
+				params: {
+					_path: "/blog",
+				},
+			});
 			this.posts = posts;
 		},
 	},
