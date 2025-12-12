@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, watchEffect } from "vue";
-import { useMarkdownRenderer } from "~/composables/markdown/renderer";
+import { useMarkdownRenderer } from "~/composables/useMarkdownRenderer";
 
 const props = defineProps<{ content: string }>();
 

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBlog } from "~/composables/blog";
+import { useBlog } from "~/composables/useBlog";
 
 const route = useRoute();
 const { getPostBySlug } = await useBlog();
