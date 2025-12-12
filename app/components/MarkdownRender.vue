@@ -1,19 +1,19 @@
 <script setup lang="ts">
-import { ref, watchEffect } from 'vue'
-import { useMarkdownRenderer } from '~/composables/markdown/renderer'
+import { ref, watchEffect } from "vue";
+import { useMarkdownRenderer } from "~/composables/markdown/renderer";
 
-const props = defineProps<{ content: string }>()
+const props = defineProps<{ content: string }>();
 
-const renderedContent = ref('')
+const renderedContent = ref("");
 
 watchEffect(async () => {
-  if (props.content) {
-    const md = await useMarkdownRenderer()
-    renderedContent.value = md.render(props.content)
-  }
-})
+	if (props.content) {
+		const md = await useMarkdownRenderer();
+		renderedContent.value = md.render(props.content);
+	}
+});
 </script>
 
 <template>
-  <div v-html="renderedContent" />
+	<div v-html="renderedContent" />
 </template>
