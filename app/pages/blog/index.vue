@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBlog } from "~/composables/useBlog";
+import { useBlog } from "~/composables/blog";
 
 const { posts } = await useBlog();
 </script>
@@ -7,16 +7,8 @@ const { posts } = await useBlog();
 <template>
 	<div class="p-4">
 		<h1 class="text-4xl font-bold mb-8">Blog</h1>
-		<ul>
-			<li v-for="post in posts" :key="post.slug" class="mb-4">
-				<NuxtLink
-					:to="`/blog/${post.slug}`"
-					class="text-xl text-primary hover:underline"
-				>
-					{{ post.title }}
-				</NuxtLink>
-				<p class="text-secondary">{{ post.date }}</p>
-			</li>
-		</ul>
+		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+			<BlogPostPreview v-for="post in posts" :key="post.slug" :post="post" />
+		</div>
 	</div>
 </template>
