@@ -1,4 +1,4 @@
 export default defineEventHandler(() => {
-  // Logic to get products
-  return []
-})
+	// Logic to get products
+	return [];
+});

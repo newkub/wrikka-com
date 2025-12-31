@@ -18,6 +18,12 @@ logs
 .fleet
 .idea
 
+**/*.vue.js
+**/*.ts.js
+tsconfig.tsbuildinfo
+nuxt.config.js
+uno.config.js
+
 # Local env files
 .env
 .env.*

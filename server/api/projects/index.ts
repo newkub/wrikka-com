@@ -1,4 +1,4 @@
 export default defineEventHandler(() => {
-  // Logic to get projects
-  return []
-})
+	// Logic to get projects
+	return [];
+});

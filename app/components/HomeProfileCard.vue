@@ -2,5 +2,5 @@
 </script>
 
 <template>
-  <div>Home Profile Card</div>
+	<div>Home Profile Card</div>
 </template>

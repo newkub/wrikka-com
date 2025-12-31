@@ -1,6 +1,6 @@
 import { storeToRefs } from "pinia";
 import { useProjectsStore } from "~/stores/projects";
-import type { Project } from "~/types/project";
+import type { Project } from "~~/shared/types/projects";
 
 export const useProjects = async () => {
 	const projectsStore = useProjectsStore();

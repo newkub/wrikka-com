@@ -1,11 +1,10 @@
-import type { Product } from "~/types/product";
+import { productsData } from "~~/shared/data/products";
+import type { Product } from "~~/shared/types/products";
 
 export const useProducts = async () => {
-  const products = ref<Product[]>([]); // Placeholder
-  // In a real app, you would fetch this from an API
-  // const { data: products } = await useFetch('/api/products')
+	const products = ref<Product[]>(productsData);
 
-  return {
-    products,
-  };
+	return {
+		products,
+	};
 };

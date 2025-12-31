@@ -8,10 +8,11 @@ const { products } = await useProducts();
 	<div class="p-4">
 		<h1 class="text-4xl font-bold mb-8">Products</h1>
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
-			<ProductCard
+			<Card
 				v-for="product in products"
 				:key="product.id"
-				:product="product"
+				:title="product.name"
+				:description="product.description"
 			/>
 		</div>
 	</div>

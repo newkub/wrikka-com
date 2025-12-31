@@ -1,6 +1,6 @@
 import { storeToRefs } from "pinia";
 import { useBlogStore } from "~/stores/blog";
-import type { BlogPost } from "~/types/blog";
+import type { BlogPost } from "~~/shared/types/blog";
 
 export const useBlog = async () => {
 	const blogStore = useBlogStore();

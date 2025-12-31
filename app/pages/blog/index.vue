@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useBlog } from "~/composables/blog";
+import { useBlog } from "~/composables/blog/useBlog";
 
 const { posts } = await useBlog();
 </script>

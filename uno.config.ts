@@ -1,6 +1,5 @@
 import {
 	defineConfig,
-	presetIcons,
 	presetWind4,
 	transformerCompileClass,
 	transformerDirectives,
@@ -12,11 +11,6 @@ export default defineConfig({
 		presetWind4({
 			preflights: {
 				reset: true,
-			},
-		}),
-		presetIcons({
-			collections: {
-				mdi: () => import("@iconify-json/mdi/icons.json").then((i) => i.default),
 			},
 		}),
 	],

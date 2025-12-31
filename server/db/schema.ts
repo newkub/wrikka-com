@@ -1,1 +1,3 @@
 // Drizzle schema definitions
+
+export {};
