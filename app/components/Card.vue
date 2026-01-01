@@ -1,7 +1,7 @@
 <script setup lang="ts">
 const props = defineProps<{
 	title: string;
-	description: string;
+	description?: string;
 }>();
 </script>
 
@@ -10,7 +10,10 @@ const props = defineProps<{
 		<h3 class="font-bold text-lg text-primary dark:text-primary-dark leading-snug">
 			{{ props.title }}
 		</h3>
-		<p class="text-secondary dark:text-secondary-dark mt-1 leading-relaxed">
+		<p
+			v-if="props.description"
+			class="text-secondary dark:text-secondary-dark mt-1 leading-relaxed"
+		>
 			{{ props.description }}
 		</p>
 	</article>

@@ -1,5 +1,4 @@
-import { useGithubService } from "~/composables/github/services/useGithubService";
-import type { GithubProfile } from "~~/shared/types/github";
+import type { GithubProfile } from "../../shared/types/github";
 
 export const useGithubProfile = async (username: string) => {
 	const service = useGithubService();

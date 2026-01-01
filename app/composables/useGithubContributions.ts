@@ -1,5 +1,4 @@
-import { useGithubService } from "~/composables/github/services/useGithubService";
-import type { GithubContributionCalendar } from "~~/shared/types/github";
+import type { GithubContributionCalendar } from "../../shared/types/github";
 
 export const useGithubContributions = async (username: string) => {
 	const service = useGithubService();

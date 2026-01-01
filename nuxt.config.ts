@@ -1,14 +1,8 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { fileURLToPath } from "node:url";
 import checker from "vite-plugin-checker";
 
 export default defineNuxtConfig({
-	compatibilityDate: "2025-05-15",
 	devtools: { enabled: true },
-	alias: {
-		"~/shared": fileURLToPath(new URL("./shared", import.meta.url)),
-	},
-
 	runtimeConfig: {
 		githubToken: process.env.GITHUB_TOKEN,
 		public: {
@@ -28,6 +22,7 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@nuxtjs/color-mode",
 		"@vue-macros/nuxt",
+		"@scalar/nuxt",
 	],
 	nitro: {
 		preset: "cloudflare_module",
@@ -44,18 +39,6 @@ export default defineNuxtConfig({
 		},
 	},
 
-	typescript: {
-		typeCheck: true,
-		strict: true,
-		tsConfig: {
-			compilerOptions: {
-				baseUrl: ".",
-				paths: {
-					"~/shared/*": ["shared/*"],
-				},
-			},
-		},
-	},
 	vite: {
 		plugins: [
 			checker({

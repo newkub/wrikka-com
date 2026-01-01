@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useProfilePage } from "~/composables/github";
-
 const colorMode = useColorMode();
 const viewsCount = 71;
 

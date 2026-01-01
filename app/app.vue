@@ -8,7 +8,3 @@
 		</main>
 	</div>
 </template>
-
-<script setup lang="ts">
-// You can add global logic here if needed
-</script>

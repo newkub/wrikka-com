@@ -1,15 +1,15 @@
 <script setup lang="ts">
-const props = defineProps<{ post: any }>();
+import type { BlogPost } from '../../shared/types/blog';
+const props = defineProps<{ post: BlogPost }>();
 </script>
 
 <template>
-	<li class="border border-surface-200 rounded-lg p-4 mb-4 hover:shadow-lg hover:border-primary transition-all duration-300">
-		<NuxtLink
-			:to="`/blog/${props.post.slug}`"
-			class="text-xl text-primary font-semibold hover:underline"
-		>
-			{{ props.post.title }}
-		</NuxtLink>
-		<p class="text-secondary mt-1">{{ props.post.date }}</p>
-	</li>
+	<NuxtLink :to="`/blog/${props.post.slug}`">
+		<article class="border border-surface-200 rounded-lg p-4 h-full hover:shadow-lg hover:border-primary transition-all duration-300">
+			<h3 class="text-xl text-primary font-semibold">
+				{{ props.post.title }}
+			</h3>
+			<p class="text-secondary mt-1">{{ props.post.description }}</p>
+		</article>
+	</NuxtLink>
 </template>

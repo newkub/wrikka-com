@@ -1,6 +1,3 @@
-import { useGithubContributions } from "~/composables/github/core/useGithubContributions";
-import { useGithubProfile } from "~/composables/github/core/useGithubProfile";
-
 export const useProfilePage = async (username: string) => {
 	const [
 		{ profile, pending: profilePending, error: profileError },
