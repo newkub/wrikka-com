@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import ProductCard from "../components/ProductCard.vue";
-
 const { products } = useProducts();
 </script>
 
@@ -15,7 +13,7 @@ const { products } = useProducts();
 		</section>
 
 		<div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-			<ProductCard
+			<ProductsProductCard
 				v-for="product in products"
 				:key="product.name"
 				:product="product"

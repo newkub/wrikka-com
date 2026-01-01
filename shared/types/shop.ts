@@ -1,8 +1,7 @@
-export interface Product {
+export interface ShopItem {
 	name: string;
 	description: string;
-	imageUrl: string;
+	coverUrl: string;
 	price: string;
 	url: string;
-	faviconUrl?: string;
 }

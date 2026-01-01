@@ -8,6 +8,7 @@ export const useProducts = () => {
 			imageUrl: "https://via.placeholder.com/400x250",
 			price: "$99",
 			url: "#",
+			faviconUrl: "https://vuejs.org/logo.svg",
 		},
 		{
 			name: "Modern UI Kit",
@@ -15,6 +16,7 @@ export const useProducts = () => {
 			imageUrl: "https://via.placeholder.com/400x250",
 			price: "$49",
 			url: "#",
+			faviconUrl: "https://figma.com/favicon.ico",
 		},
 		{
 			name: "Nuxt.js Boilerplate",
@@ -22,6 +24,7 @@ export const useProducts = () => {
 			imageUrl: "https://via.placeholder.com/400x250",
 			price: "$29",
 			url: "#",
+			faviconUrl: "https://nuxt.com/favicon.ico",
 		},
 	]);
 

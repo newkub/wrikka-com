@@ -5,4 +5,5 @@ export interface Project {
 	imageUrl: string;
 	url?: string;
 	githubUrl?: string;
+	faviconUrl?: string;
 }

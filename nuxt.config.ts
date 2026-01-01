@@ -24,18 +24,15 @@ export default defineNuxtConfig({
 		"@nuxtjs/color-mode",
 		"@vue-macros/nuxt",
 	],
+	routeRules: {
+		"/": { prerender: true },
+		"/blog/**": { isr: 3600 }, // Stale-while-revalidate for 1 hour
+		"/api/**": { cors: true },
+	},
 	nitro: {
-		preset: "cloudflare_module",
-		cloudflare: {
-			nodeCompat: true,
-			wrangler: {
-				routes: [
-					{
-						pattern: "*wrikka.com",
-						custom_domain: true,
-					},
-				],
-			},
+		prerender: {
+			crawlLinks: true,
+			routes: ["/"],
 		},
 	},
 

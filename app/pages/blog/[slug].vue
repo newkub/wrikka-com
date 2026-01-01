@@ -17,7 +17,7 @@ const formatDate = (dateString?: string) => {
 </script>
 
 <template>
-	<div>
+	<div class="container mx-auto p-4 sm:p-6 lg:p-8">
 		<div v-if="pending" class="space-y-8 animate-pulse">
 			<div class="h-8 bg-gray-700 rounded w-3/4 mx-auto"></div>
 			<div class="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
@@ -34,18 +34,18 @@ const formatDate = (dateString?: string) => {
 				Sorry, we couldn't find the post you're looking for.
 			</p>
 			<NuxtLink
-				to="/blog"
+				to="/#blog"
 				class="inline-block mt-6 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-			>Back to Blog</NuxtLink>
+			>Back to Home</NuxtLink>
 		</div>
 		<article v-else-if="post" class="max-w-4xl mx-auto">
 			<header class="text-center mb-12">
 				<NuxtLink
-					to="/blog"
+					to="/#blog"
 					class="inline-flex items-center gap-2 text-primary hover:underline mb-6"
 				>
 					<span class="i-carbon-arrow-left"></span>
-					<span>Back to all articles</span>
+					<span>Back to Home</span>
 				</NuxtLink>
 				<h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight">
 					{{ post.title }}

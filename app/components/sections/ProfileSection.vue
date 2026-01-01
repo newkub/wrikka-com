@@ -1,10 +1,4 @@
 <script setup lang="ts">
-import ProfileActions from "../components/profile/ProfileActions.vue";
-import ProfileBio from "../components/profile/ProfileBio.vue";
-import ProfileContributionGraph from "../components/profile/ProfileContributionGraph.vue";
-import ProfileHeader from "../components/profile/ProfileHeader.vue";
-import ProfileSocialLinks from "../components/profile/ProfileSocialLinks.vue";
-
 const config = useRuntimeConfig();
 const username = (config.public.githubUsername || "").trim();
 
@@ -49,11 +43,11 @@ const bioText = computed(() => {
 			<p class="text-red-500">Error loading profile. Please try again later.</p>
 		</div>
 		<div v-else-if="profile" class="space-y-12">
-			<ProfileHeader :profile="profile" :views-count="viewsCount" />
-			<ProfileBio :bio="bioText" />
-			<ProfileActions :email="profile.email" />
-			<ProfileSocialLinks :socials="socials" />
-			<ProfileContributionGraph :calendar="calendar" />
+			<ProfileProfileHeader :profile="profile" :views-count="viewsCount" />
+			<ProfileProfileBio :bio="bioText" />
+			<ProfileProfileActions :email="profile.email" />
+			<ProfileProfileSocialLinks :socials="socials" />
+			<ProfileProfileContributionGraph :calendar="calendar" />
 		</div>
 	</div>
 </template>
