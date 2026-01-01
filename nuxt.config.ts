@@ -22,7 +22,6 @@ export default defineNuxtConfig({
 		"@vueuse/nuxt",
 		"@nuxtjs/color-mode",
 		"@vue-macros/nuxt",
-		"@scalar/nuxt",
 	],
 	nitro: {
 		preset: "cloudflare_module",

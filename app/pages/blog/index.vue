@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { computed } from 'vue';
+import { computed } from "vue";
 const { fetchPosts } = useBlog();
 const { data: posts, pending, error } = await fetchPosts();
 
@@ -12,7 +12,11 @@ const filteredPosts = computed(() => posts.value?.filter(Boolean) ?? []);
 		<div v-if="pending">Loading...</div>
 		<div v-else-if="error">Could not load posts.</div>
 		<div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-			<BlogPostPreview v-for="post in filteredPosts" :key="post.slug" :post="post" />
+			<BlogPostPreview
+				v-for="post in filteredPosts"
+				:key="post.slug"
+				:post="post"
+			/>
 		</div>
 	</div>
 </template>

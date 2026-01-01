@@ -1,0 +1,40 @@
+@unocss preflights;
+@unocss default;
+
+:root {
+	--background: theme(colors.background);
+	--foreground: theme(colors.foreground);
+
+	--card: theme(colors.card.DEFAULT);
+	--card-foreground: theme(colors.card.foreground);
+
+	--primary: theme(colors.primary.DEFAULT);
+	--primary-foreground: theme(colors.primary.foreground);
+
+	--secondary: theme(colors.secondary.DEFAULT);
+	--secondary-foreground: theme(colors.secondary.foreground);
+
+	--accent: theme(colors.accent.DEFAULT);
+	--accent-foreground: theme(colors.accent.foreground);
+}
+
+.dark-mode {
+	--background: theme(colors.dark.background);
+	--foreground: theme(colors.dark.foreground);
+
+	--card: theme(colors.dark.card.DEFAULT);
+	--card-foreground: theme(colors.dark.card.foreground);
+
+	--primary: theme(colors.dark.primary.DEFAULT);
+	--primary-foreground: theme(colors.dark.primary.foreground);
+
+	--secondary: theme(colors.dark.secondary.DEFAULT);
+	--secondary-foreground: theme(colors.dark.secondary.foreground);
+
+	--accent: theme(colors.dark.accent.DEFAULT);
+	--accent-foreground: theme(colors.dark.accent.foreground);
+}
+
+body {
+	@apply bg-background text-foreground;
+}

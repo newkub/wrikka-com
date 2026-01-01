@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { GithubContributionCalendar } from "~~/shared/types/github";
+import type { GithubContributionCalendar } from "../../../shared/types/github";
 
 const props = defineProps<{
 	calendar: GithubContributionCalendar | null;

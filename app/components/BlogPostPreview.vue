@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { BlogPost } from '../../shared/types/blog';
+import type { BlogPost } from "../../shared/types/blog";
 const props = defineProps<{ post: BlogPost }>();
 </script>
 
