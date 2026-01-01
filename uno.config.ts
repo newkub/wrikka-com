@@ -9,6 +9,7 @@ import {
 export default defineConfig({
 	presets: [
 		presetWind4({
+			darkMode: "class",
 			preflights: {
 				reset: true,
 			},

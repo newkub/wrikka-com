@@ -1,29 +1,22 @@
 <script setup lang="ts">
-defineProps<{
-	introUrl?: string;
-	email?: string;
-}>();
+defineProps<{ email?: string | null }>();
 </script>
 
 <template>
-	<section class="flex flex-wrap gap-3">
+	<section class="flex flex-wrap gap-4 border-b border-gray-700 pb-8">
 		<a
-			v-if="introUrl"
-			:href="introUrl"
-			target="_blank"
-			rel="noreferrer"
-			class="inline-flex items-center gap-2 rounded-xl bg-primary text-surface px-4 py-2.5 text-sm font-semibold focus:(outline-none ring-2 ring-accent ring-offset-2 ring-offset-surface)"
+			href="#"
+			class="inline-flex items-center gap-2 rounded-lg bg-white text-gray-900 px-4 py-2 font-semibold hover:bg-gray-200 transition-colors"
 		>
-			<Icon name="mdi:calendar-clock" size="18" />
+			<span class="i-carbon-calendar-heat-map text-xl"></span>
 			<span>Book an intro call</span>
 		</a>
-
 		<a
 			v-if="email"
 			:href="`mailto:${email}`"
-			class="inline-flex items-center gap-2 rounded-xl border border-surface-200 bg-surface text-primary px-4 py-2.5 text-sm font-semibold focus:(outline-none ring-2 ring-accent ring-offset-2 ring-offset-surface)"
+			class="inline-flex items-center gap-2 rounded-lg border border-gray-700 bg-transparent text-white px-4 py-2 font-semibold hover:bg-gray-800 transition-colors"
 		>
-			<Icon name="mdi:email-outline" size="18" />
+			<span class="i-carbon-email text-xl"></span>
 			<span>Send an email</span>
 		</a>
 	</section>

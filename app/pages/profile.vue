@@ -1,58 +1,59 @@
 <script setup lang="ts">
-const colorMode = useColorMode();
-const viewsCount = 71;
-
-function toggleColorMode() {
-	colorMode.preference = colorMode.value === "dark" ? "light" : "dark";
-}
+import ProfileActions from "../components/profile/ProfileActions.vue";
+import ProfileBio from "../components/profile/ProfileBio.vue";
+import ProfileContributionGraph from "../components/profile/ProfileContributionGraph.vue";
+import ProfileHeader from "../components/profile/ProfileHeader.vue";
+import ProfileSocialLinks from "../components/profile/ProfileSocialLinks.vue";
 
 const config = useRuntimeConfig();
 const username = (config.public.githubUsername || "").trim();
 
 const { profile, calendar, pending, error } = await useProfilePage(username);
 
+const viewsCount = 78; // Mock data
+
 const socials = computed(() => {
-	const githubUrl = username
-		? `https://github.com/${username}`
-		: "https://github.com";
+	const githubUrl = username ? `https://github.com/${username}` : "#";
 	return [
-		{ label: "GitHub", url: githubUrl, icon: "github" as const },
-		{ label: "Twitter", url: "#", icon: "twitter" as const },
-		{ label: "LinkedIn", url: "#", icon: "linkedin" as const },
-		{ label: "Medium", url: "#", icon: "medium" as const },
-		{ label: "Behance", url: "#", icon: "behance" as const },
-		{ label: "More", url: "#", icon: "more" as const },
+		{ label: "GitHub", url: githubUrl, icon: "logo-github" },
+		{ label: "Twitter", url: "#", icon: "logo-twitter" },
+		{ label: "LinkedIn", url: "#", icon: "logo-linkedin" },
 	];
 });
 
 const bioText = computed(() => {
 	return (
 		profile.value?.bio
-			?? "Hey, I'm a full stack developer who loves building clean, modern websites and apps where design, functionality, and even the smallest details matter, with a focus on making products that are both practical and visually satisfying.\n\nTech stack isn't my concern, I'm flexible with whatever the project needs, though I prefer modern frameworks and tools. I'm always open for new opportunities to learn and grow."
+		|| `Passionate full-stack developer creating beautiful, functional web apps. I thrive on solving complex problems and learning new technologies.`
 	);
 });
 </script>
 
 <template>
-	<div class="max-w-5xl mx-auto">
-		<div class="space-y-5">
-			<div v-if="pending" class="text-secondary">Loading...</div>
-			<div v-else-if="error" class="text-secondary">Error</div>
-			<div v-else-if="profile" class="space-y-5">
-				<ProfileHeaderCard
-					:profile="profile"
-					:views-count="viewsCount"
-					@toggle-theme="toggleColorMode"
-				/>
-
-				<ProfileBio :bio="bioText" />
-
-				<ProfileActions :intro-url="'#'" :email="profile.email ?? undefined" />
-
-				<ProfileSocials :links="socials" />
-
-				<ProfileContributions :calendar="calendar" />
+	<div class="max-w-5xl mx-auto py-8 px-4">
+		<div v-if="pending" class="space-y-8 animate-pulse">
+			<div class="flex items-start gap-5">
+				<div class="w-24 h-24 rounded-full bg-gray-700"></div>
+				<div class="flex-1 space-y-3 pt-2">
+					<div class="h-8 bg-gray-700 rounded w-1/2"></div>
+					<div class="h-4 bg-gray-700 rounded w-1/4"></div>
+				</div>
 			</div>
+			<div class="space-y-2 border-t border-gray-700 pt-8">
+				<div class="h-4 bg-gray-700 rounded w-full"></div>
+				<div class="h-4 bg-gray-700 rounded w-full"></div>
+				<div class="h-4 bg-gray-700 rounded w-2/3"></div>
+			</div>
+		</div>
+		<div v-else-if="error" class="text-center py-12">
+			<p class="text-red-500">Error loading profile. Please try again later.</p>
+		</div>
+		<div v-else-if="profile" class="space-y-12">
+			<ProfileHeader :profile="profile" :views-count="viewsCount" />
+			<ProfileBio :bio="bioText" />
+			<ProfileActions :email="profile.email" />
+			<ProfileSocialLinks :socials="socials" />
+			<ProfileContributionGraph :calendar="calendar" />
 		</div>
 	</div>
 </template>

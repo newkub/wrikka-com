@@ -2,6 +2,13 @@
 import checker from "vite-plugin-checker";
 
 export default defineNuxtConfig({
+	app: {
+		head: {
+			htmlAttrs: {
+				lang: "en",
+			},
+		},
+	},
 	devtools: { enabled: true },
 	runtimeConfig: {
 		githubToken: process.env.GITHUB_TOKEN,
@@ -9,14 +16,8 @@ export default defineNuxtConfig({
 			githubUsername: process.env.GITHUB_USERNAME ?? "",
 		},
 	},
-	icon: {
-		serverBundle: {
-			collections: ["mdi"],
-		},
-	},
 	modules: [
 		"nuxt-mcp-dev",
-		"@nuxt/icon",
 		"@pinia/nuxt",
 		"@unocss/nuxt",
 		"@vueuse/nuxt",

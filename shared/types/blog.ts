@@ -3,4 +3,7 @@ export interface BlogPost {
 	title: string;
 	description: string;
 	html: string;
+	date?: string;
+	tags?: string[];
+	imageUrl?: string;
 }
