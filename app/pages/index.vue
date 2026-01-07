@@ -3,6 +3,7 @@ import type {
 	GithubContributionCalendar,
 	GithubProfile,
 } from "../../shared/types/github";
+import AchievementsSection from '~/components/profile/achievements/AchievementsSection.vue';
 
 const config = useRuntimeConfig();
 const username = (config.public.githubUsername || "").trim();
