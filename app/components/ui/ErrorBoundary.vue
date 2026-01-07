@@ -7,13 +7,13 @@ interface ErrorBoundaryProps {
 const props = defineProps<ErrorBoundaryProps>();
 
 const errorMessage = computed(() => {
-	if (!props.error) return 'An unexpected error occurred';
-	
-	if (props.error.name === 'FetchError') {
-		return 'Failed to load data. Please check your connection and try again.';
+	if (!props.error) return "An unexpected error occurred";
+
+	if (props.error.name === "FetchError") {
+		return "Failed to load data. Please check your connection and try again.";
 	}
-	
-	return props.error.message || 'Something went wrong';
+
+	return props.error.message || "Something went wrong";
 });
 
 const handleRetry = () => {

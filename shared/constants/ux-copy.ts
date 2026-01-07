@@ -4,7 +4,7 @@ export const UX_COPY = {
 	// Navigation
 	nav: {
 		profile: "Profile",
-		blog: "Blog", 
+		blog: "Blog",
 		projects: "Projects",
 		shop: "Shop",
 		products: "Products",
@@ -18,7 +18,7 @@ export const UX_COPY = {
 			projects: "Explore my projects",
 			shop: "Visit my shop",
 			products: "Browse my products",
-		}
+		},
 	},
 
 	// Loading States
@@ -95,10 +95,10 @@ export const UX_COPY = {
 	time: {
 		today: "Today",
 		yesterday: "Yesterday",
-		daysAgo: (days: number) => `${days} day${days !== 1 ? 's' : ''} ago`,
-		weeksAgo: (weeks: number) => `${weeks} week${weeks !== 1 ? 's' : ''} ago`,
-		monthsAgo: (months: number) => `${months} month${months !== 1 ? 's' : ''} ago`,
-		yearsAgo: (years: number) => `${years} year${years !== 1 ? 's' : ''} ago`,
+		daysAgo: (days: number) => `${days} day${days !== 1 ? "s" : ""} ago`,
+		weeksAgo: (weeks: number) => `${weeks} week${weeks !== 1 ? "s" : ""} ago`,
+		monthsAgo: (months: number) => `${months} month${months !== 1 ? "s" : ""} ago`,
+		yearsAgo: (years: number) => `${years} year${years !== 1 ? "s" : ""} ago`,
 		lastUpdated: "Last updated",
 		createdAt: "Created",
 	},

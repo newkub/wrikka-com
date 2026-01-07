@@ -1,6 +1,15 @@
 <script setup lang="ts">
 const { projects, pending, error } = useProjects();
 
+// SEO
+useSEO({
+	title: "Projects - Wrikka",
+	description: "A collection of my work, from personal experiments to open-source contributions.",
+	type: "website",
+	keywords: ["projects", "portfolio", "open source", "github", "web development", "vue.js", "nuxt"],
+	author: "Veerapong",
+});
+
 const pinnedProjects = computed(() =>
 	projects.value?.filter(p => p.isPinned) ?? []
 );

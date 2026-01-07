@@ -13,7 +13,9 @@ const getEventText = (event: GithubEvent) => {
 			return `Opened pull request in ${event.repo.name}: ${event.payload.pull_request?.title}`;
 		case "PushEvent":
 			const commitCount = event.payload.commits?.length || 0;
-			return `Pushed ${commitCount} commit${commitCount !== 1 ? 's' : ''} to ${event.repo.name}`;
+			return `Pushed ${commitCount} commit${
+				commitCount !== 1 ? "s" : ""
+			} to ${event.repo.name}`;
 		default:
 			return `Activity in ${event.repo.name}`;
 	}
@@ -43,13 +45,23 @@ const getRelativeTime = (dateString: string) => {
 	const now = new Date();
 	const diffTime = Math.abs(now.getTime() - date.getTime());
 	const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
-	
+
 	if (diffDays === 0) return "Today";
 	if (diffDays === 1) return "Yesterday";
 	if (diffDays < 7) return `${diffDays} days ago`;
-	if (diffDays < 30) return `${Math.floor(diffDays / 7)} week${Math.floor(diffDays / 7) !== 1 ? 's' : ''} ago`;
-	if (diffDays < 365) return `${Math.floor(diffDays / 30)} month${Math.floor(diffDays / 30) !== 1 ? 's' : ''} ago`;
-	return `${Math.floor(diffDays / 365)} year${Math.floor(diffDays / 365) !== 1 ? 's' : ''} ago`;
+	if (diffDays < 30) {
+		return `${Math.floor(diffDays / 7)} week${
+			Math.floor(diffDays / 7) !== 1 ? "s" : ""
+		} ago`;
+	}
+	if (diffDays < 365) {
+		return `${Math.floor(diffDays / 30)} month${
+			Math.floor(diffDays / 30) !== 1 ? "s" : ""
+		} ago`;
+	}
+	return `${Math.floor(diffDays / 365)} year${
+		Math.floor(diffDays / 365) !== 1 ? "s" : ""
+	} ago`;
 };
 </script>
 
@@ -66,27 +78,27 @@ const getRelativeTime = (dateString: string) => {
 
 		<!-- Loading State -->
 		<div v-if="pending" class="space-y-4">
-			<UiSkeletonCard 
-				v-for="i in 3" 
-				:key="i" 
-				:lines="2" 
-				class="animate-pulse" 
+			<UiSkeletonCard
+				v-for="i in 3"
+				:key="i"
+				:lines="2"
+				class="animate-pulse"
 			/>
 		</div>
 
 		<!-- Error State -->
-		<UiErrorBoundary 
-			v-else-if="error" 
+		<UiErrorBoundary
+			v-else-if="error"
 			:error="error"
 		/>
 
 		<!-- Empty State -->
-		<div 
-			v-else-if="!memories?.length" 
+		<div
+			v-else-if="!memories?.length"
 			class="text-center py-12 bg-secondary dark:bg-surface-800 rounded-lg border border-custom"
 		>
-			<Icon 
-				name="mdi:calendar-blank" 
+			<Icon
+				name="mdi:calendar-blank"
 				class="text-4xl text-tertiary dark:text-surface-600 mb-4"
 				aria-hidden="true"
 			/>
@@ -94,12 +106,13 @@ const getRelativeTime = (dateString: string) => {
 				No memories today
 			</h3>
 			<p class="text-secondary dark:text-secondary-dark">
-				Check back tomorrow for GitHub memories from this date in previous years.
+				Check back tomorrow for GitHub memories from this date in previous
+				years.
 			</p>
 		</div>
 
 		<!-- Memories List -->
-		<div 
+		<div
 			v-else
 			class="space-y-4"
 			role="list"
@@ -122,7 +135,7 @@ const getRelativeTime = (dateString: string) => {
 					<!-- Event Content -->
 					<div class="flex-1 min-w-0">
 						<div class="flex items-start gap-3">
-							<Icon 
+							<Icon
 								:name="getEventIcon(event.type)"
 								class="text-lg text-accent flex-shrink-0 mt-1"
 								aria-hidden="true"
@@ -132,8 +145,8 @@ const getRelativeTime = (dateString: string) => {
 									{{ getEventText(event) }}
 								</p>
 								<div class="flex items-center gap-2 mt-2 text-sm text-secondary dark:text-secondary-dark">
-									<Icon 
-										name="mdi:clock" 
+									<Icon
+										name="mdi:clock"
 										class="w-4 h-4"
 										aria-hidden="true"
 									/>
@@ -141,7 +154,9 @@ const getRelativeTime = (dateString: string) => {
 										{{ getRelativeTime(event.created_at) }}
 									</time>
 									<span aria-hidden="true">•</span>
-									<span>{{ new Date(event.created_at).toLocaleDateString() }}</span>
+									<span>{{
+										new Date(event.created_at).toLocaleDateString()
+									}}</span>
 								</div>
 							</div>
 						</div>

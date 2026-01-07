@@ -1,26 +1,26 @@
 <script setup lang="ts">
 interface LoadingSpinnerProps {
-	size?: 'sm' | 'md' | 'lg';
+	size?: "sm" | "md" | "lg";
 	class?: string;
 }
 
 const props = withDefaults(defineProps<LoadingSpinnerProps>(), {
-	size: 'md',
+	size: "md",
 });
 
 const sizeClasses = {
-	sm: 'w-4 h-4',
-	md: 'w-6 h-6',
-	lg: 'w-8 h-8',
+	sm: "w-4 h-4",
+	md: "w-6 h-6",
+	lg: "w-8 h-8",
 };
 </script>
 
 <template>
-	<div 
+	<div
 		:class="[
 			'animate-spin rounded-full border-2 border-surface-200 border-t-accent',
 			sizeClasses[size],
-			props.class
+			props.class,
 		]"
 		role="status"
 		aria-label="Loading"

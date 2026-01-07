@@ -3,13 +3,13 @@ const showSkipLink = ref(false);
 
 onMounted(() => {
 	const handleFirstTab = (e: KeyboardEvent) => {
-		if (e.key === 'Tab') {
+		if (e.key === "Tab") {
 			showSkipLink.value = true;
-			window.removeEventListener('keydown', handleFirstTab);
+			window.removeEventListener("keydown", handleFirstTab);
 		}
 	};
-	
-	window.addEventListener('keydown', handleFirstTab);
+
+	window.addEventListener("keydown", handleFirstTab);
 });
 </script>
 

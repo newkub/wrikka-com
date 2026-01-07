@@ -4,10 +4,11 @@ const isFocusMode = useFocusMode();
 // SEO Meta
 useHead({
 	htmlAttrs: {
-		lang: 'en',
+		lang: "en",
 	},
 	bodyAttrs: {
-		class: 'bg-primary text-primary dark:bg-primary-dark dark:text-primary-dark',
+		class:
+			"bg-primary text-primary dark:bg-primary-dark dark:text-primary-dark",
 	},
 });
 </script>
@@ -16,11 +17,11 @@ useHead({
 	<div class="min-h-screen bg-primary text-primary dark:bg-primary-dark dark:text-primary-dark">
 		<UiSkipLink />
 		<UiTabNav v-if="!isFocusMode" />
-		<main 
+		<main
 			id="main-content"
 			:class="[
 				'mx-auto w-full',
-				{ 'container py-8': !isFocusMode, 'px-4': isFocusMode }
+				{ 'container py-8': !isFocusMode, 'px-4': isFocusMode },
 			]"
 		>
 			<UiPageTransition />

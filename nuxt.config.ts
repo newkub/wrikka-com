@@ -24,6 +24,7 @@ export default defineNuxtConfig({
 		githubToken: process.env.GITHUB_TOKEN,
 		public: {
 			githubUsername: process.env.GITHUB_USERNAME ?? "",
+			siteUrl: process.env.SITE_URL ?? "https://wrikka.com",
 		},
 	},
 	colorMode: {

@@ -10,7 +10,16 @@ const username = (config.public.githubUsername || "").trim();
 const { profile, calendar, pending, error } = await useProfilePage(username);
 
 const isMissingUsername = computed(() => !username);
-const viewsCount = 78; // Mock data
+
+// SEO
+useSEO({
+	title: profile.value?.name ? `${profile.value.name} - Full Stack Developer` : "Wrikka - Full Stack Developer Portfolio",
+	description: profile.value?.bio || "A passionate and creative full-stack developer from Thailand with a strong focus on building beautiful, functional, and user-centric web applications.",
+	image: profile.value?.avatarUrl,
+	type: "profile",
+	keywords: ["full stack developer", "web development", "vue.js", "nuxt", "javascript", "typescript", "portfolio", ...(profile.value?.login ? [profile.value.login] : [])],
+	author: profile.value?.name || "Veerapong",
+});
 
 const socials = computed(() => {
 	const githubUrl = profile.value?.login

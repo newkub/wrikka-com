@@ -4,8 +4,20 @@ const route = useRoute();
 const colorMode = useColorMode();
 
 type NavItem =
-	| { type: "internal"; name: string; path: string; iconName: string; description?: string }
-	| { type: "external"; name: string; href: string; iconName: string; description?: string };
+	| {
+		type: "internal";
+		name: string;
+		path: string;
+		iconName: string;
+		description?: string;
+	}
+	| {
+		type: "external";
+		name: string;
+		href: string;
+		iconName: string;
+		description?: string;
+	};
 
 const items: NavItem[] = [
 	{
@@ -15,10 +27,10 @@ const items: NavItem[] = [
 		iconName: "mdi:account-circle",
 		description: "View my profile and information",
 	},
-	{ 
-		type: "internal", 
-		name: "Blog", 
-		path: "/blog", 
+	{
+		type: "internal",
+		name: "Blog",
+		path: "/blog",
 		iconName: "mdi:post",
 		description: "Read my latest blog posts",
 	},
@@ -29,10 +41,10 @@ const items: NavItem[] = [
 		iconName: "mdi:code-tags",
 		description: "Explore my projects",
 	},
-	{ 
-		type: "internal", 
-		name: "Shop", 
-		path: "/shop", 
+	{
+		type: "internal",
+		name: "Shop",
+		path: "/shop",
 		iconName: "mdi:store",
 		description: "Visit my shop",
 	},
@@ -61,21 +73,22 @@ const currentFocusIndex = ref(0);
 
 const handleKeyDown = (event: KeyboardEvent) => {
 	switch (event.key) {
-		case 'ArrowLeft':
-		case 'ArrowUp':
+		case "ArrowLeft":
+		case "ArrowUp":
 			event.preventDefault();
-			currentFocusIndex.value = (currentFocusIndex.value - 1 + items.length) % items.length;
+			currentFocusIndex.value = (currentFocusIndex.value - 1 + items.length)
+				% items.length;
 			break;
-		case 'ArrowRight':
-		case 'ArrowDown':
+		case "ArrowRight":
+		case "ArrowDown":
 			event.preventDefault();
 			currentFocusIndex.value = (currentFocusIndex.value + 1) % items.length;
 			break;
-		case 'Home':
+		case "Home":
 			event.preventDefault();
 			currentFocusIndex.value = 0;
 			break;
-		case 'End':
+		case "End":
 			event.preventDefault();
 			currentFocusIndex.value = items.length - 1;
 			break;
@@ -85,7 +98,7 @@ const handleKeyDown = (event: KeyboardEvent) => {
 const themeButtonRef = ref<HTMLElement>();
 
 const handleThemeKeyDown = (event: KeyboardEvent) => {
-	if (event.key === 'Enter' || event.key === ' ') {
+	if (event.key === "Enter" || event.key === " ") {
 		event.preventDefault();
 		toggleTheme();
 	}
@@ -95,7 +108,7 @@ const handleThemeKeyDown = (event: KeyboardEvent) => {
 <template>
 	<header class="sticky top-0 z-40 pointer-events-auto bg-primary/80 dark:bg-primary-dark/80 backdrop-blur-lg py-2 border-b border-custom mb-8">
 		<div class="container">
-			<nav 
+			<nav
 				aria-label="Primary navigation"
 				class="flex items-center justify-center gap-1"
 				@keydown="handleKeyDown"
@@ -109,7 +122,9 @@ const handleThemeKeyDown = (event: KeyboardEvent) => {
 							:aria-label="item.description"
 							:tabindex="currentFocusIndex === index ? 0 : -1"
 							class="group inline-flex items-center gap-2 px-3 py-2 text-secondary hover:text-accent transition-colors whitespace-nowrap font-medium rounded-md focus-visible:(outline-none ring-2 ring-accent ring-offset-2 ring-offset-primary dark:ring-offset-primary-dark) focus-visible:text-accent"
-							:class="isActive(item.path) ? '!text-accent bg-secondary dark:bg-surface-800' : undefined"
+							:class="isActive(item.path)
+							? '!text-accent bg-secondary dark:bg-surface-800'
+							: undefined"
 						>
 							<Icon
 								:name="item.iconName"
@@ -145,8 +160,8 @@ const handleThemeKeyDown = (event: KeyboardEvent) => {
 						type="button"
 						class="inline-flex items-center justify-center rounded-md px-2 py-2 text-secondary hover:text-primary transition-colors focus-visible:(outline-none ring-2 ring-accent ring-offset-2 ring-offset-primary dark:ring-offset-primary-dark) cursor-pointer"
 						:aria-label="colorMode.value === 'dark'
-							? 'Switch to light mode'
-							: 'Switch to dark mode'"
+						? 'Switch to light mode'
+						: 'Switch to dark mode'"
 						:aria-pressed="colorMode.value === 'dark'"
 						@click="toggleTheme"
 						@keydown="handleThemeKeyDown"
@@ -157,14 +172,18 @@ const handleThemeKeyDown = (event: KeyboardEvent) => {
 							class="text-xl"
 							aria-hidden="true"
 						/>
-						<Icon 
-							v-else 
-							name="mdi:weather-night" 
+						<Icon
+							v-else
+							name="mdi:weather-night"
 							class="text-xl"
 							aria-hidden="true"
 						/>
 						<span class="sr-only">
-							{{ colorMode.value === 'dark' ? 'Switch to light mode' : 'Switch to dark mode' }}
+							{{
+								colorMode.value === "dark"
+								? "Switch to light mode"
+								: "Switch to dark mode"
+							}}
 						</span>
 					</button>
 				</div>

@@ -21,14 +21,15 @@ const props = withDefaults(defineProps<SkeletonCardProps>(), {
 			</div>
 		</div>
 		<div class="space-y-2">
-			<div 
-				v-for="i in lines" 
+			<div
+				v-for="i in lines"
 				:key="i"
 				:class="[
 					'h-4 bg-tertiary rounded animate-pulse',
-					i === lines ? 'w-3/4' : 'w-full'
+					i === lines ? 'w-3/4' : 'w-full',
 				]"
-			></div>
+			>
+			</div>
 		</div>
 	</div>
 </template>

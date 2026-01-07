@@ -2,6 +2,15 @@
 const { fetchPosts } = useBlog();
 const { data: posts, pending, error } = await fetchPosts();
 
+// SEO
+useSEO({
+	title: "Blog - Wrikka",
+	description: "Welcome to my corner of the internet where I share my thoughts on web development, design, and technology.",
+	type: "website",
+	keywords: ["blog", "web development", "design", "technology", "vue.js", "nuxt", "javascript", "typescript"],
+	author: "Veerapong",
+});
+
 const searchQuery = ref("");
 const selectedTag = ref<string | null>(null);
 const sortBy = ref<"newest" | "oldest">("newest");
