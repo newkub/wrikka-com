@@ -3,7 +3,7 @@ import MarkdownIt from "markdown-it";
 import mditAnchor from "markdown-it-anchor";
 import mditAttrs from "markdown-it-attrs";
 import mditContainer from "markdown-it-container";
-import mditEmoji from "markdown-it-emoji/dist/index.cjs";
+// import mditEmoji from "markdown-it-emoji"; // Temporarily disabled due to import issues
 import mditFootnote from "markdown-it-footnote";
 import mditTaskLists from "markdown-it-task-lists";
 import { createHighlighterCore } from "shiki/core";
@@ -62,7 +62,7 @@ async function createMarkdownParser() {
 		.use(mditContainer, "warning")
 		.use(mditContainer, "danger")
 		.use(mditTaskLists)
-		.use(mditEmoji)
+		// .use(mditEmoji) // Temporarily disabled due to import issues
 		.use(fromHighlighter(highlighter as any, {
 			themes: {
 				light: "vitesse-light",
