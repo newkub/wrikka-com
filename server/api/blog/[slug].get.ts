@@ -9,10 +9,26 @@ export default defineEventHandler(async (event) => {
 		throw createError({ statusCode: 400, statusMessage: "Missing slug" });
 	}
 
-	const contentDir = path.resolve(process.cwd(), "content");
-	const filePath = path.join(contentDir, `${slug}.md`);
+	const rootDir = path.resolve(process.cwd(), "content");
+	const blogDir = path.resolve(process.cwd(), "content", "blog");
+	const candidatePaths = [
+		path.join(blogDir, `${slug}.md`),
+		path.join(rootDir, `${slug}.md`),
+	];
 
 	try {
+		const filePath = await (async () => {
+			for (const candidate of candidatePaths) {
+				try {
+					await fs.access(candidate);
+					return candidate;
+				} catch {
+					// continue
+				}
+			}
+			throw new Error("not-found");
+		})();
+
 		const fileContent = await fs.readFile(filePath, "utf-8");
 		const { data, content } = matter(fileContent);
 

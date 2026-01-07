@@ -7,3 +7,5 @@ export interface BlogPost {
 	tags?: string[];
 	imageUrl?: string;
 }
+
+export type Post = BlogPost;

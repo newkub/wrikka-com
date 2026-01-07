@@ -9,7 +9,6 @@ function toggleColorMode() {
 
 defineProps<{
 	profile: GithubProfile;
-	viewsCount: number;
 }>();
 </script>
 
@@ -24,26 +23,23 @@ defineProps<{
 			<div>
 				<h1 class="text-3xl font-bold text-white flex items-center gap-2">
 					{{ profile.name ?? profile.login }}
-					<span class="i-carbon-badge-check text-blue-500 text-2xl"></span>
+					<Icon name="mdi:check-decagram" class="text-blue-500 text-2xl" />
 				</h1>
 				<p class="text-gray-400 mt-1">@{{ profile.login }}</p>
 			</div>
 		</div>
 		<div class="flex items-center gap-4">
-			<div class="flex items-center gap-2 text-gray-400">
-				<span class="i-carbon-view"></span>
-				<span>{{ viewsCount }} views</span>
-			</div>
 			<button
 				@click="toggleColorMode"
 				class="text-gray-400 hover:text-white transition-colors p-2 rounded-full hover:bg-gray-800"
 				aria-label="Toggle color mode"
 			>
-				<span
+				<Icon
 					v-if="colorMode.value === 'dark'"
-					class="i-carbon-sun text-2xl"
-				></span>
-				<span v-else class="i-carbon-moon text-2xl"></span>
+					name="mdi:white-balance-sunny"
+					class="text-2xl"
+				/>
+				<Icon v-else name="mdi:weather-night" class="text-2xl" />
 			</button>
 		</div>
 	</section>

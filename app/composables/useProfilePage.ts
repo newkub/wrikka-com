@@ -1,4 +1,22 @@
 export const useProfilePage = async (username: string) => {
+	if (!username) {
+		const profile = ref(null);
+		const calendar = ref(null);
+		const pending = ref(false);
+		const error = ref(null);
+
+		return {
+			profile,
+			calendar,
+			pending,
+			error,
+			profilePending: pending,
+			calendarPending: pending,
+			profileError: error,
+			calendarError: error,
+		};
+	}
+
 	const [
 		{ profile, pending: profilePending, error: profileError },
 		{ calendar, pending: calendarPending, error: calendarError },

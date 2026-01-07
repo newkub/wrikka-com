@@ -3,10 +3,10 @@ const colorMode = useColorMode();
 const [isMobileMenuOpen, toggleMobileMenu] = useToggle(false);
 
 const navLinks = [
-	{ to: "/", text: "Home" },
+	{ to: "/", text: "Profile" },
 	{ to: "/blog", text: "Blog" },
 	{ to: "/projects", text: "Projects" },
-	{ to: "/products", text: "Products" },
+	{ to: "/shop", text: "Shop" },
 ];
 
 function toggleColorMode() {
@@ -15,9 +15,12 @@ function toggleColorMode() {
 </script>
 
 <template>
-	<header class="sticky top-0 z-50 bg-gray-900/70 border-b border-gray-800 backdrop-blur-lg">
+	<header class="sticky top-0 z-50 bg-surface/80 dark:bg-surface-dark/80 border-b border-surface-200 dark:border-surface-800 backdrop-blur-lg">
 		<nav class="container mx-auto flex justify-between items-center p-4">
-			<NuxtLink to="/" class="text-2xl font-bold text-white">Wrikka</NuxtLink>
+			<NuxtLink
+				to="/"
+				class="text-2xl font-bold text-primary dark:text-primary-dark"
+			>Wrikka</NuxtLink>
 
 			<!-- Desktop Menu -->
 			<div class="hidden md:flex items-center gap-6">
@@ -25,19 +28,20 @@ function toggleColorMode() {
 					v-for="link in navLinks"
 					:key="link.to"
 					:to="link.to"
-					class="text-gray-400 hover:text-white transition-colors font-medium"
-					active-class="!text-primary"
+					class="text-secondary hover:text-accent transition-colors font-medium"
+					active-class="!text-accent"
 				>{{ link.text }}</NuxtLink>
 				<button
 					@click="toggleColorMode"
-					class="text-gray-400 hover:text-white transition-colors"
+					class="text-secondary hover:text-accent transition-colors cursor-pointer"
 					aria-label="Toggle color mode"
 				>
-					<span
+					<Icon
 						v-if="colorMode.value === 'dark'"
-						class="i-carbon-sun text-xl"
-					></span>
-					<span v-else class="i-carbon-moon text-xl"></span>
+						name="mdi:white-balance-sunny"
+						class="text-xl"
+					/>
+					<Icon v-else name="mdi:weather-night" class="text-xl" />
 				</button>
 			</div>
 
@@ -45,21 +49,22 @@ function toggleColorMode() {
 			<div class="md:hidden flex items-center">
 				<button
 					@click="toggleColorMode"
-					class="text-gray-400 hover:text-white transition-colors mr-4"
+					class="text-secondary hover:text-accent transition-colors mr-4 cursor-pointer"
 					aria-label="Toggle color mode"
 				>
-					<span
+					<Icon
 						v-if="colorMode.value === 'dark'"
-						class="i-carbon-sun text-xl"
-					></span>
-					<span v-else class="i-carbon-moon text-xl"></span>
+						name="mdi:white-balance-sunny"
+						class="text-xl"
+					/>
+					<Icon v-else name="mdi:weather-night" class="text-xl" />
 				</button>
 				<button
 					@click="toggleMobileMenu()"
-					class="text-gray-400 hover:text-white"
+					class="text-secondary hover:text-accent"
 					aria-label="Open menu"
 				>
-					<span class="i-carbon-menu text-2xl"></span>
+					<Icon name="mdi:menu" class="text-2xl" />
 				</button>
 			</div>
 		</nav>
@@ -67,15 +72,15 @@ function toggleColorMode() {
 		<!-- Mobile Menu -->
 		<div
 			v-if="isMobileMenuOpen"
-			class="md:hidden bg-gray-900/90 backdrop-blur-lg"
+			class="md:hidden bg-surface/90 dark:bg-surface-dark/90 backdrop-blur-lg"
 		>
 			<div class="container mx-auto flex flex-col items-center gap-4 py-4">
 				<NuxtLink
 					v-for="link in navLinks"
 					:key="link.to"
 					:to="link.to"
-					class="text-gray-300 hover:text-white transition-colors text-lg"
-					active-class="!text-primary font-semibold"
+					class="text-secondary hover:text-accent transition-colors text-lg"
+					active-class="!text-accent font-semibold"
 					@click="toggleMobileMenu(false)"
 				>{{ link.text }}</NuxtLink>
 			</div>

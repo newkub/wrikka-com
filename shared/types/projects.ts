@@ -6,4 +6,5 @@ export interface Project {
 	url?: string;
 	githubUrl?: string;
 	faviconUrl?: string;
+	isPinned?: boolean;
 }

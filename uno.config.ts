@@ -17,6 +17,16 @@ export default defineConfig({
 	],
 	transformers: [transformerVariantGroup(), transformerDirectives(), transformerCompileClass()],
 	theme: {
+		breakpoints: {
+			'sm': '640px',
+			'md': '768px',
+			'lg': '1024px',
+			'xl': '1280px',
+			'2xl': '1536px',
+		},
+		fontFamily: {
+			sans: ["\"Noto Sans Thai\"", "sans-serif"],
+		},
 		colors: {
 			// Main theme colors
 			primary: {
@@ -37,7 +47,7 @@ export default defineConfig({
 			surface: {
 				DEFAULT: "#ffffff",
 				light: "#ffffff",
-				dark: "#0f172a",
+				dark: "#1e293b",
 				100: {
 					DEFAULT: "#f1f5f9",
 					light: "#f1f5f9",

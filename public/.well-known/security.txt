@@ -1,0 +1,4 @@
+Contact: mailto:security@example.com
+Preferred-Languages: en, th
+Policy: /security
+Canonical: /.well-known/security.txt

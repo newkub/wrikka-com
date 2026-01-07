@@ -2,82 +2,99 @@
 const route = useRoute();
 const { fetchPostBySlug } = useBlog();
 
+const isFocusMode = useFocusMode();
+const articleEl = ref<HTMLElement | null>(null);
+const currentSectionTitle = ref<string | null>(null);
+
 const { data: post, pending, error } = await fetchPostBySlug(
 	route.params.slug as string,
 );
 
-const formatDate = (dateString?: string) => {
-	if (!dateString) return "";
-	return new Date(dateString).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
+// Fetch all posts to find next/previous
+const { fetchPosts } = useBlog();
+const { data: allPosts } = await fetchPosts();
+
+const shareUrl = computed(() => process.client ? window.location.href : '');
+const shareText = computed(() => `Check out this article: ${post.value?.title}`);
+
+const twitterShareUrl = computed(() => `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(shareText.value)}`);
+const facebookShareUrl = computed(() => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl.value)}`);
+
+const [prevPost, nextPost] = (() => {
+  if (!post.value || !allPosts.value) return [null, null];
+
+  const sortedPosts = [...allPosts.value].sort((a, b) => new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime());
+  const currentIndex = sortedPosts.findIndex(p => p.slug === post.value!.slug);
+
+  if (currentIndex === -1) return [null, null];
+
+  const prev = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
+  const next = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
+
+  return [prev || null, next || null];
+})();
+
+
+const updateCurrentSectionFromIntersection = () => {
+	const root = articleEl.value;
+	if (!root) return;
+
+	const headings = Array.from(root.querySelectorAll<HTMLElement>("h2[id]"));
+	if (!headings.length) {
+		currentSectionTitle.value = null;
+		return;
+	}
+
+	headings.forEach((h) => {
+		useIntersectionObserver(
+			h,
+			([entry]) => {
+				if (!entry?.isIntersecting) return;
+				const text = (h.textContent || "").trim();
+				currentSectionTitle.value = text || null;
+			},
+			{
+				root: null,
+				threshold: 0.25,
+				rootMargin: "-72px 0px -70% 0px",
+			},
+		);
 	});
 };
+
+watch(
+	() => post.value?.html,
+	async () => {
+		await nextTick();
+		updateCurrentSectionFromIntersection();
+	},
+);
+
+onMounted(() => {
+	updateCurrentSectionFromIntersection();
+});
 </script>
 
+
 <template>
-	<div class="container mx-auto p-4 sm:p-6 lg:p-8">
-		<div v-if="pending" class="space-y-8 animate-pulse">
-			<div class="h-8 bg-gray-700 rounded w-3/4 mx-auto"></div>
-			<div class="h-4 bg-gray-700 rounded w-1/2 mx-auto"></div>
-			<div class="h-64 bg-gray-700 rounded-lg"></div>
-			<div class="space-y-4 pt-8">
-				<div class="h-4 bg-gray-700 rounded w-full"></div>
-				<div class="h-4 bg-gray-700 rounded w-full"></div>
-				<div class="h-4 bg-gray-700 rounded w-5/6"></div>
-			</div>
-		</div>
-		<div v-else-if="error" class="text-center py-12">
-			<h1 class="text-4xl font-bold text-red-500">Post Not Found</h1>
-			<p class="mt-4 text-gray-400">
-				Sorry, we couldn't find the post you're looking for.
-			</p>
-			<NuxtLink
-				to="/#blog"
-				class="inline-block mt-6 px-4 py-2 bg-primary text-white rounded-lg hover:bg-primary/90 transition-colors"
-			>Back to Home</NuxtLink>
-		</div>
-		<article v-else-if="post" class="max-w-4xl mx-auto">
-			<header class="text-center mb-12">
-				<NuxtLink
-					to="/#blog"
-					class="inline-flex items-center gap-2 text-primary hover:underline mb-6"
-				>
-					<span class="i-carbon-arrow-left"></span>
-					<span>Back to Home</span>
-				</NuxtLink>
-				<h1 class="text-4xl lg:text-6xl font-extrabold text-white leading-tight">
-					{{ post.title }}
-				</h1>
-				<p class="mt-4 text-lg text-gray-400">{{ post.description }}</p>
-				<div class="mt-6 text-sm text-gray-500 flex items-center justify-center gap-4">
-					<span v-if="post.date">{{ formatDate(post.date) }}</span>
-				</div>
-				<div
-					v-if="post.tags && post.tags.length"
-					class="flex flex-wrap justify-center gap-2 mt-4"
-				>
-					<span
-						v-for="tag in post.tags"
-						:key="tag"
-						class="px-2 py-1 bg-gray-800 text-xs font-semibold text-gray-300 rounded-full"
-					>{{ tag }}</span>
-				</div>
-			</header>
-
-			<img
-				v-if="post.imageUrl"
-				:src="post.imageUrl"
-				:alt="post.title"
-				class="w-full rounded-lg shadow-lg mb-12"
-			>
-
-			<div
-				class="prose prose-invert prose-lg max-w-none prose-headings:text-white prose-a:text-primary hover:prose-a:underline prose-strong:text-white prose-blockquote:border-l-primary prose-code:bg-gray-800 prose-code:p-1 prose-code:rounded prose-code:text-white"
-				v-html="post.html"
-			>
-			</div>
-		</article>
-	</div>
+  <div>
+    <BlogPostLoading v-if="pending" />
+    <BlogPostError v-else-if="error" />
+    <div v-else-if="post" :class="['max-w-4xl mx-auto', { 'px-4 sm:px-6 lg:px-8': !isFocusMode }]" ref="articleEl">
+      <div class="fixed top-20 right-4 z-50">
+        <button @click="isFocusMode = !isFocusMode" class="p-2 rounded-full bg-surface-100/80 dark:bg-surface-800/80 backdrop-blur-sm border border-surface-200 dark:border-surface-700 text-secondary hover:text-primary transition-colors">
+          <Icon :name="isFocusMode ? 'mdi:fullscreen-exit' : 'mdi:fullscreen'" class="text-xl" />
+        </button>
+      </div>
+      <BlogPostHeader v-if="!isFocusMode" :post="post" />
+      <BlogPostBody :post="post" :currentSectionTitle="currentSectionTitle" />
+      <BlogPostFooter
+        v-if="!isFocusMode"
+        :prevPost="prevPost"
+        :nextPost="nextPost"
+        :twitterShareUrl="twitterShareUrl"
+        :facebookShareUrl="facebookShareUrl"
+      />
+    </div>
+  </div>
 </template>

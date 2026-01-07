@@ -7,8 +7,13 @@ defineProps<{
 </script>
 
 <template>
-	<NuxtLink :to="item.url" target="_blank" class="block group">
-		<div class="bg-gray-800/50 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out backdrop-blur-sm h-full flex flex-col">
+	<a
+		href="https://shop.wrikka.com"
+		target="_blank"
+		rel="noreferrer"
+		class="block group"
+	>
+		<div class="bg-surface-100/60 dark:bg-surface-200/10 rounded-lg overflow-hidden shadow-lg hover:shadow-xl transition-shadow duration-300 ease-in-out backdrop-blur-sm h-full flex flex-col border border-surface-200 dark:border-surface-800">
 			<div class="overflow-hidden">
 				<img
 					:src="item.coverUrl"
@@ -17,20 +22,21 @@ defineProps<{
 				>
 			</div>
 			<div class="p-6 flex-1 flex flex-col">
-				<h3 class="text-xl font-bold text-white mb-2 flex-1">
+				<h3 class="text-xl font-bold text-primary dark:text-primary-dark mb-2 flex-1">
 					{{ item.name }}
 				</h3>
-				<p class="text-gray-400 text-base mb-4">{{ item.description }}</p>
+				<p class="text-secondary text-base mb-4">{{ item.description }}</p>
 				<div class="flex justify-between items-center mt-auto">
-					<span class="text-2xl font-bold text-primary">{{ item.price }}</span>
-					<div class="inline-flex items-center gap-2 text-gray-300 group-hover:text-white transition-colors font-semibold">
+					<span class="text-2xl font-bold text-accent">{{ item.price }}</span>
+					<div class="inline-flex items-center gap-2 text-secondary group-hover:text-primary dark:group-hover:text-primary-dark transition-colors font-semibold">
 						<span>View Product</span>
-						<span
-							class="i-carbon-arrow-right group-hover:translate-x-1 transition-transform"
-						></span>
+						<Icon
+							name="mdi:arrow-right"
+							class="group-hover:translate-x-1 transition-transform"
+						/>
 					</div>
 				</div>
 			</div>
 		</div>
-	</NuxtLink>
+	</a>
 </template>
