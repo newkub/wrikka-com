@@ -5,9 +5,19 @@ const { data: posts, pending, error } = await fetchPosts();
 // SEO
 useSEO({
 	title: "Blog - Wrikka",
-	description: "Welcome to my corner of the internet where I share my thoughts on web development, design, and technology.",
+	description:
+		"Welcome to my corner of the internet where I share my thoughts on web development, design, and technology.",
 	type: "website",
-	keywords: ["blog", "web development", "design", "technology", "vue.js", "nuxt", "javascript", "typescript"],
+	keywords: [
+		"blog",
+		"web development",
+		"design",
+		"technology",
+		"vue.js",
+		"nuxt",
+		"javascript",
+		"typescript",
+	],
 	author: "Veerapong",
 });
 
