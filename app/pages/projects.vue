@@ -20,7 +20,7 @@ useSEO({
 });
 
 // State
-const sortBy = ref<'stars' | 'updated' | 'name' | 'created'>('stars');
+const sortBy = ref<"stars" | "updated" | "name" | "created">("stars");
 const filterLanguages = ref<string[]>([]);
 const filterTopics = ref<string[]>([]);
 const showArchived = ref(false);
@@ -58,14 +58,16 @@ const otherProjects = computed(() => {
 	// Sort
 	return filtered.sort((a, b) => {
 		switch (sortBy.value) {
-			case 'stars':
+			case "stars":
 				return (b.stars || 0) - (a.stars || 0);
-			case 'updated':
-				return new Date(b.lastUpdated || '0').getTime() - new Date(a.lastUpdated || '0').getTime();
-			case 'name':
+			case "updated":
+				return new Date(b.lastUpdated || "0").getTime()
+					- new Date(a.lastUpdated || "0").getTime();
+			case "name":
 				return a.name.localeCompare(b.name);
-			case 'created':
-				return new Date(b.createdAt || '0').getTime() - new Date(a.createdAt || '0').getTime();
+			case "created":
+				return new Date(b.createdAt || "0").getTime()
+					- new Date(a.createdAt || "0").getTime();
 			default:
 				return 0;
 		}
@@ -111,7 +113,7 @@ const clearFilters = () => {
 	filterTopics.value = [];
 	showArchived.value = false;
 	showForks.value = false;
-	sortBy.value = 'stars';
+	sortBy.value = "stars";
 };
 
 const getProjectCount = () => {
@@ -119,11 +121,13 @@ const getProjectCount = () => {
 };
 
 const getTotalStars = () => {
-	return projects.value?.reduce((sum, project) => sum + (project.stars || 0), 0) || 0;
+	return projects.value?.reduce((sum, project) => sum + (project.stars || 0), 0)
+		|| 0;
 };
 
 const getTotalForks = () => {
-	return projects.value?.reduce((sum, project) => sum + (project.forks || 0), 0) || 0;
+	return projects.value?.reduce((sum, project) => sum + (project.forks || 0), 0)
+		|| 0;
 };
 </script>
 

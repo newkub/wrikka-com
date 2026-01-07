@@ -106,6 +106,8 @@ const bioText = computed(() => {
 						<ProfileActions :email="profile.email" />
 						<ProfileSocialLinks :socials="socials" />
 						<ProfileContributionGraph :calendar="calendar" />
+						<SkillsShowcase />
+						<AchievementsSection />
 						<ProfileMemories />
 					</div>
 				</div>
