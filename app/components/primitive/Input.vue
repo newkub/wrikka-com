@@ -32,7 +32,7 @@ const updateValue = (event: Event) => {
 		:placeholder="placeholder"
 		:disabled="disabled"
 		:required="required"
-		class="w-full px-1rem py-0.75rem bg-white dark:bg-gray-700 border border-gray-300 dark:border-gray-600 rounded-0.375rem text-gray-900 dark:text-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-500 transition-all-0.2s disabled:opacity-50 disabled:cursor-not-allowed"
+		class="w-full px-1rem py-0.75rem bg-background border border-border rounded-0.375rem text-foreground focus:outline-none focus:ring-2 focus:ring-primary transition-all-0.2s disabled:opacity-50 disabled:cursor-not-allowed"
 		@input="updateValue"
 	/>
 </template>

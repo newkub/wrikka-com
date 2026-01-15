@@ -1,7 +1,8 @@
 <script setup lang="ts">
 import { useMarkdownRenderer } from "../composables/useMarkdownRenderer";
+import CodeBlock from "./CodeBlock.vue";
 
-const { render } = await useMarkdownRenderer();
+const { render, extractCodeBlocks } = await useMarkdownRenderer();
 
 interface Props {
 	content: string;
@@ -13,10 +14,26 @@ const renderedContent = computed(() => {
 	if (!props.content) return "";
 	return render(props.content);
 });
+
+const codeBlocks = computed(() => {
+	return extractCodeBlocks(props.content);
+});
+
+const renderWithCodeBlocks = (content: string) => {
+	// Replace code blocks with placeholders
+	return content.replace(/```(\w+)?(?:\[([^\]]+)\])?\n([\s\S]*?)```/g, '___CODEBLOCK___');
+};
 </script>
 
 <template>
-	<div class="markdown-content prose prose-sm dark:prose-invert max-w-none">
+	<div class="markdown-content prose prose-sm max-w-none">
+		<template v-for="(block, index) in codeBlocks" :key="index">
+			<CodeBlock
+				:code="block.code"
+				:language="block.language"
+				:filename="block.filename"
+			/>
+		</template>
 		<div v-html="renderedContent"></div>
 	</div>
 </template>
@@ -26,8 +43,8 @@ const renderedContent = computed(() => {
 	font-size: 2rem;
 	font-weight: 700;
 	margin-bottom: 1rem;
-	color: rgb(17 24 39);
-	border-bottom: 2px solid rgb(229 231 235);
+	color: var(--color-foreground);
+	border-bottom: 2px solid var(--color-border);
 	padding-bottom: 0.5rem;
 }
 
@@ -35,8 +52,8 @@ const renderedContent = computed(() => {
 	font-size: 1.5rem;
 	font-weight: 600;
 	margin-bottom: 0.75rem;
-	color: rgb(17 24 39);
-	border-bottom: 1px solid rgb(229 231 235);
+	color: var(--color-foreground);
+	border-bottom: 1px solid var(--color-border);
 	padding-bottom: 0.5rem;
 	margin-top: 2rem;
 }
@@ -45,7 +62,7 @@ const renderedContent = computed(() => {
 	font-size: 1.25rem;
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 	margin-top: 1.5rem;
 }
 
@@ -53,7 +70,7 @@ const renderedContent = computed(() => {
 	font-size: 1.125rem;
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 	margin-top: 1rem;
 }
 
@@ -61,7 +78,7 @@ const renderedContent = computed(() => {
 	font-size: 1rem;
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 	margin-top: 1rem;
 }
 
@@ -69,25 +86,25 @@ const renderedContent = computed(() => {
 	font-size: 0.875rem;
 	font-weight: 600;
 	margin-bottom: 0.5rem;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 	margin-top: 1rem;
 }
 
 .markdown-content :deep(p) {
 	font-size: 0.875rem;
-	color: rgb(55 65 81);
+	color: var(--color-muted-foreground);
 	margin-bottom: 1rem;
 	line-height: 1.6;
 }
 
 .markdown-content :deep(a) {
-	color: rgb(37 99 235);
+	color: var(--color-primary);
 	text-decoration: underline;
 	transition: color 0.2s;
 }
 
 .markdown-content :deep(a:hover) {
-	color: rgb(29 78 216);
+	color: var(--color-primary-hover);
 }
 
 .markdown-content :deep(ul), .markdown-content :deep(ol) {
@@ -97,7 +114,7 @@ const renderedContent = computed(() => {
 
 .markdown-content :deep(li) {
 	font-size: 0.875rem;
-	color: rgb(55 65 81);
+	color: var(--color-muted-foreground);
 	margin-bottom: 0.5rem;
 	line-height: 1.6;
 }
@@ -111,31 +128,31 @@ const renderedContent = computed(() => {
 }
 
 .markdown-content :deep(blockquote) {
-	border-left: 4px solid rgb(209 213 219);
+	border-left: 4px solid var(--color-border);
 	padding-left: 1rem;
 	margin: 1rem 0;
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
-	background-color: rgb(249 250 251);
+	background-color: var(--color-muted);
 	border-radius: 0.25rem;
 	font-style: italic;
-	color: rgb(75 85 99);
+	color: var(--color-muted-foreground);
 }
 
 .markdown-content :deep(code) {
-	background-color: rgb(243 244 246);
+	background-color: var(--color-surface-elevated);
 	border-radius: 0.25rem;
 	padding-left: 0.25rem;
 	padding-right: 0.25rem;
 	padding-top: 0.125rem;
 	padding-bottom: 0.125rem;
 	font-size: 0.875rem;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 	font-family: monospace;
 }
 
 .markdown-content :deep(pre) {
-	background-color: rgb(243 244 246);
+	background-color: var(--color-surface-elevated);
 	border-radius: 0.5rem;
 	padding: 1rem;
 	overflow-x: auto;
@@ -159,11 +176,11 @@ const renderedContent = computed(() => {
 	width: 100%;
 	margin: 1rem 0;
 	border-collapse: collapse;
-	border: 1px solid rgb(229 231 235);
+	border: 1px solid var(--color-border);
 }
 
 .markdown-content :deep(th) {
-	background-color: rgb(243 244 246);
+	background-color: var(--color-surface-elevated);
 	text-align: left;
 	padding-left: 0.75rem;
 	padding-right: 0.75rem;
@@ -171,8 +188,8 @@ const renderedContent = computed(() => {
 	padding-bottom: 0.5rem;
 	font-size: 0.75rem;
 	font-weight: 600;
-	color: rgb(17 24 39);
-	border-bottom: 1px solid rgb(229 231 235);
+	color: var(--color-foreground);
+	border-bottom: 1px solid var(--color-border);
 }
 
 .markdown-content :deep(td) {
@@ -181,8 +198,8 @@ const renderedContent = computed(() => {
 	padding-top: 0.5rem;
 	padding-bottom: 0.5rem;
 	font-size: 0.875rem;
-	color: rgb(55 65 81);
-	border-bottom: 1px solid rgb(229 231 235);
+	color: var(--color-muted-foreground);
+	border-bottom: 1px solid var(--color-border);
 }
 
 .markdown-content :deep(tr:last-child td) {
@@ -190,7 +207,7 @@ const renderedContent = computed(() => {
 }
 
 .markdown-content :deep(tr:hover) {
-	background-color: rgb(249 250 251);
+	background-color: var(--color-muted);
 }
 
 .markdown-content :deep(img) {
@@ -202,17 +219,17 @@ const renderedContent = computed(() => {
 
 .markdown-content :deep(hr) {
 	margin: 2rem 0;
-	border-color: rgb(229 231 235);
+	border-color: var(--color-border);
 }
 
 .markdown-content :deep(strong) {
 	font-weight: 700;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 }
 
 .markdown-content :deep(em) {
 	font-style: italic;
-	color: rgb(17 24 39);
+	color: var(--color-foreground);
 }
 
 .markdown-content :deep(.shiki) {
@@ -224,87 +241,4 @@ const renderedContent = computed(() => {
 	color: rgb(243 244 246);
 }
 
-.dark .markdown-content :deep(h1) {
-	color: rgb(243 244 246);
-	border-bottom-color: rgb(55 65 81);
-}
-
-.dark .markdown-content :deep(h2) {
-	color: rgb(243 244 246);
-	border-bottom-color: rgb(55 65 81);
-}
-
-.dark .markdown-content :deep(h3) {
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(h4) {
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(h5) {
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(h6) {
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(p) {
-	color: rgb(209 213 219);
-}
-
-.dark .markdown-content :deep(a) {
-	color: rgb(96 165 250);
-}
-
-.dark .markdown-content :deep(a:hover) {
-	color: rgb(129 140 248);
-}
-
-.dark .markdown-content :deep(li) {
-	color: rgb(209 213 219);
-}
-
-.dark .markdown-content :deep(blockquote) {
-	border-left-color: rgb(75 85 99);
-	background-color: rgb(31 41 55);
-	color: rgb(156 163 175);
-}
-
-.dark .markdown-content :deep(code) {
-	background-color: rgb(31 41 55);
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(pre) {
-	background-color: rgb(31 41 55);
-}
-
-.dark .markdown-content :deep(table) {
-	border-color: rgb(55 65 81);
-}
-
-.dark .markdown-content :deep(th) {
-	background-color: rgb(31 41 55);
-	color: rgb(243 244 246);
-	border-bottom-color: rgb(55 65 81);
-}
-
-.dark .markdown-content :deep(td) {
-	color: rgb(209 213 219);
-	border-bottom-color: rgb(55 65 81);
-}
-
-.dark .markdown-content :deep(tr:hover) {
-	background-color: rgb(31 41 55);
-}
-
-.dark .markdown-content :deep(strong) {
-	color: rgb(243 244 246);
-}
-
-.dark .markdown-content :deep(em) {
-	color: rgb(243 244 246);
-}
 </style>

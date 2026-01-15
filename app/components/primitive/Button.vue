@@ -33,13 +33,13 @@ const handleClick = (event: MouseEvent) => {
 		:class="[
 			'inline-flex items-center justify-center gap-0.5rem rounded-0.375rem font-600 transition-all-0.2s',
 			{
-				'bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:cursor-not-allowed':
+				'bg-primary text-primary-foreground hover:bg-primary-hover disabled:opacity-50 disabled:cursor-not-allowed':
 					variant === 'primary',
-				'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600 disabled:opacity-50 disabled:cursor-not-allowed':
+				'bg-surface text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed':
 					variant === 'secondary',
-				'border-2 border-blue-600 text-blue-600 dark:text-blue-400 hover:bg-blue-50 dark:hover:bg-blue-900/20 disabled:opacity-50 disabled:cursor-not-allowed':
+				'border-2 border-primary text-primary hover:bg-primary/10 disabled:opacity-50 disabled:cursor-not-allowed':
 					variant === 'outline',
-				'bg-transparent text-gray-900 dark:text-gray-100 hover:bg-gray-100 dark:hover:bg-gray-800 disabled:opacity-50 disabled:cursor-not-allowed':
+				'bg-transparent text-foreground hover:bg-muted disabled:opacity-50 disabled:cursor-not-allowed':
 					variant === 'ghost',
 			},
 			{

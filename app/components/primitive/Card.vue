@@ -17,9 +17,9 @@ const props = withDefaults(defineProps<Props>(), {
 		:class="[
 			'rounded-0.5rem transition-all-0.2s',
 			{
-				'bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700':
+				'bg-surface border border-border':
 					variant === 'default',
-				'border-2 border-gray-200 dark:border-gray-700': variant === 'outline',
+				'border-2 border-border': variant === 'outline',
 				'border border-transparent': variant === 'ghost',
 			},
 			{

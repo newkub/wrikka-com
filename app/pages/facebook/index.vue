@@ -22,16 +22,16 @@ const formatDate = (dateString: string) => {
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-foreground">
 				Facebook
 			</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+			<p class="text-1.125rem text-muted-foreground">
 				Latest posts from Facebook
 			</p>
 		</div>
 
 		<div v-if="postsPending" class="flex justify-center items-center py-4rem">
-			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full">
+			<div class="animate-spin w-2rem h-2rem border-4 border-border border-t-primary rounded-full">
 			</div>
 		</div>
 
@@ -46,27 +46,27 @@ const formatDate = (dateString: string) => {
 					:href="post.permalink_url"
 					target="_blank"
 					rel="noopener"
-					class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem p-1.5rem block transition-all-0.2s hover:-translate-y-2px hover:shadow-lg no-underline text-gray-900 dark:text-gray-100"
+					class="bg-surface border border-border rounded-0.5rem p-1.5rem block transition-all-0.2s hover:-translate-y-2px hover:shadow-lg no-underline text-foreground"
 				>
 					<div class="flex items-start gap-1rem mb-1rem">
 						<img
 							v-if="post.from?.picture?.data?.url"
 							:src="post.from.picture.data.url"
 							:alt="post.from.name"
-							class="w-3rem h-3rem rounded-full border-2 border-gray-200 dark:border-gray-700"
+							class="w-3rem h-3rem rounded-full border-2 border-border"
 						/>
 						<div class="flex-1">
 							<h3 class="text-1rem font-600 m-0 mb-0.25rem">
 								{{ post.from.name }}
 							</h3>
-							<p class="text-0.75rem text-gray-600 dark:text-gray-400 m-0">
+							<p class="text-0.75rem text-muted-foreground m-0">
 								{{ formatDate(post.created_time) }}
 							</p>
 						</div>
 					</div>
 					<p
 						v-if="post.message"
-						class="text-0.875rem text-gray-900 dark:text-gray-100 mb-1rem whitespace-pre-wrap"
+						class="text-0.875rem text-foreground mb-1rem whitespace-pre-wrap"
 					>
 						{{ post.message }}
 					</p>
@@ -76,7 +76,7 @@ const formatDate = (dateString: string) => {
 						alt="Post image"
 						class="w-full rounded-0.375rem mb-1rem"
 					/>
-					<div class="flex items-center gap-0.5rem text-0.75rem text-gray-600 dark:text-gray-400">
+					<div class="flex items-center gap-0.5rem text-0.75rem text-muted-foreground mb-0.5rem">
 						<Icon name="mdi:facebook" class="w-1rem h-1rem" />
 						<span>View on Facebook</span>
 					</div>
@@ -84,7 +84,7 @@ const formatDate = (dateString: string) => {
 			</div>
 		</div>
 
-		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+		<div v-else class="text-center py-4rem text-muted-foreground">
 			<p>No posts found</p>
 		</div>
 	</div>

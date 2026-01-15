@@ -1,23 +1,46 @@
 import MarkdownIt from "markdown-it";
-import { createHighlighter, bundledLanguages } from "shiki";
+import { bundledLanguages, createHighlighter, type Highlighter, type BundledLanguage, type BundledTheme } from "shiki";
 
-let highlighter: any = null;
+interface CodeBlock {
+	code: string;
+	language: string;
+	filename?: string;
+	html: string;
+}
+
+const LANGUAGE_MAP: Record<string, string> = {
+	react: "jsx",
+	git: "git-commit",
+	ts: "typescript",
+	js: "javascript",
+	tsx: "tsx",
+	jsx: "jsx",
+} as const;
+
+const THEMES: BundledTheme[] = ["vitesse-light", "vitesse-dark"];
+
+let highlighter: Highlighter | null = null;
 let md: MarkdownIt | null = null;
 
-function addCopyButton(html: string, code: string): string {
-	// Add CopyButton component to the code block
-	const copyButtonHtml = `
-		<CopyButton code="${encodeURIComponent(code)}" />
-	`;
+function getTheme(isDark: boolean): BundledTheme {
+	return isDark ? "vitesse-dark" : "vitesse-light";
+}
 
-	// Find the pre tag and insert the copy button
-	return html.replace(
-		/<pre([^>]*)>/,
-		`<pre$1 class="group relative">`
-	).replace(
-		/<\/pre>/,
-		`${copyButtonHtml}</pre>`
-	);
+function mapLanguage(lang: string): string {
+	return LANGUAGE_MAP[lang.toLowerCase()] || lang.toLowerCase();
+}
+
+function findLanguage(mappedLang: string, loadedLangs: string[]): string {
+	if (loadedLangs.includes(mappedLang)) {
+		return mappedLang;
+	}
+
+	const similarLang = loadedLangs.find((l: string) => {
+		const lLower = l.toLowerCase();
+		return lLower.includes(mappedLang) || mappedLang.includes(lLower);
+	});
+
+	return similarLang || "text";
 }
 
 async function initMarkdown() {
@@ -25,78 +48,43 @@ async function initMarkdown() {
 		return md;
 	}
 
-	highlighter = await createHighlighter({
-		themes: ["vitesse-light", "vitesse-dark"],
-		langs: Object.keys(bundledLanguages),
-	});
+	try {
+		highlighter = await createHighlighter({
+			themes: THEMES,
+			langs: Object.keys(bundledLanguages) as BundledLanguage[],
+		});
 
-	md = MarkdownIt({
-		html: true,
-		linkify: true,
-		typographer: true,
-		highlight: (code: string, lang: string) => {
-			const colorMode = useColorMode();
-			const theme = colorMode.value === "dark" ? "vitesse-dark" : "vitesse-light";
+		md = MarkdownIt({
+			html: true,
+			linkify: true,
+			typographer: true,
+			highlight: (code: string, lang: string) => {
+				const isDark = import.meta.client ? useColorMode().value === "dark" : false;
+				const theme = getTheme(isDark);
 
-			if (!lang) {
-				// If no language specified, try to auto-detect or use text
-				const html = highlighter.codeToHtml(code, {
-					lang: "text",
+				if (!lang) {
+					return highlighter!.codeToHtml(code, {
+						lang: "text",
+						theme,
+					});
+				}
+
+				const mappedLang = mapLanguage(lang);
+				const loadedLangs = highlighter!.getLoadedLanguages();
+				const finalLang = findLanguage(mappedLang, loadedLangs);
+
+				return highlighter!.codeToHtml(code, {
+					lang: finalLang as BundledLanguage,
 					theme,
 				});
-				return addCopyButton(html, code);
-			}
+			},
+		});
 
-			// Map common aliases to supported languages
-			const langMap: Record<string, string> = {
-				react: "jsx",
-				git: "git-commit",
-				ts: "typescript",
-				js: "javascript",
-				tsx: "tsx",
-				jsx: "jsx",
-			};
-			const mappedLang = langMap[lang.toLowerCase()] || lang.toLowerCase();
-
-			const loadedLangs = highlighter.getLoadedLanguages();
-
-			// Check if language is loaded
-			if (loadedLangs.includes(mappedLang)) {
-				let html: string;
-
-				// Use regular highlighter for now (twoslash requires special setup)
-				html = highlighter.codeToHtml(code, {
-					lang: mappedLang,
-					theme,
-				});
-
-				return addCopyButton(html, code);
-			}
-
-			// Try to find a similar language
-			const similarLang = loadedLangs.find((l: string) => {
-				const lLower = l.toLowerCase();
-				return lLower.includes(mappedLang) || mappedLang.includes(lLower);
-			});
-
-			if (similarLang) {
-				const html = highlighter.codeToHtml(code, {
-					lang: similarLang,
-					theme,
-				});
-				return addCopyButton(html, code);
-			}
-
-			// Fallback to text/plain
-			const html = highlighter.codeToHtml(code, {
-				lang: "text",
-				theme,
-			});
-			return addCopyButton(html, code);
-		},
-	});
-
-	return md;
+		return md;
+	} catch (error) {
+		console.error("Failed to initialize markdown renderer:", error);
+		throw error;
+	}
 }
 
 export async function useMarkdownRenderer() {
@@ -106,7 +94,45 @@ export async function useMarkdownRenderer() {
 		return renderer.render(content);
 	};
 
+	const extractCodeBlocks = (content: string): CodeBlock[] => {
+		const codeBlocks: CodeBlock[] = [];
+		const regex = /```(\w+)?(?:\[([^\]]+)\])?\n([\s\S]*?)```/g;
+		let match;
+
+		while ((match = regex.exec(content)) !== null) {
+			const language = match[1] || "text";
+			const filename = match[2] || undefined;
+			const code = match[3] || "";
+
+			if (!highlighter) {
+				console.warn("Highlighter not initialized");
+				continue;
+			}
+
+			const isDark = import.meta.client ? useColorMode().value === "dark" : false;
+			const theme = getTheme(isDark);
+			const mappedLang = mapLanguage(language);
+			const loadedLangs = highlighter.getLoadedLanguages();
+			const finalLang = findLanguage(mappedLang, loadedLangs);
+
+			const html = highlighter.codeToHtml(code, {
+				lang: finalLang as BundledLanguage,
+				theme,
+			});
+
+			codeBlocks.push({
+				code: encodeURIComponent(code),
+				language: finalLang,
+				filename: filename || undefined,
+				html,
+			});
+		}
+
+		return codeBlocks;
+	};
+
 	return {
 		render,
+		extractCodeBlocks,
 	};
 }

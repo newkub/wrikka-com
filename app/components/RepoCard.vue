@@ -1,6 +1,10 @@
 <script setup lang="ts">
-import Badge from "./primitive/Badge.vue";
 import Card from "./primitive/Card.vue";
+import Badge from "./primitive/Badge.vue";
+import RepoStats from "./RepoStats.vue";
+import RepoCommits from "./RepoCommits.vue";
+import RepoActions from "./RepoActions.vue";
+import RepoReadmeModal from "./RepoReadmeModal.vue";
 
 interface Props {
 	repo: {
@@ -12,10 +16,13 @@ interface Props {
 		language: string | null;
 		stargazers_count: number;
 		forks_count: number;
+		open_issues_count?: number;
+		pulls_count?: number;
 		updated_at: string;
 		topics: string[];
 		fork: boolean;
 		archived: boolean;
+		readme?: string | null;
 		commits?: Array<{
 			sha: string;
 			message: string;
@@ -27,103 +34,91 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const formatDate = (dateString: string) => {
-	return new Date(dateString).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
-};
+const showReadmeModal = ref(false);
 </script>
 
 <template>
-	<a
-		:href="repo.html_url"
-		target="_blank"
-		rel="noopener"
-		class="block transition-all-0.2s hover:-translate-y-2px hover:shadow-lg no-underline text-gray-900 dark:text-gray-100"
+	<div
+		@click="showReadmeModal = true"
+		class="block transition-all-0.3s hover:-translate-y-2px hover:shadow-lg no-underline text-foreground group cursor-pointer"
 	>
 		<Card variant="default" padding="md" hover>
-			<div class="flex items-start justify-between mb-1rem">
-				<div class="flex items-center gap-0.5rem">
+			<div class="flex items-start justify-between mb-1.25rem">
+				<div class="flex items-center gap-0.75rem flex-1">
 					<Icon
 						name="mdi:source-repository"
-						class="w-1rem h-1rem text-blue-600 dark:text-blue-400"
+						class="w-1.25rem h-1.25rem text-primary shrink-0"
 					/>
-					<h3 class="text-1.125rem font-600 m-0">{{ repo.name }}</h3>
+					<h3 class="text-1.25rem font-600 m-0 truncate">{{ repo.name }}</h3>
+				</div>
+				<div class="flex items-center gap-0.5rem shrink-0">
 					<Badge v-if="repo.fork" size="sm">Fork</Badge>
-					<Badge v-if="repo.archived" variant="warning" size="sm"
-					>Archived</Badge>
+					<Badge v-if="repo.archived" variant="warning" size="sm">Archived</Badge>
 				</div>
 			</div>
+
 			<p
 				v-if="repo.description"
-				class="text-gray-600 dark:text-gray-400 mb-1rem text-0.875rem line-clamp-2"
+				class="text-text-secondary mb-1.25rem text-0.875rem line-clamp-2 leading-relaxed"
 			>
 				{{ repo.description }}
 			</p>
-			<div class="flex gap-1rem text-0.875rem text-gray-600 dark:text-gray-400 mb-1rem">
-				<span v-if="repo.language" class="flex items-center gap-0.25rem">
-					<Icon
-						name="mdi:code-tags"
-						class="w-1rem h-1rem text-purple-600 dark:text-purple-400"
-					/>
-					{{ repo.language }}
-				</span>
-				<span class="flex items-center gap-0.25rem">
-					<Icon name="mdi:star" class="w-1rem h-1rem" />
-					{{ repo.stargazers_count }}
-				</span>
-				<span class="flex items-center gap-0.25rem">
-					<Icon name="mdi:source-fork" class="w-1rem h-1rem" />
-					{{ repo.forks_count }}
-				</span>
-			</div>
+
+			<RepoStats
+				:language="repo.language"
+				:stargazers-count="repo.stargazers_count"
+				:forks-count="repo.forks_count"
+				:open-issues-count="repo.open_issues_count"
+				:pulls-count="repo.pulls_count"
+			/>
+
 			<div
 				v-if="repo.topics && repo.topics.length > 0"
-				class="flex flex-wrap gap-0.5rem mb-1rem"
+				class="flex flex-wrap gap-0.5rem mb-1.25rem"
 			>
 				<Badge
 					v-for="topic in repo.topics.slice(0, 3)"
 					:key="topic"
 					size="sm"
-					variant="default"
 					class="text-0.75rem"
 				>
 					{{ topic }}
 				</Badge>
+				<Badge
+					v-if="repo.topics.length > 3"
+					size="sm"
+					class="text-0.75rem"
+				>
+					+{{ repo.topics.length - 3 }}
+				</Badge>
 			</div>
+
 			<div
-				v-if="repo.commits && repo.commits.length > 0"
-				class="border-t border-gray-200 dark:border-gray-700 pt-1rem"
+				v-if="repo.readme"
+				class="mb-1.25rem"
 			>
-				<div class="flex items-center justify-between mb-0.75rem">
-					<p class="text-0.75rem font-600 text-gray-600 dark:text-gray-400 m-0">
-						Recent commits
-					</p>
-					<span class="text-0.75rem text-gray-500 dark:text-gray-500">Updated {{
-							formatDate(repo.updated_at)
-						}}</span>
-				</div>
-				<div class="flex flex-col gap-0.5rem">
-					<a
-						v-for="commit in repo.commits.slice(0, 3)"
-						:key="commit.sha"
-						:href="commit.url"
-						target="_blank"
-						rel="noopener"
-						class="group flex items-start gap-0.5rem p-0.5rem rounded-0.25rem text-0.75rem text-gray-600 dark:text-gray-400 hover:bg-gray-100 dark:hover:bg-gray-800 transition-all-0.2s no-underline"
-						@click.stop
-					>
-						<span
-							class="font-mono text-blue-600 dark:text-blue-400 text-0.7rem shrink-0"
-						>{{ commit.sha.slice(0, 7) }}</span>
-						<span
-							class="line-clamp-1 flex-1 group-hover:text-blue-600 dark:group-hover:text-blue-400 transition-colors-0.2s"
-						>{{ commit.message }}</span>
-					</a>
+				<div class="flex items-center gap-0.5rem px-0 py-0.5rem text-0.875rem font-600 text-muted-foreground">
+					<Icon name="mdi:book-open-variant" class="w-1rem h-1rem" />
+					<span>Click card to view README</span>
 				</div>
 			</div>
+
+			<RepoCommits
+				v-if="repo.commits && repo.commits.length > 0"
+				:commits="repo.commits"
+				:updated-at="repo.updated_at"
+			/>
+
+			<RepoActions :html-url="repo.html_url" />
 		</Card>
-	</a>
+	</div>
+
+	<RepoReadmeModal
+		:show="showReadmeModal"
+		:repo-name="repo.name"
+		:readme="repo.readme"
+		:html-url="repo.html_url"
+		:updated-at="repo.updated_at"
+		@close="showReadmeModal = false"
+	/>
 </template>

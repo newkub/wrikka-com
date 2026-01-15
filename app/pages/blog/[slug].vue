@@ -55,43 +55,32 @@ useSeoMeta({
 				:updated-date="post.updatedDate"
 				:title="post.title"
 				:url="currentUrl"
+				:cover="post.cover"
+				:excerpt="post.excerpt"
 			/>
 		</template>
 
 		<template #toc>
-			<div class="space-y-1.5rem">
-				<img
-					v-if="post?.cover"
-					:src="post.cover"
-					:alt="post.title"
-					class="w-full rounded-0.5rem shadow-md"
-				/>
-				<TableOfContents v-if="post" :content="renderedContent" />
-			</div>
+			<TableOfContents v-if="post" :content="renderedContent" />
 		</template>
 
 		<div v-if="pending" class="flex justify-center items-center py-4rem">
-			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 border-t-blue-600 rounded-full"></div>
+			<div class="animate-spin w-2rem h-2rem border-4 border-border border-t-primary rounded-full"></div>
 		</div>
 
 		<article v-else-if="post" class="blog-post">
-			<header class="mb-2rem">
-				<h1 class="text-2.5rem font-700 mb-1rem">{{ post.title }}</h1>
-				<p class="text-1.125rem text-gray-600 dark:text-gray-400 mb-1rem leading-1.6">{{ post.excerpt }}</p>
-			</header>
-
 			<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
 		</article>
 
-		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+		<div v-else class="text-center py-4rem text-muted-foreground">
 			<p>Blog post not found</p>
-			<NuxtLink to="/blog" class="text-blue-600 dark:text-blue-400 no-underline hover:underline">Back to Blog</NuxtLink>
+			<NuxtLink to="/blog" class="text-primary no-underline hover:underline">Back to Blog</NuxtLink>
 		</div>
 
 		<!-- Fixed Back to Blog Button -->
 		<NuxtLink
 			to="/blog"
-			class="fixed left-0 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 p-1rem transition-all-0.2s z-50"
+			class="fixed left-0 top-1/2 -translate-y-1/2 text-muted-foreground hover:text-primary p-1rem transition-all-0.2s z-50"
 			title="Back to Blog"
 		>
 			<Icon name="mdi:arrow-left" class="w-1.5rem h-1.5rem" />

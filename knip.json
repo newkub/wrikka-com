@@ -4,8 +4,7 @@
 		"app/app.vue",
 		"app/pages/**/*.vue",
 		"server/api/**/*.ts",
-		"server/routes/**/*.ts",
 		"nuxt.config.ts"
 	],
-	"project": ["**/*.{js,ts,vue}"]
+	"project": ["app/**/*.{js,ts,vue}", "server/**/*.{js,ts}", "shared/**/*.{js,ts}"]
 }

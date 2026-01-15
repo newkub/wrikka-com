@@ -1,4 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
+import checker from "vite-plugin-checker";
 
 export default defineNuxtConfig({
 	compatibilityDate: "2026-01-08",
@@ -25,6 +26,7 @@ export default defineNuxtConfig({
 		preference: "system",
 		fallback: "light",
 	},
+	css: ["~/assets/css/theme.css"],
 	/*
 	typescript: {
 		strict: true,
@@ -42,18 +44,9 @@ export default defineNuxtConfig({
 		"@nuxtjs/google-fonts",
 	],
 	icon: {
-		provider: "iconify",
 		serverBundle: {
-			collections: ["mdi", "carbon"],
+			collections: ["mdi", "logos"],
 		},
-		customCollections: {
-			mdi: () => import("@iconify-json/mdi/icons.json").then((i) => i.default),
-		},
-	},
-	alias: {
-		"#shared": "./shared",
-		"#app": "./app",
-		"#server": "./server",
 	},
 	routeRules: {
 		// Static pages - prerender at build time
@@ -157,7 +150,7 @@ export default defineNuxtConfig({
 		display: "swap",
 		preload: true,
 	},
-	/*
+
 	vite: {
 		plugins: [
 			checker({
@@ -169,5 +162,5 @@ export default defineNuxtConfig({
 				oxlint: true,
 			}),
 		],
-	},*/
+	},
 });

@@ -37,15 +37,17 @@ const filteredPosts = computed(() => {
 		const query = searchQuery.value.toLowerCase();
 		filtered = filtered.filter(
 			(post) =>
-				post.title.toLowerCase().includes(query) ||
-				post.excerpt.toLowerCase().includes(query) ||
-				post.tags.some((tag) => tag.toLowerCase().includes(query))
+				post.title.toLowerCase().includes(query)
+				|| post.excerpt.toLowerCase().includes(query)
+				|| post.tags.some((tag) => tag.toLowerCase().includes(query)),
 		);
 	}
 
 	// Filter by category
 	if (selectedCategory.value) {
-		filtered = filtered.filter((post) => post.category === selectedCategory.value);
+		filtered = filtered.filter((post) =>
+			post.category === selectedCategory.value
+		);
 	}
 
 	return filtered;
@@ -53,7 +55,9 @@ const filteredPosts = computed(() => {
 
 const categories = computed(() => {
 	if (!posts.value) return [];
-	const cats = new Set(posts.value.map((post) => post.category).filter(Boolean) as string[]);
+	const cats = new Set(
+		posts.value.map((post) => post.category).filter(Boolean) as string[],
+	);
 	return Array.from(cats).sort();
 });
 </script>
@@ -61,10 +65,10 @@ const categories = computed(() => {
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-foreground">
 				Blog
 			</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+			<p class="text-1.125rem text-muted-foreground">
 				Latest articles and tutorials
 			</p>
 		</div>
@@ -74,13 +78,13 @@ const categories = computed(() => {
 			<div class="relative flex-1 max-w-md w-full">
 				<Icon
 					name="mdi:magnify"
-					class="absolute left-0.75rem top-1/2 -translate-y-1/2 w-1.25rem h-1.25rem text-gray-400"
+					class="absolute left-0.75rem top-1/2 -translate-y-1/2 w-1.25rem h-1.25rem text-muted-foreground"
 				/>
 				<input
 					v-model="searchQuery"
 					type="text"
 					placeholder="Search posts..."
-					class="w-full pl-2.75rem pr-1rem py-0.75rem bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+					class="w-full pl-2.75rem pr-1rem py-0.75rem bg-muted border border-border rounded-0.5rem text-foreground placeholder-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary"
 				/>
 			</div>
 
@@ -90,8 +94,8 @@ const categories = computed(() => {
 					:class="[
 						'px-0.75rem py-0.5rem rounded-0.25rem text-0.875rem font-500 transition-all-0.2s',
 						selectedCategory === null
-							? 'bg-blue-600 text-white'
-							: 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600',
+							? 'bg-primary text-primary-foreground'
+							: 'bg-surface text-foreground hover:bg-muted',
 					]"
 				>
 					All
@@ -120,16 +124,16 @@ const categories = computed(() => {
 			<article
 				v-for="post in filteredPosts"
 				:key="post.slug"
-				class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem overflow-hidden transition-all-0.2s hover:-translate-y-2px hover:shadow-lg"
+				class="bg-surface border border-border rounded-0.5rem overflow-hidden transition-all-0.2s hover:-translate-y-2px hover:shadow-lg"
 			>
 				<NuxtLink
 					:to="`/blog/${post.slug}`"
-					class="block no-underline text-gray-900 dark:text-gray-100"
+					class="block no-underline text-foreground"
 				>
 					<!-- Cover Image -->
 					<div
 						v-if="post.cover"
-						class="w-full h-48 bg-gray-200 dark:bg-gray-700 overflow-hidden"
+						class="w-full h-48 bg-muted overflow-hidden"
 					>
 						<img
 							:src="post.cover"
@@ -140,14 +144,14 @@ const categories = computed(() => {
 
 					<div class="p-1.5rem">
 						<h2 class="text-1.25rem font-600 mb-0.75rem">{{ post.title }}</h2>
-						<p class="text-gray-600 dark:text-gray-400 mb-1rem leading-1.6 line-clamp-3">
+						<p class="text-muted-foreground mb-1rem leading-1.6 line-clamp-3">
 							{{ post.excerpt }}
 						</p>
-						<div class="flex items-center gap-1rem text-0.875rem text-gray-600 dark:text-gray-400">
+						<div class="flex items-center gap-1rem text-0.875rem text-muted-foreground">
 							<time :datetime="post.date">{{ formatDate(post.date) }}</time>
 							<span
 								v-if="post.category"
-								class="bg-blue-600 text-white px-0.5rem py-0.25rem rounded-0.25rem text-0.75rem font-500"
+								class="bg-primary text-primary-foreground px-0.5rem py-0.25rem rounded-0.25rem text-0.75rem font-500"
 							>{{ post.category }}</span>
 						</div>
 					</div>
@@ -155,7 +159,7 @@ const categories = computed(() => {
 			</article>
 		</div>
 
-		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+		<div v-else class="text-center py-4rem text-muted-foreground">
 			<p>No posts found</p>
 		</div>
 	</div>

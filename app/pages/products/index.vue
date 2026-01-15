@@ -19,10 +19,10 @@ const { data: products } = await useFetch<Product[]>("/api/products");
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-foreground">
 				Products
 			</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+			<p class="text-1.125rem text-muted-foreground">
 				My products and digital goods
 			</p>
 		</div>
@@ -38,7 +38,7 @@ const { data: products } = await useFetch<Product[]>("/api/products");
 					:href="product.url"
 					target="_blank"
 					rel="noopener"
-					class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem overflow-hidden block transition-all-0.2s hover:-translate-y-2px hover:shadow-lg no-underline text-gray-900 dark:text-gray-100"
+					class="bg-surface border border-border rounded-0.5rem overflow-hidden block transition-all-0.2s hover:-translate-y-2px hover:shadow-lg no-underline text-foreground"
 				>
 					<div class="relative aspect-video">
 						<img
@@ -51,16 +51,16 @@ const { data: products } = await useFetch<Product[]>("/api/products");
 						<h3 class="text-1.125rem font-600 m-0 mb-0.5rem">
 							{{ product.name }}
 						</h3>
-						<p class="text-gray-600 dark:text-gray-400 mb-1rem text-0.875rem line-clamp-2">
+						<p class="text-muted-foreground mb-1rem text-0.875rem line-clamp-2">
 							{{ product.description }}
 						</p>
 						<div class="flex items-center justify-between">
 							<span
-								class="text-1.25rem font-700 text-blue-600 dark:text-blue-400"
+								class="text-1.25rem font-700 text-primary"
 							>{{ product.price }}</span>
 							<Icon
 								name="mdi:cart"
-								class="w-1.25rem h-1.25rem text-gray-600 dark:text-gray-400"
+								class="w-1.25rem h-1.25rem text-muted-foreground"
 							/>
 						</div>
 					</div>
@@ -68,7 +68,7 @@ const { data: products } = await useFetch<Product[]>("/api/products");
 			</div>
 		</div>
 
-		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+		<div v-else class="text-center py-4rem text-muted-foreground">
 			<p>No products found</p>
 		</div>
 	</div>

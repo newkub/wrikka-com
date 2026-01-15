@@ -6,19 +6,15 @@
 		"react",
 		"unicorn",
 		"react-perf",
-		"vitest",
 		"jsx-a11y",
-        "nextjs",
-        "import",
+		"nextjs",
 		"promise",
-		"vitest",
 		"typescript",
 		"vue",
 		"node"
-
 	],
 	"env": {
 		"browser": true,
-		"node" :true
+		"node": true
 	}
 }

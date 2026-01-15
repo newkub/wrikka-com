@@ -50,19 +50,19 @@ interface GitHubProfile {
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div v-if="profile" class="flex flex-col gap-2rem md:flex-row md:gap-4rem">
-			<div class="flex flex-col gap-1rem md:w-1/3">
+			<div class="flex flex-col gap-1rem md:w-1/4">
 				<img
 					:src="profile.avatar_url"
 					:alt="profile.name ?? profile.login"
-					class="w-16rem h-16rem rounded-full border-4 border-gray-200 dark:border-gray-700"
+					class="w-16rem h-16rem rounded-full border-4 border-border"
 				/>
-				<h1 class="text-2rem font-700 text-gray-900 dark:text-gray-100">
+				<h1 class="text-2rem font-700 text-foreground">
 					{{ profile.name || profile.login }}
 				</h1>
-				<p class="text-gray-600 dark:text-gray-400">{{ profile.login }}</p>
+				<p class="text-muted-foreground">{{ profile.login }}</p>
 				<p
 					v-if="profile.bio"
-					class="text-1rem text-gray-900 dark:text-gray-100"
+					class="text-1rem text-foreground"
 				>
 					{{ profile.bio }}
 				</p>
@@ -72,7 +72,7 @@ interface GitHubProfile {
 						:href="profile.html_url"
 						target="_blank"
 						rel="noopener"
-						class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s"
+						class="flex items-center gap-0.5rem text-muted-foreground hover:text-primary transition-colors-0.2s"
 					>
 						<Icon name="mdi:office-building" class="w-1rem h-1rem" />
 						<span>{{ profile.company }}</span>
@@ -82,7 +82,7 @@ interface GitHubProfile {
 						:href="profile.html_url"
 						target="_blank"
 						rel="noopener"
-						class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s"
+						class="flex items-center gap-0.5rem text-muted-foreground hover:text-primary transition-colors-0.2s"
 					>
 						<Icon name="mdi:map-marker" class="w-1rem h-1rem" />
 						<span>{{ profile.location }}</span>
@@ -92,7 +92,7 @@ interface GitHubProfile {
 						:href="profile.blog"
 						target="_blank"
 						rel="noopener"
-						class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s"
+						class="flex items-center gap-0.5rem text-muted-foreground hover:text-primary transition-colors-0.2s"
 					>
 						<Icon name="mdi:link" class="w-1rem h-1rem" />
 						<span>{{ profile.blog }}</span>
@@ -102,79 +102,69 @@ interface GitHubProfile {
 						:href="`https://twitter.com/${profile.twitter_username}`"
 						target="_blank"
 						rel="noopener"
-						class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s"
+						class="flex items-center gap-0.5rem text-muted-foreground hover:text-primary transition-colors-0.2s"
 					>
 						<Icon name="mdi:twitter" class="w-1rem h-1rem" />
 						<span>@{{ profile.twitter_username }}</span>
 					</a>
 				</div>
-				<div class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem p-1rem mt-1rem">
-					<div class="grid grid-cols-2 gap-1rem">
-						<a
-							:href="profile.html_url"
-							target="_blank"
-							rel="noopener"
-							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
-						>
-							<Icon name="mdi:star" class="w-1.5rem h-1.5rem text-yellow-500" />
-							<span class="font-700 text-1.5rem">{{
-								stats?.totalStars ?? 0
-							}}</span>
-							<span class="text-0.75rem text-gray-600 dark:text-gray-400"
-							>Stars</span>
-						</a>
-						<a
-							:href="profile.html_url"
-							target="_blank"
-							rel="noopener"
-							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
-						>
-							<Icon
-								name="mdi:source-repository"
-								class="w-1.5rem h-1.5rem text-blue-600 dark:text-blue-400"
-							/>
-							<span class="font-700 text-1.5rem">{{
-								stats?.totalRepos ?? 0
-							}}</span>
-							<span class="text-0.75rem text-gray-600 dark:text-gray-400"
-							>Repos</span>
-						</a>
-						<a
-							:href="`https://github.com/${profile.login}?tab=followers`"
-							target="_blank"
-							rel="noopener"
-							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
-						>
-							<Icon
-								name="mdi:account-group"
-								class="w-1.5rem h-1.5rem text-green-600 dark:text-green-400"
-							/>
-							<span class="font-700 text-1.5rem">{{ profile.followers }}</span>
-							<span class="text-0.75rem text-gray-600 dark:text-gray-400"
-							>Followers</span>
-						</a>
-						<a
-							:href="`https://github.com/${profile.login}?tab=following`"
-							target="_blank"
-							rel="noopener"
-							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
-						>
-							<Icon
-								name="mdi:account-multiple"
-								class="w-1.5rem h-1.5rem text-purple-600 dark:text-purple-400"
-							/>
-							<span class="font-700 text-1.5rem">{{ profile.following }}</span>
-							<span class="text-0.75rem text-gray-600 dark:text-gray-400"
-							>Following</span>
-						</a>
-					</div>
+				<div class="flex flex-col gap-0.75rem mt-1rem">
+					<a
+						:href="profile.html_url"
+						target="_blank"
+						rel="noopener"
+						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
+					>
+						<div class="flex items-center gap-0.5rem">
+							<Icon name="mdi:star" class="w-1.25rem h-1.25rem text-warning" />
+							<span class="text-0.875rem text-muted-foreground">Stars</span>
+						</div>
+						<span class="font-600 text-1.125rem">{{ stats?.totalStars ?? 0 }}</span>
+					</a>
+					<a
+						:href="profile.html_url"
+						target="_blank"
+						rel="noopener"
+						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
+					>
+						<div class="flex items-center gap-0.5rem">
+							<Icon name="mdi:source-repository" class="w-1.25rem h-1.25rem text-primary" />
+							<span class="text-0.875rem text-muted-foreground">Repos</span>
+						</div>
+						<span class="font-600 text-1.125rem">{{ stats?.totalRepos ?? 0 }}</span>
+					</a>
+					<a
+						:href="`https://github.com/${profile.login}?tab=followers`"
+						target="_blank"
+						rel="noopener"
+						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
+					>
+						<div class="flex items-center gap-0.5rem">
+							<Icon name="mdi:account-group" class="w-1.25rem h-1.25rem text-success" />
+							<span class="text-0.875rem text-muted-foreground">Followers</span>
+						</div>
+						<span class="font-600 text-1.125rem">{{ profile.followers }}</span>
+					</a>
+					<a
+						:href="`https://github.com/${profile.login}?tab=following`"
+						target="_blank"
+						rel="noopener"
+						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
+					>
+						<div class="flex items-center gap-0.5rem">
+							<Icon name="mdi:account-multiple" class="w-1.25rem h-1.25rem text-accent" />
+							<span class="text-0.875rem text-muted-foreground">Following</span>
+						</div>
+						<span class="font-600 text-1.125rem">{{ profile.following }}</span>
+					</a>
 				</div>
 				<a
 					:href="profile.html_url"
 					target="_blank"
 					rel="noopener"
-					class="mt-1rem px-1rem py-0.5rem bg-blue-600 text-white rounded-0.375rem font-600 text-center no-underline transition-colors-0.2s hover:opacity-90"
+					class="mt-1rem px-1rem py-0.75rem bg-primary text-primary-foreground rounded-0.375rem font-600 text-center no-underline transition-colors-0.2s hover:opacity-90 flex items-center justify-center gap-0.5rem"
 				>
+					<Icon name="mdi:github" class="w-1.25rem h-1.25rem" />
 					View on GitHub
 				</a>
 			</div>
@@ -182,9 +172,9 @@ interface GitHubProfile {
 			<div class="flex-1 flex flex-col gap-2rem">
 				<div
 					v-if="readme"
-					class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem p-2rem"
+					class="bg-muted border border-border rounded-0.5rem p-2rem"
 				>
-					<h2 class="text-1.5rem font-700 mb-1rem flex items-center gap-0.5rem text-gray-900 dark:text-gray-100">
+					<h2 class="text-1.5rem font-700 mb-1rem flex items-center gap-0.5rem text-foreground">
 						<Icon name="mdi:file-document" class="w-1.5rem h-1.5rem" />
 						README.md
 					</h2>
@@ -214,13 +204,13 @@ interface GitHubProfile {
 			v-if="profilePending || readmePending || reposPending || statsPending"
 			class="flex justify-center items-center py-4rem"
 		>
-			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full">
+			<div class="animate-spin w-2rem h-2rem border-4 border-border border-t-primary rounded-full">
 			</div>
 		</div>
 
 		<div
 			v-if="!profile && !profilePending"
-			class="text-center py-4rem text-gray-600 dark:text-gray-400"
+			class="text-center py-4rem text-muted-foreground"
 		>
 			<p>
 				Failed to load profile. Please check your GitHub username configuration.

@@ -25,6 +25,24 @@ const extractHeadings = () => {
 
 const activeHeading = ref<string>("");
 
+const updateActiveHeading = () => {
+	const scrollPosition = window.scrollY;
+
+	// Find the heading that is currently in view
+	for (const heading of headings.value) {
+		const element = document.getElementById(heading.id);
+		if (element) {
+			const rect = element.getBoundingClientRect();
+			const isVisible = rect.top >= 0 && rect.top < window.innerHeight / 2;
+
+			if (isVisible) {
+				activeHeading.value = heading.id;
+				break;
+			}
+		}
+	}
+};
+
 onMounted(() => {
 	extractHeadings();
 
@@ -39,6 +57,7 @@ onMounted(() => {
 		},
 		{
 			rootMargin: "-20% 0% -70% 0%",
+			threshold: [0, 0.5, 1],
 		},
 	);
 
@@ -47,10 +66,14 @@ onMounted(() => {
 		document.querySelectorAll("h2, h3, h4").forEach((heading) => {
 			observer.observe(heading);
 		});
+
+		// Also listen to scroll events for better accuracy
+		window.addEventListener("scroll", updateActiveHeading, { passive: true });
 	});
 
 	onUnmounted(() => {
 		observer.disconnect();
+		window.removeEventListener("scroll", updateActiveHeading);
 	});
 });
 
@@ -69,7 +92,7 @@ const scrollToHeading = (id: string) => {
 
 <template>
 	<div v-if="headings.length > 0" class="table-of-contents">
-		<h3 class="text-1rem font-600 mb-1rem text-gray-900 dark:text-gray-100 flex items-center gap-0.5rem">
+		<h3 class="text-1rem font-600 mb-1rem text-foreground flex items-center gap-0.5rem">
 			<Icon name="mdi:table-of-contents" class="w-1rem h-1rem" />
 			Table of Contents
 		</h3>
@@ -79,11 +102,11 @@ const scrollToHeading = (id: string) => {
 				:key="heading.id"
 				:href="`#${heading.id}`"
 				@click.prevent="scrollToHeading(heading.id)"
-				class="block text-0.875rem no-underline transition-all-0.2s hover:text-blue-600 dark:hover:text-blue-400"
+				class="block text-0.875rem no-underline transition-all-0.2s hover:text-primary"
 				:class="[
-					'text-gray-600 dark:text-gray-400',
+					'text-muted-foreground',
 					{
-						'text-blue-600 dark:text-blue-400 font-600':
+						'text-primary font-600':
 							activeHeading === heading.id,
 						'pl-0': heading.level === 2,
 						'pl-1rem': heading.level === 3,

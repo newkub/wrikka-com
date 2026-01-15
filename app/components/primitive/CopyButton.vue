@@ -24,7 +24,7 @@ const copyCode = async () => {
 <template>
 	<button
 		@click="copyCode"
-		class="absolute top-2 right-2 bg-gray-800 dark:bg-gray-700 hover:bg-gray-700 dark:hover:bg-gray-600 text-white p-1.5 rounded-md transition-all-0.2s opacity-0 group-hover:opacity-100 z-10"
+		class="absolute top-2 right-2 bg-surface hover:bg-muted text-foreground p-1.5 rounded-md transition-all-0.2s opacity-0 group-hover:opacity-100 z-10"
 		:title="copied ? 'Copied!' : 'Copy code'"
 	>
 		<Icon
@@ -35,7 +35,7 @@ const copyCode = async () => {
 		<Icon
 			v-else
 			name="mdi:check"
-			class="w-1rem h-1rem text-green-400"
+			class="w-1rem h-1rem text-success-foreground"
 		/>
 	</button>
 </template>

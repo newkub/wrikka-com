@@ -11,8 +11,8 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
 	icon: "",
 	text: "",
-	iconClass: "w-1rem h-1rem text-gray-600 dark:text-gray-400",
-	textClass: "text-0.875rem text-gray-900 dark:text-gray-100",
+	iconClass: "w-1rem h-1rem text-muted-foreground",
+	textClass: "text-0.875rem text-foreground",
 	align: "items-center",
 	gap: "gap-0.5rem",
 });

@@ -21,11 +21,11 @@ const getLevel = (count: number) => {
 
 const getColor = (level: number) => {
 	const colors = [
-		"bg-gray-100 dark:bg-gray-800",
-		"bg-green-200 dark:bg-green-900",
-		"bg-green-300 dark:bg-green-800",
-		"bg-green-400 dark:bg-green-700",
-		"bg-green-500 dark:bg-green-600",
+		"bg-muted",
+		"bg-success/20",
+		"bg-success/40",
+		"bg-success/60",
+		"bg-success/80",
 	];
 	return colors[level];
 };
@@ -37,7 +37,7 @@ const getColor = (level: number) => {
 	</div>
 
 	<div v-else-if="activity" class="flex flex-col gap-0.5rem">
-		<h2 class="text-1rem font-600 text-gray-900 dark:text-gray-100">
+		<h2 class="text-1rem font-600 text-foreground">
 			{{ activity.totalContributions }} contributions in the last year
 		</h2>
 		<div class="overflow-x-auto">
@@ -58,18 +58,18 @@ const getColor = (level: number) => {
 				</div>
 			</div>
 		</div>
-		<div class="flex items-center gap-0.5rem mt-0.5rem text-0.75rem text-gray-600 dark:text-gray-400">
+		<div class="flex items-center gap-0.5rem mt-0.5rem text-0.75rem text-muted-foreground">
 			<span>Less</span>
 			<div class="flex gap-0.125rem">
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-gray-100 dark:bg-gray-800">
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-muted">
 				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-green-200 dark:bg-green-900">
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/20">
 				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-green-300 dark:bg-green-800">
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/40">
 				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-green-400 dark:bg-green-700">
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/60">
 				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-green-500 dark:bg-green-600">
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/80">
 				</div>
 			</div>
 			<span>More</span>

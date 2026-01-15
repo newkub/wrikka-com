@@ -8,9 +8,15 @@ interface Props {
 const props = defineProps<Props>();
 
 const shareUrls = {
-	twitter: `https://twitter.com/intent/tweet?text=${encodeURIComponent(props.title || "")}&url=${encodeURIComponent(props.url || "")}`,
-	facebook: `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(props.url || "")}`,
-	linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(props.url || "")}`,
+	twitter: `https://twitter.com/intent/tweet?text=${
+		encodeURIComponent(props.title || "")
+	}&url=${encodeURIComponent(props.url || "")}`,
+	facebook: `https://www.facebook.com/sharer/sharer.php?u=${
+		encodeURIComponent(props.url || "")
+	}`,
+	linkedin: `https://www.linkedin.com/sharing/share-offsite/?url=${
+		encodeURIComponent(props.url || "")
+	}`,
 };
 
 const icons = {
@@ -31,7 +37,7 @@ const labels = {
 		:href="shareUrls[platform]"
 		target="_blank"
 		rel="noopener noreferrer"
-		class="flex items-center gap-0.25rem px-0.75rem py-0.5rem bg-gray-100 dark:bg-gray-800 border border-gray-300 dark:border-gray-600 rounded-0.375rem text-0.875rem text-gray-900 dark:text-gray-100 hover:bg-gray-200 dark:hover:bg-gray-700 transition-all-0.2s no-underline"
+		class="flex items-center gap-0.25rem px-0.75rem py-0.5rem bg-surface border border-border rounded-0.375rem text-0.875rem text-foreground hover:bg-muted transition-all-0.2s no-underline"
 	>
 		<Icon :name="icons[platform]" class="w-1rem h-1rem" />
 		{{ labels[platform] }}
