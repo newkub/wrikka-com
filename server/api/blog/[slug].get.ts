@@ -1,44 +1,39 @@
-import { promises as fs } from "fs";
-import matter from "gray-matter";
-import path from "path";
-import { renderMarkdown } from "../../utils/markdown";
+import { readFileSync } from "fs"
+import { join } from "path"
+import matter from "gray-matter"
 
 export default defineEventHandler(async (event) => {
-	const slug = getRouterParam(event, "slug");
+	const slug = getRouterParam(event, "slug")
+
 	if (!slug) {
-		throw createError({ statusCode: 400, statusMessage: "Missing slug" });
+		throw createError({
+			statusCode: 400,
+			statusMessage: "Slug is required",
+		})
 	}
 
-	const rootDir = path.resolve(process.cwd(), "content");
-	const blogDir = path.resolve(process.cwd(), "content", "blog");
-	const candidatePaths = [
-		path.join(blogDir, `${slug}.md`),
-		path.join(rootDir, `${slug}.md`),
-	];
-
 	try {
-		const filePath = await (async () => {
-			for (const candidate of candidatePaths) {
-				try {
-					await fs.access(candidate);
-					return candidate;
-				} catch {
-					// continue
-				}
-			}
-			throw new Error("not-found");
-		})();
+		const contentDir = join(process.cwd(), "content", "blog")
+		const filePath = join(contentDir, `${slug}.md`)
 
-		const fileContent = await fs.readFile(filePath, "utf-8");
-		const { data, content } = matter(fileContent);
+		const fileContent = readFileSync(filePath, "utf-8")
+		const { data, content } = matter(fileContent)
 
 		return {
 			slug,
-			title: data.title || "Untitled",
-			description: data.description || "",
-			html: await renderMarkdown(content),
-		};
-	} catch {
-		throw createError({ statusCode: 404, statusMessage: "Post not found" });
+			title: data.title || slug,
+			excerpt: data.excerpt || content.slice(0, 150).replace(/[#*`]/g, "") + "...",
+			date: data.date || new Date().toISOString(),
+			category: data.category || null,
+			tags: data.tags || [],
+			content,
+			frontmatter: data,
+		}
 	}
-});
+	catch {
+		throw createError({
+			statusCode: 404,
+			statusMessage: "Blog post not found",
+		})
+	}
+})

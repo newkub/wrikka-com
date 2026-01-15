@@ -1,117 +1,154 @@
 <script setup lang="ts">
-import type {
-	GithubContributionCalendar,
-	GithubProfile,
-} from "../../shared/types/github";
+useSeoMeta({
+	title: "Home",
+	description: "My personal portfolio and projects",
+})
 
-const config = useRuntimeConfig();
-const username = (config.public.githubUsername || "").trim();
+const { data: profile, pending: profilePending } = await useFetch<GitHubProfile>("/api/github/profile")
+const { data: readme, pending: readmePending } = await useFetch("/api/github/readme")
+const { data: repos, pending: reposPending } = await useFetch("/api/github/repos")
+const { data: stats, pending: statsPending } = await useFetch<GitHubStats>("/api/github/stats")
 
-const { profile, calendar, pending, error } = await useProfilePage(username);
+const formatDate = (dateString: string) => {
+	return new Date(dateString).toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "long",
+		day: "numeric",
+	})
+}
 
-const isMissingUsername = computed(() => !username);
+interface GitHubStats {
+	totalStars: number
+	totalRepos: number
+	reposByLanguage: Record<string, any[]>
+	repos: any[]
+}
 
-// SEO
-useSEO({
-	title: profile.value?.name
-		? `${profile.value.name} - Full Stack Developer`
-		: "Wrikka - Full Stack Developer Portfolio",
-	description: profile.value?.bio
-		|| "A passionate and creative full-stack developer from Thailand with a strong focus on building beautiful, functional, and user-centric web applications.",
-	image: profile.value?.avatarUrl,
-	type: "profile",
-	keywords: [
-		"full stack developer",
-		"web development",
-		"vue.js",
-		"nuxt",
-		"javascript",
-		"typescript",
-		"portfolio",
-		...(profile.value?.login ? [profile.value.login] : []),
-	],
-	author: profile.value?.name || "Veerapong",
-});
-
-const socials = computed(() => {
-	const githubUrl = profile.value?.login
-		? `https://github.com/${profile.value.login}`
-		: "#";
-	return [
-		{ label: "GitHub", url: githubUrl, icon: "mdi:github" },
-		{ label: "X", url: "#", icon: "mdi:twitter" }, // Assuming 'X' uses the twitter icon
-		{
-			label: "Facebook",
-			url: "https://facebook.com/webdev.sharex",
-			icon: "mdi:facebook",
-		},
-	];
-});
-
-const bioText = computed(() => {
-	return (
-		profile.value?.bio
-		|| "A passionate and creative full-stack developer from Thailand with a strong focus on building beautiful, functional, and user-centric web applications. I have a knack for solving complex problems and a deep love for diving into new technologies, constantly striving to push the boundaries of what is possible on the web."
-	);
-});
+interface GitHubProfile {
+	login: string
+	name: string | null
+	bio: string | null
+	company: string | null
+	location: string | null
+	blog: string | null
+	twitter_username: string | null
+	avatar_url: string
+	html_url: string
+	followers: number
+	following: number
+}
 </script>
 
 <template>
-	<div>
-		<div v-if="pending" class="space-y-8 animate-pulse">
-			<!-- Skeleton for banner -->
-			<div class="h-48 w-full bg-gray-700"></div>
-			<div class="px-4 sm:px-6 lg:px-8">
-				<div class="flex items-start gap-5 -mt-16">
-					<div class="w-24 h-24 rounded-full bg-gray-700 border-4 border-gray-800">
-					</div>
-					<div class="flex-1 space-y-3 pt-12">
-						<div class="h-8 bg-gray-700 rounded w-1/2"></div>
-						<div class="h-4 bg-gray-700 rounded w-1/4"></div>
-					</div>
-				</div>
-				<div class="space-y-2 border-t border-gray-700 pt-8 mt-8">
-					<div class="h-4 bg-gray-700 rounded w-full"></div>
-					<div class="h-4 bg-gray-700 rounded w-full"></div>
-					<div class="h-4 bg-gray-700 rounded w-2/3"></div>
-				</div>
-			</div>
-		</div>
-		<div v-else-if="isMissingUsername" class="text-center py-12">
-			<p class="text-gray-400">
-				Missing GitHub username. Please set GITHUB_USERNAME in your environment.
-			</p>
-		</div>
-		<div v-else-if="error" class="text-center py-12">
-			<p class="text-red-500">Error loading profile.</p>
-			<p class="text-gray-400 mt-2">
-				{{
-					(error as any)?.statusCode ? `(${(error as any).statusCode}) ` : ""
-				}}{{ (error as any)?.statusMessage || "Please try again later." }}
-			</p>
-		</div>
-		<div v-else-if="profile">
-			<div>
+	<div class="flex flex-col gap-2rem">
+		<div v-if="profile" class="flex flex-col gap-2rem md:flex-row md:gap-4rem">
+			<div class="flex flex-col gap-1rem md:w-1/3">
 				<img
-					class="h-48 w-full object-cover"
-					src="https://images.unsplash.com/photo-1550439062-609e1531270e?q=80&w=2070&auto=format&fit=crop"
-					alt="Cover Banner"
-				>
+					:src="profile.avatar_url"
+					:alt="profile.name ?? profile.login"
+					class="w-16rem h-16rem rounded-full border-4 border-gray-200 dark:border-gray-700"
+				/>
+				<h1 class="text-2rem font-700 text-gray-900 dark:text-gray-100">{{ profile.name || profile.login }}</h1>
+				<p class="text-gray-600 dark:text-gray-400">{{ profile.login }}</p>
+				<p v-if="profile.bio" class="text-1rem text-gray-900 dark:text-gray-100">{{ profile.bio }}</p>
+				<div class="flex flex-col gap-0.5rem">
+					<a v-if="profile.company" :href="profile.html_url" target="_blank" rel="noopener" class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s">
+						<Icon name="mdi:office-building" class="w-1rem h-1rem" />
+						<span>{{ profile.company }}</span>
+					</a>
+					<a v-if="profile.location" :href="profile.html_url" target="_blank" rel="noopener" class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s">
+						<Icon name="mdi:map-marker" class="w-1rem h-1rem" />
+						<span>{{ profile.location }}</span>
+					</a>
+					<a v-if="profile.blog" :href="profile.blog" target="_blank" rel="noopener" class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s">
+						<Icon name="mdi:link" class="w-1rem h-1rem" />
+						<span>{{ profile.blog }}</span>
+					</a>
+					<a v-if="profile.twitter_username" :href="`https://twitter.com/${profile.twitter_username}`" target="_blank" rel="noopener" class="flex items-center gap-0.5rem text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 transition-colors-0.2s">
+						<Icon name="mdi:twitter" class="w-1rem h-1rem" />
+						<span>@{{ profile.twitter_username }}</span>
+					</a>
+				</div>
+				<div class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem p-1rem mt-1rem">
+					<div class="grid grid-cols-2 gap-1rem">
+						<a
+							:href="profile.html_url"
+							target="_blank"
+							rel="noopener"
+							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
+						>
+							<Icon name="mdi:star" class="w-1.5rem h-1.5rem text-yellow-500" />
+							<span class="font-700 text-1.5rem">{{ stats?.totalStars ?? 0 }}</span>
+							<span class="text-0.75rem text-gray-600 dark:text-gray-400">Stars</span>
+						</a>
+						<a
+							:href="profile.html_url"
+							target="_blank"
+							rel="noopener"
+							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
+						>
+							<Icon name="mdi:source-repository" class="w-1.5rem h-1.5rem text-blue-600 dark:text-blue-400" />
+							<span class="font-700 text-1.5rem">{{ stats?.totalRepos ?? 0 }}</span>
+							<span class="text-0.75rem text-gray-600 dark:text-gray-400">Repos</span>
+						</a>
+						<a
+							:href="`https://github.com/${profile.login}?tab=followers`"
+							target="_blank"
+							rel="noopener"
+							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
+						>
+							<Icon name="mdi:account-group" class="w-1.5rem h-1.5rem text-green-600 dark:text-green-400" />
+							<span class="font-700 text-1.5rem">{{ profile.followers }}</span>
+							<span class="text-0.75rem text-gray-600 dark:text-gray-400">Followers</span>
+						</a>
+						<a
+							:href="`https://github.com/${profile.login}?tab=following`"
+							target="_blank"
+							rel="noopener"
+							class="flex flex-col items-center gap-0.25rem p-1rem bg-white dark:bg-gray-700 rounded-0.375rem border border-gray-200 dark:border-gray-600 transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-gray-900 dark:text-gray-100"
+						>
+							<Icon name="mdi:account-multiple" class="w-1.5rem h-1.5rem text-purple-600 dark:text-purple-400" />
+							<span class="font-700 text-1.5rem">{{ profile.following }}</span>
+							<span class="text-0.75rem text-gray-600 dark:text-gray-400">Following</span>
+						</a>
+					</div>
+				</div>
+				<a :href="profile.html_url" target="_blank" rel="noopener" class="mt-1rem px-1rem py-0.5rem bg-blue-600 text-white rounded-0.375rem font-600 text-center no-underline transition-colors-0.2s hover:opacity-90">
+					View on GitHub
+				</a>
 			</div>
-			<div class="px-4 sm:px-6 lg:px-8">
-				<div class="-mt-16">
-					<div class="space-y-12">
-						<ProfileHeader :profile="profile" />
-						<ProfileBio :bio="bioText" />
-						<ProfileActions :email="profile.email" />
-						<ProfileSocialLinks :socials="socials" />
-						<ProfileContributionGraph :calendar="calendar" />
-						<SkillsShowcase />
-						<AchievementsSection />
-						<ProfileMemories />
+
+			<div class="flex-1 flex flex-col gap-2rem">
+				<div v-if="readme" class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem p-2rem">
+					<h2 class="text-1.5rem font-700 mb-1rem flex items-center gap-0.5rem text-gray-900 dark:text-gray-100">
+						<Icon name="mdi:file-document" class="w-1.5rem h-1.5rem" />
+						README.md
+					</h2>
+					<MarkdownRenderer :content="readme.content" />
+				</div>
+
+				<div v-if="stats && stats.repos && stats.repos.length > 0" class="flex flex-col gap-2rem">
+					<h2 class="text-1.5rem font-700 flex items-center gap-0.5rem text-gray-900 dark:text-gray-100">
+						<Icon name="mdi:source-repository" class="w-1.5rem h-1.5rem" />
+						Repositories ({{ stats.totalRepos }})
+					</h2>
+					<div class="grid grid-cols-1 gap-1.5rem md:grid-cols-2 lg:grid-cols-3">
+						<RepoCard
+							v-for="repo in stats.repos"
+							:key="repo.id"
+							:repo="repo"
+						/>
 					</div>
 				</div>
 			</div>
+		</div>
+
+		<div v-if="profilePending || readmePending || reposPending || statsPending" class="flex justify-center items-center py-4rem">
+			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full"></div>
+		</div>
+
+		<div v-if="!profile && !profilePending" class="text-center py-4rem text-gray-600 dark:text-gray-400">
+			<p>Failed to load profile. Please check your GitHub username configuration.</p>
 		</div>
 	</div>
 </template>

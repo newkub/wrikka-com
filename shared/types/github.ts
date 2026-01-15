@@ -1,70 +1,35 @@
+export interface GithubEvent {
+	id: string
+	type: string
+	actor: {
+		login: string
+		avatar_url: string
+	}
+	repo: {
+		name: string
+		url: string
+	}
+	created_at: string
+	payload: any
+}
+
 export interface GithubProfile {
-	login: string;
-	name: string | null;
-	avatarUrl: string;
-	bio: string | null;
-	websiteUrl: string | null;
-	email: string | null;
-	followers: number;
-	following: number;
-}
-
-export interface GithubContributionDay {
-	date: string;
-	contributionCount: number;
-	color: string;
-}
-
-export interface GithubContributionWeek {
-	contributionDays: GithubContributionDay[];
+	login: string
+	name: string | null
+	bio: string | null
+	company: string | null
+	location: string | null
+	blog: string | null
+	twitter_username: string | null
+	avatar_url: string
+	html_url: string
+	followers: number
+	following: number
+	public_repos: number
 }
 
 export interface GithubContributionCalendar {
-	totalContributions: number;
-	weeks: GithubContributionWeek[];
-}
-
-export interface GithubRepo {
-	name: string;
-	description: string | null;
-	url: string;
-	homepageUrl: string | null;
-	isFork: boolean;
-	isArchived: boolean;
-	languages: {
-		nodes: Array<{ name: string }>;
-	};
-	opengraphImageUrl: string;
-}
-
-export interface PinnedGithubRepo {
-	node: GithubRepo;
-}
-
-export interface GithubGraphqlResponse {
-	data: {
-		user: {
-			pinnedItems: {
-				nodes: GithubRepo[];
-			};
-			repositories: {
-				nodes: GithubRepo[];
-			};
-		};
-	} | null;
-}
-
-export interface GithubEvent {
-	id: string;
-	type: string;
-	repo: {
-		name: string;
-	};
-	payload: {
-		action?: string;
-		issue?: { title: string; html_url: string };
-		pull_request?: { title: string; html_url: string };
-		commits?: Array<{ sha: string; message: string }>;
-	};
-	created_at: string;
+	weeks: number[][]
+	totalContributions: number
+	years: number[]
 }

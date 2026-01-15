@@ -1,7 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 
 export default defineNuxtConfig({
-	css: [],
+	compatibilityDate: "2026-01-08",
 	app: {
 		head: {
 			htmlAttrs: {
@@ -10,12 +10,6 @@ export default defineNuxtConfig({
 			link: [
 				{ rel: "icon", type: "image/x-icon", href: "/favicon.ico" },
 				{ rel: "manifest", href: "/site.webmanifest" },
-				{ rel: "preconnect", href: "https://fonts.googleapis.com" },
-				{ rel: "preconnect", href: "https://fonts.gstatic.com", crossorigin: "" },
-				{
-					href: "https://fonts.googleapis.com/css2?family=Noto+Sans+Thai:wght@400;500;700&display=swap",
-					rel: "stylesheet",
-				},
 			],
 		},
 	},
@@ -31,13 +25,11 @@ export default defineNuxtConfig({
 		preference: "system",
 		fallback: "light",
 	},
-	alias: {
-		"~/shared": "./shared",
-	},
+	/*
 	typescript: {
 		strict: true,
 		typeCheck: true,
-	},
+	},*/
 	modules: [
 		"nuxt-mcp-dev",
 		"@pinia/nuxt",
@@ -47,16 +39,50 @@ export default defineNuxtConfig({
 		"@vue-macros/nuxt",
 		"@nuxt/icon",
 		"@scalar/nuxt",
+		"@nuxtjs/google-fonts",
 	],
 	icon: {
+		provider: "iconify",
 		serverBundle: {
 			collections: ["mdi", "carbon"],
 		},
 	},
+	alias: {
+		"#shared": "./shared",
+		"#app": "./app",
+		"#server": "./server",
+	},
 	routeRules: {
+		// Static pages - prerender at build time
 		"/": { prerender: true },
-		"/blog/**": { isr: 3600 }, // Stale-while-revalidate for 1 hour
-		"/api/**": { cors: true },
+		"/projects": { prerender: true },
+		"/contact": { prerender: true },
+		"/facebook": { prerender: true },
+		"/youtube": { prerender: true },
+		"/x": { prerender: true },
+
+		// Blog routes - ISR with different revalidation times
+		"/blog": { isr: 3600 }, // Blog listing - revalidate every 1 hour
+		"/blog/**": { isr: 7200 }, // Individual blog posts - revalidate every 2 hours
+
+		// API routes - cache with CORS
+		"/api/github/**": {
+			cors: true,
+			cache: {
+				maxAge: 60 * 5, // 5 minutes
+			},
+		},
+		"/api/facebook/**": {
+			cors: true,
+			cache: {
+				maxAge: 60 * 10, // 10 minutes
+			},
+		},
+		"/api/contact": {
+			cors: true,
+		},
+
+		// Static assets - long-term caching
 		"/_nuxt/**": {
 			headers: {
 				"cache-control": "public, max-age=31536000, immutable",
@@ -72,21 +98,64 @@ export default defineNuxtConfig({
 				"cache-control": "public, max-age=86400",
 			},
 		},
+		"/robots.txt": {
+			headers: {
+				"cache-control": "public, max-age=3600",
+			},
+		},
+		"/.well-known/**": {
+			headers: {
+				"cache-control": "public, max-age=3600",
+			},
+		},
 		"/sitemap.xml": {
 			headers: {
 				"cache-control": "public, max-age=3600",
 			},
 		},
+
+		// Global headers for all routes
+		"/**": {
+			headers: {
+				"X-Content-Type-Options": "nosniff",
+				"X-Frame-Options": "SAMEORIGIN",
+				"Referrer-Policy": "strict-origin-when-cross-origin",
+				"Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+			},
+		},
 	},
 	nitro: {
+		preset: "cloudflare_module",
+		cloudflare: {
+			deployConfig: true,
+			nodeCompat: true,
+			wrangler: {
+				routes: [
+					{
+						pattern: "*wrikka.com",
+						custom_domain: true,
+					},
+				],
+			},
+		},
 		prerender: {
 			crawlLinks: true,
 			routes: ["/"],
 		},
 	},
 
+	scalar: {
+		url: "https://registry.scalar.com/@scalar/apis/galaxy?format=yaml",
+	},
+	googleFonts: {
+		families: {
+			"Noto+Sans+Thai": [400, 500, 600, 700],
+		},
+		display: "swap",
+		preload: true,
+	},
+	/*
 	vite: {
-		/*
 		plugins: [
 			checker({
 				overlay: {
@@ -96,6 +165,6 @@ export default defineNuxtConfig({
 				vueTsc: true,
 				oxlint: true,
 			}),
-		],*/
-	},
+		],
+	},*/
 });

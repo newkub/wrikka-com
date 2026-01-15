@@ -1,46 +1,51 @@
-import type { GithubProfile } from "~~/shared/types/github";
+export default defineEventHandler(async () => {
+	const config = useRuntimeConfig()
+	const githubUsername = config.public.githubUsername
 
-export default defineEventHandler(async (event) => {
-	const query = getQuery(event);
-	const username = typeof query.username === "string" ? query.username : "";
-
-	if (!username) {
-		throw createError({ statusCode: 400, statusMessage: "Missing username" });
+	if (!githubUsername) {
+		throw createError({
+			statusCode: 400,
+			statusMessage: "GitHub username is not configured",
+		})
 	}
 
-	const config = useRuntimeConfig(event);
-	const token = typeof config.githubToken === "string" && config.githubToken.length > 0 ? config.githubToken : null;
+	try {
+		const response = await fetch(`https://api.github.com/users/${githubUsername}`, {
+			headers: {
+				Authorization: `Bearer ${config.githubToken}`,
+				Accept: "application/vnd.github.v3+json",
+			},
+		})
 
-	const headers: Record<string, string> = {
-		accept: "application/vnd.github+json",
-		"user-agent": "wrikka-com",
-	};
+		if (!response.ok) {
+			throw createError({
+				statusCode: response.status,
+				statusMessage: `GitHub API error: ${response.statusText}`,
+			})
+		}
 
-	if (token) {
-		headers.authorization = `Bearer ${token}`;
+		const data = await response.json()
+
+		return {
+			login: data.login,
+			name: data.name,
+			bio: data.bio,
+			avatar_url: data.avatar_url,
+			html_url: data.html_url,
+			blog: data.blog,
+			location: data.location,
+			company: data.company,
+			followers: data.followers,
+			following: data.following,
+			public_repos: data.public_repos,
+			created_at: data.created_at,
+			twitter_username: data.twitter_username,
+		}
 	}
-
-	const res = await $fetch<{
-		login: string;
-		name: string | null;
-		avatar_url: string;
-		bio: string | null;
-		blog: string | null;
-		email: string | null;
-		followers: number;
-		following: number;
-	}>(`https://api.github.com/users/${encodeURIComponent(username)}`, { headers });
-
-	const profile: GithubProfile = {
-		login: res.login,
-		name: res.name,
-		avatarUrl: res.avatar_url,
-		bio: res.bio,
-		websiteUrl: res.blog,
-		email: res.email,
-		followers: res.followers,
-		following: res.following,
-	};
-
-	return profile;
-});
+	catch {
+		throw createError({
+			statusCode: 500,
+			statusMessage: "Failed to fetch GitHub profile",
+		})
+	}
+})

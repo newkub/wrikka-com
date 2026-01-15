@@ -1,11 +1,10 @@
 export interface BlogPost {
 	slug: string;
 	title: string;
+	excerpt: string;
 	description: string;
-	html: string;
-	date?: string;
-	tags?: string[];
-	imageUrl?: string;
+	date: string;
+	category: string | null;
+	categories?: string[];
+	tags: string[];
 }
-
-export type Post = BlogPost;

@@ -1,100 +1,383 @@
 <script setup lang="ts">
-const route = useRoute();
-const { fetchPostBySlug } = useBlog();
+definePageMeta({
+	layout: "blog",
+})
 
-const isFocusMode = useFocusMode();
-const articleEl = ref<HTMLElement | null>(null);
-const currentSectionTitle = ref<string | null>(null);
+const route = useRoute()
+const slug = route.params.slug as string
 
-const { data: post, pending, error } = await fetchPostBySlug(
-	route.params.slug as string,
-);
+interface BlogPostDetail {
+	content: string
+	title: string
+	excerpt: string
+	date: string
+	category: string | null
+	tags: string[]
+	author?: string
+	readingTime?: number
+	updatedDate?: string
+}
 
-// Fetch all posts to find next/previous
-const { fetchPosts } = useBlog();
-const { data: allPosts } = await fetchPosts();
+const { data: post, pending } = await useFetch<BlogPostDetail>(`/api/blog/${slug}`)
 
-const shareUrl = computed(() => process.client ? window.location.href : '');
-const shareText = computed(() => `Check out this article: ${post.value?.title}`);
+const { render } = await useMarkdownRenderer()
 
-const twitterShareUrl = computed(() => `https://twitter.com/intent/tweet?url=${encodeURIComponent(shareUrl.value)}&text=${encodeURIComponent(shareText.value)}`);
-const facebookShareUrl = computed(() => `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(shareUrl.value)}`);
+const formatDate = (dateString: string) => {
+	return new Date(dateString).toLocaleDateString("en-US", {
+		year: "numeric",
+		month: "long",
+		"day": "numeric",
+	})
+}
 
-const [prevPost, nextPost] = (() => {
-  if (!post.value || !allPosts.value) return [null, null];
+const renderedContent = computed(() => {
+	if (!post.value?.content) return ""
+	return render(post.value.content)
+})
 
-  const sortedPosts = [...allPosts.value].sort((a, b) => new Date(a.date || 0).getTime() - new Date(b.date || 0).getTime());
-  const currentIndex = sortedPosts.findIndex(p => p.slug === post.value!.slug);
+const currentUrl = computed(() => {
+	return typeof window !== "undefined" ? window.location.href : ""
+})
 
-  if (currentIndex === -1) return [null, null];
-
-  const prev = currentIndex > 0 ? sortedPosts[currentIndex - 1] : null;
-  const next = currentIndex < sortedPosts.length - 1 ? sortedPosts[currentIndex + 1] : null;
-
-  return [prev || null, next || null];
-})();
-
-
-const updateCurrentSectionFromIntersection = () => {
-	const root = articleEl.value;
-	if (!root) return;
-
-	const headings = Array.from(root.querySelectorAll<HTMLElement>("h2[id]"));
-	if (!headings.length) {
-		currentSectionTitle.value = null;
-		return;
-	}
-
-	headings.forEach((h) => {
-		useIntersectionObserver(
-			h,
-			([entry]) => {
-				if (!entry?.isIntersecting) return;
-				const text = (h.textContent || "").trim();
-				currentSectionTitle.value = text || null;
-			},
-			{
-				root: null,
-				threshold: 0.25,
-				rootMargin: "-72px 0px -70% 0px",
-			},
-		);
-	});
-};
-
-watch(
-	() => post.value?.html,
-	async () => {
-		await nextTick();
-		updateCurrentSectionFromIntersection();
-	},
-);
-
-onMounted(() => {
-	updateCurrentSectionFromIntersection();
-});
+useSeoMeta({
+	title: computed(() => post.value?.title || "Blog Post"),
+	description: computed(() => post.value?.excerpt || ""),
+})
 </script>
 
-
 <template>
-  <div>
-    <BlogPostLoading v-if="pending" />
-    <BlogPostError v-else-if="error" />
-    <div v-else-if="post" :class="['max-w-4xl mx-auto', { 'px-4 sm:px-6 lg:px-8': !isFocusMode }]" ref="articleEl">
-      <div class="fixed top-20 right-4 z-50">
-        <button @click="isFocusMode = !isFocusMode" class="p-2 rounded-full bg-surface-100/80 dark:bg-surface-800/80 backdrop-blur-sm border border-surface-200 dark:border-surface-700 text-secondary hover:text-primary transition-colors">
-          <Icon :name="isFocusMode ? 'mdi:fullscreen-exit' : 'mdi:fullscreen'" class="text-xl" />
-        </button>
-      </div>
-      <BlogPostHeader v-if="!isFocusMode" :post="post" />
-      <BlogPostBody :post="post" :currentSectionTitle="currentSectionTitle" />
-      <BlogPostFooter
-        v-if="!isFocusMode"
-        :prevPost="prevPost"
-        :nextPost="nextPost"
-        :twitterShareUrl="twitterShareUrl"
-        :facebookShareUrl="facebookShareUrl"
-      />
-    </div>
-  </div>
+	<div v-if="pending" class="flex justify-center items-center py-4rem">
+		<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 border-t-blue-600 rounded-full"></div>
+	</div>
+
+	<article v-else-if="post" class="blog-post">
+		<header class="mb-2rem">
+			<NuxtLink to="/blog" class="inline-flex items-center gap-0.5rem text-blue-600 dark:text-blue-400 no-underline mb-1rem hover:underline">
+				<Icon name="mdi:arrow-left" class="w-1rem h-1rem" />
+				<span>Back to Blog</span>
+			</NuxtLink>
+			<h1 class="text-2.5rem font-700 mb-1rem">{{ post.title }}</h1>
+			<p class="text-1.125rem text-gray-600 dark:text-gray-400 mb-1rem leading-1.6">{{ post.excerpt }}</p>
+		</header>
+
+		<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
+
+		<template #metadata v-if="post">
+			<BlogMetadata
+				:date="post.date"
+				:category="post.category"
+				:tags="post.tags"
+				:author="post.author"
+				:reading-time="post.readingTime"
+				:updated-date="post.updatedDate"
+				:title="post.title"
+				:url="currentUrl"
+			/>
+		</template>
+
+		<template #toc v-if="post">
+			<TableOfContents :content="renderedContent" />
+		</template>
+	</article>
+
+	<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+		<p>Blog post not found</p>
+		<NuxtLink to="/blog" class="text-blue-600 dark:text-blue-400 no-underline hover:underline">Back to Blog</NuxtLink>
+	</div>
 </template>
+
+<style>
+.prose {
+	color: rgb(17, 24, 39);
+	max-width: 65ch;
+}
+.prose :where(p):not(:where([class~="not-prose"] *)) {
+	margin-top: 1.25em;
+	margin-bottom: 1.25em;
+}
+.prose :where([class~="lead"]):not(:where([class~="not-prose"] *)) {
+	color: rgb(55, 65, 81);
+	font-size: 1.25em;
+	line-height: 1.6;
+	margin-top: 1.2em;
+	margin-bottom: 1.2em;
+}
+.prose :where(a):not(:where([class~="not-prose"] *)) {
+	color: rgb(37, 99, 235);
+	text-decoration: underline;
+	font-weight: 500;
+}
+.prose :where(a):not(:where([class~="not-prose"] *)):hover {
+	color: rgb(29, 78, 216);
+}
+.prose :where(strong):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 600;
+}
+.prose :where(a strong):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(blockquote strong):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(thead th strong):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(ul):not(:where([class~="not-prose"] *)) {
+	list-style-type: disc;
+	padding-left: 1.625em;
+}
+.prose :where(ol):not(:where([class~="not-prose"] *)) {
+	list-style-type: decimal;
+	padding-left: 1.625em;
+}
+.prose :where(li):not(:where([class~="not-prose"] *)) {
+	margin-top: 0.5em;
+	margin-bottom: 0.5em;
+}
+.prose :where(ol > li):not(:where([class~="not-prose"] *)) {
+	padding-left: 0.375em;
+}
+.prose :where(ul > li):not(:where([class~="not-prose"] *)) {
+	padding-left: 0.375em;
+}
+.prose :where(.prose > ul > li):not(:where([class~="not-prose"] *)) {
+	padding-left: 0.375em;
+}
+.prose :where(.prose > ol > li):not(:where([class~="not-prose"] *)) {
+	padding-left: 0.375em;
+}
+.prose :where(ul ul, ul ol, ol ul, ol ol):not(:where([class~="not-prose"] *)) {
+	margin-top: 0.75em;
+	margin-bottom: 0.75em;
+}
+.prose :where(hr):not(:where([class~="not-prose"] *)) {
+	border-color: rgb(229, 231, 235);
+	border-top-width: 1px;
+	margin-top: 3em;
+	margin-bottom: 3em;
+}
+.prose :where(blockquote):not(:where([class~="not-prose"] *)) {
+	font-weight: 500;
+	font-style: italic;
+	color: rgb(55, 65, 81);
+	border-left-width: 0.25rem;
+	border-left-color: rgb(209, 213, 219);
+	quotes: "\201C""\201D""\2018""\2019";
+	margin-top: 1.6em;
+	margin-bottom: 1.6em;
+	padding-left: 1em;
+}
+.prose :where(h1):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 800;
+	font-size: 2.25em;
+	margin-top: 0;
+	margin-bottom: 0.8888889em;
+	line-height: 1.1111111;
+}
+.prose :where(h2):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 700;
+	font-size: 1.5em;
+	margin-top: 2em;
+	margin-bottom: 1em;
+	line-height: 1.3333333;
+}
+.prose :where(h3):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 600;
+	font-size: 1.25em;
+	margin-top: 1.6em;
+	margin-bottom: 0.6em;
+	line-height: 1.6;
+}
+.prose :where(h4):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 600;
+	margin-top: 1.5em;
+	margin-bottom: 0.5em;
+	line-height: 1.5;
+}
+.prose :where(img):not(:where([class~="not-prose"] *)) {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.prose :where(picture):not(:where([class~="not-prose"] *)) {
+	display: block;
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.prose :where(video):not(:where([class~="not-prose"] *)) {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.prose :where(figure):not(:where([class~="not-prose"] *)) {
+	margin-top: 2em;
+	margin-bottom: 2em;
+}
+.prose :where(figcaption):not(:where([class~="not-prose"] *)) {
+	color: rgb(107, 114, 128);
+	font-size: 0.875em;
+	line-height: 1.4285714;
+	margin-top: 0.8571429em;
+}
+.prose :where(code):not(:where([class~="not-prose"] *)) {
+	color: rgb(239, 68, 68);
+	font-weight: 600;
+	font-size: 0.875em;
+}
+.prose :where(code):not(:where([class~="not-prose"] *)):before {
+	content: "`";
+}
+.prose :where(code):not(:where([class~="not-prose"] *)):after {
+	content: "`";
+}
+.prose :where(a code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(h1 code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(h2 code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(h3 code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(h4 code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(blockquote code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(th code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(td code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(div code):not(:where([class~="not-prose"] *)) {
+	color: inherit;
+}
+.prose :where(pre):not(:where([class~="not-prose"] *)) {
+	color: rgb(229, 231, 235);
+	background-color: rgb(17, 24, 39);
+	overflow-x: auto;
+	font-weight: 400;
+	font-size: 0.875em;
+	line-height: 1.7142857;
+	margin-top: 1.7142857em;
+	margin-bottom: 1.7142857em;
+	border-radius: 0.375rem;
+	padding: 0.8571429em 1.1428571em;
+}
+.prose :where(pre code):not(:where([class~="not-prose"] *)) {
+	background-color: transparent;
+	border-width: 0;
+	border-radius: 0;
+	padding: 0;
+	font-weight: inherit;
+	color: inherit;
+	font-size: inherit;
+	font-family: inherit;
+	line-height: inherit;
+}
+.prose :where(pre code):not(:where([class~="not-prose"] *)):before {
+	content: none;
+}
+.prose :where(pre code):not(:where([class~="not-prose"] *)):after {
+	content: none;
+}
+.prose :where(table):not(:where([class~="not-prose"] *)) {
+	width: 100%;
+	table-layout: auto;
+	text-align: left;
+	margin-top: 2em;
+	margin-bottom: 2em;
+	font-size: 0.875em;
+	line-height: 1.7142857;
+}
+.prose :where(thead):not(:where([class~="not-prose"] *)) {
+	color: rgb(17, 24, 39);
+	font-weight: 600;
+	border-bottom-width: 1px;
+	border-bottom-color: rgb(209, 213, 219);
+}
+.prose :where(thead th):not(:where([class~="not-prose"] *)) {
+	vertical-align: bottom;
+	padding-right: 0.5714286em;
+	padding-bottom: 0.5714286em;
+	padding-left: 0.5714286em;
+}
+.prose :where(tbody tr):not(:where([class~="not-prose"] *)) {
+	border-bottom-width: 1px;
+	border-bottom-color: rgb(229, 231, 235);
+}
+.prose :where(tbody tr:last-child):not(:where([class~="not-prose"] *)) {
+	border-bottom-width: 0;
+}
+.prose :where(tbody td):not(:where([class~="not-prose"] *)) {
+	vertical-align: top;
+	padding: 0.5714286em;
+}
+.prose :where(tfoot):not(:where([class~="not-prose"] *)) {
+	border-top-width: 1px;
+	border-top-color: rgb(209, 213, 219);
+}
+.prose :where(tfoot td):not(:where([class~="not-prose"] *)) {
+	vertical-align: top;
+	padding: 0.5714286em;
+}
+.prose :where(figure > *):not(:where([class~="not-prose"] *)) {
+	margin-top: 0;
+	margin-bottom: 0;
+}
+.prose :where(figcaption):not(:where([class~="not-prose"] *)) {
+	color: rgb(107, 114, 128);
+	font-size: 0.875em;
+	line-height: 1.4285714;
+	margin-top: 0.8571429em;
+}
+.prose :where(.dark &):not(:where([class~="not-prose"] *)) {
+	color: rgb(229, 231, 235);
+}
+.prose :where(.dark & strong):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+}
+.prose :where(.dark & a):not(:where([class~="not-prose"] *)) {
+	color: rgb(96, 165, 250);
+}
+.prose :where(.dark & a):not(:where([class~="not-prose"] *)):hover {
+	color: rgb(129, 140, 248);
+}
+.prose :where(.dark & blockquote):not(:where([class~="not-prose"] *)) {
+	color: rgb(156, 163, 175);
+	border-left-color: rgb(75, 85, 99);
+}
+.prose :where(.dark & h1):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+}
+.prose :where(.dark & h2):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+}
+.prose :where(.dark & h3):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+}
+.prose :where(.dark & h4):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+}
+.prose :where(.dark & code):not(:where([class~="not-prose"] *)) {
+	color: rgb(248, 113, 113);
+}
+.prose :where(.dark & thead):not(:where([class~="not-prose"] *)) {
+	color: rgb(255, 255, 255);
+	border-bottom-color: rgb(75, 85, 99);
+}
+.prose :where(.dark & tbody tr):not(:where([class~="not-prose"] *)) {
+	border-bottom-color: rgb(55, 65, 81);
+}
+.prose :where(.dark & tfoot):not(:where([class~="not-prose"] *)) {
+	border-top-color: rgb(75, 85, 99);
+}
+</style>
