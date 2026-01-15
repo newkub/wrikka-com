@@ -27,7 +27,10 @@ export default defineEventHandler(async (event) => {
 			category: data.category || null,
 			tags: data.tags || [],
 			content,
-			frontmatter: data,
+			cover: data.cover || data.image || null,
+			author: data.author || undefined,
+			readingTime: data.readingTime || undefined,
+			updatedDate: data.updatedDate || undefined,
 		}
 	}
 	catch {
