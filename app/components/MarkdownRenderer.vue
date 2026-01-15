@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import { useMarkdownRenderer } from "../composables/useMarkdownRenderer"
+import { useMarkdownRenderer } from "../composables/useMarkdownRenderer";
 
-const { render } = await useMarkdownRenderer()
+const { render } = await useMarkdownRenderer();
 
 interface Props {
-	content: string
+	content: string;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const renderedContent = computed(() => {
-	if (!props.content) return ""
-	return render(props.content)
-})
+	if (!props.content) return "";
+	return render(props.content);
+});
 </script>
 
 <template>

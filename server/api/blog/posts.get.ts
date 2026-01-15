@@ -1,19 +1,19 @@
-import { glob } from "glob"
-import matter from "gray-matter"
-import { readFileSync } from "fs"
-import { join } from "path"
+import { readFileSync } from "fs";
+import { glob } from "glob";
+import matter from "gray-matter";
+import { join } from "path";
 
 export default defineEventHandler(async (_event) => {
 	try {
-		const contentDir = join(process.cwd(), "content", "blog")
-		const files = await glob("*.md", { cwd: contentDir, absolute: false })
+		const contentDir = join(process.cwd(), "content", "blog");
+		const files = await glob("*.md", { cwd: contentDir, absolute: false });
 
 		const posts = files.map((file) => {
-			const filePath = join(contentDir, file)
-			const fileContent = readFileSync(filePath, "utf-8")
-			const { data, content } = matter(fileContent)
+			const filePath = join(contentDir, file);
+			const fileContent = readFileSync(filePath, "utf-8");
+			const { data, content } = matter(fileContent);
 
-			const slug = file.replace(/\.md$/, "")
+			const slug = file.replace(/\.md$/, "");
 
 			return {
 				slug,
@@ -22,15 +22,14 @@ export default defineEventHandler(async (_event) => {
 				date: data.date || new Date().toISOString(),
 				category: data.category || null,
 				tags: data.tags || [],
-			}
-		})
+			};
+		});
 
-		return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
-	}
-	catch {
+		return posts.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+	} catch {
 		throw createError({
 			statusCode: 500,
 			statusMessage: "Failed to fetch blog posts",
-		})
+		});
 	}
-})
+});

@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-	src?: string
-	alt?: string
-	size?: "sm" | "md" | "lg"
+	src?: string;
+	alt?: string;
+	size?: "sm" | "md" | "lg";
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	size: "md",
-})
+});
 </script>
 
 <template>

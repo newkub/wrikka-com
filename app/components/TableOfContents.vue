@@ -1,70 +1,70 @@
 <script setup lang="ts">
 interface Heading {
-	id: string
-	text: string
-	level: number
+	id: string;
+	text: string;
+	level: number;
 }
 
 const props = defineProps<{
-	content: string
-}>()
+	content: string;
+}>();
 
-const headings = ref<Heading[]>([])
+const headings = ref<Heading[]>([]);
 
 const extractHeadings = () => {
-	const parser = new DOMParser()
-	const doc = parser.parseFromString(props.content, "text/html")
-	const headingElements = doc.querySelectorAll("h2, h3, h4")
+	const parser = new DOMParser();
+	const doc = parser.parseFromString(props.content, "text/html");
+	const headingElements = doc.querySelectorAll("h2, h3, h4");
 
 	headings.value = Array.from(headingElements).map((el) => ({
 		id: el.id || el.textContent?.toLowerCase().replace(/\s+/g, "-") || "",
 		text: el.textContent || "",
 		level: el.tagName && el.tagName[1] ? parseInt(el.tagName[1]) : 2,
-	}))
-}
+	}));
+};
 
-const activeHeading = ref<string>("")
+const activeHeading = ref<string>("");
 
 onMounted(() => {
-	extractHeadings()
+	extractHeadings();
 
 	// Set up scroll spy using IntersectionObserver
 	const observer = new IntersectionObserver(
 		(entries) => {
 			entries.forEach((entry) => {
 				if (entry.isIntersecting) {
-					activeHeading.value = entry.target.id
+					activeHeading.value = entry.target.id;
 				}
-			})
+			});
 		},
 		{
 			rootMargin: "-20% 0% -70% 0%",
 		},
-	)
+	);
 
 	// Observe headings after they're rendered
 	nextTick(() => {
 		document.querySelectorAll("h2, h3, h4").forEach((heading) => {
-			observer.observe(heading)
-		})
-	})
+			observer.observe(heading);
+		});
+	});
 
 	onUnmounted(() => {
-		observer.disconnect()
-	})
-})
+		observer.disconnect();
+	});
+});
 
 watch(() => props.content, () => {
-	extractHeadings()
-}, { immediate: true })
+	extractHeadings();
+}, { immediate: true });
 
 const scrollToHeading = (id: string) => {
-	if (!id) return
-	const element = document.getElementById(id)
+	if (!id) return;
+	const element = document.getElementById(id);
 	if (element) {
-		element.scrollIntoView({ behavior: "smooth" })
+		element.scrollIntoView({ behavior: "smooth" });
 	}
-}
+};
 </script>
 
 <template>
@@ -83,7 +83,8 @@ const scrollToHeading = (id: string) => {
 				:class="[
 					'text-gray-600 dark:text-gray-400',
 					{
-						'text-blue-600 dark:text-blue-400 font-600': activeHeading === heading.id,
+						'text-blue-600 dark:text-blue-400 font-600':
+							activeHeading === heading.id,
 						'pl-0': heading.level === 2,
 						'pl-1rem': heading.level === 3,
 						'pl-2rem': heading.level === 4,

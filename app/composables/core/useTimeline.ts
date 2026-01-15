@@ -8,7 +8,8 @@ export const useTimeline = () => {
 			position: "Senior Full Stack Developer",
 			startDate: "2023-01",
 			current: true,
-			description: "Leading development of modern web applications using Nuxt, Vue.js, and TypeScript. Implementing best practices and mentoring junior developers.",
+			description:
+				"Leading development of modern web applications using Nuxt, Vue.js, and TypeScript. Implementing best practices and mentoring junior developers.",
 			technologies: ["Nuxt", "Vue.js", "TypeScript", "Node.js", "PostgreSQL"],
 			location: "Bangkok, Thailand",
 			url: "https://example.com",
@@ -19,7 +20,8 @@ export const useTimeline = () => {
 			position: "Full Stack Developer",
 			startDate: "2021-06",
 			endDate: "2022-12",
-			description: "Developed and maintained multiple client projects. Built responsive web applications and RESTful APIs.",
+			description:
+				"Developed and maintained multiple client projects. Built responsive web applications and RESTful APIs.",
 			technologies: ["React", "Next.js", "Node.js", "MongoDB", "AWS"],
 			location: "Bangkok, Thailand",
 			url: "https://example.com",
@@ -30,7 +32,8 @@ export const useTimeline = () => {
 			position: "Frontend Developer",
 			startDate: "2020-01",
 			endDate: "2021-05",
-			description: "Created user interfaces for web applications. Collaborated with designers to implement pixel-perfect designs.",
+			description:
+				"Created user interfaces for web applications. Collaborated with designers to implement pixel-perfect designs.",
 			technologies: ["Vue.js", "Nuxt.js", "TailwindCSS", "Firebase"],
 			location: "Remote",
 			url: "https://example.com",

@@ -2,31 +2,41 @@
 useSeoMeta({
 	title: "YouTube",
 	description: "Latest videos from YouTube",
-})
+});
 
-const { data: videos, pending: videosPending } = await useFetch("/api/youtube/videos")
+const { data: videos, pending: videosPending } = await useFetch(
+	"/api/youtube/videos",
+);
 
 const formatDate = (dateString: string) => {
 	return new Date(dateString).toLocaleDateString("en-US", {
 		year: "numeric",
 		month: "long",
 		day: "numeric",
-	})
-}
+	});
+};
 </script>
 
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">YouTube</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">Latest videos from YouTube</p>
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+				YouTube
+			</h1>
+			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+				Latest videos from YouTube
+			</p>
 		</div>
 
 		<div v-if="videosPending" class="flex justify-center items-center py-4rem">
-			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full"></div>
+			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full">
+			</div>
 		</div>
 
-		<div v-else-if="videos && videos.length > 0" class="max-w-6xl mx-auto px-1.5rem">
+		<div
+			v-else-if="videos && videos.length > 0"
+			class="max-w-6xl mx-auto px-1.5rem"
+		>
 			<div class="grid grid-cols-1 gap-1.5rem md:grid-cols-2 lg:grid-cols-3">
 				<a
 					v-for="video in videos"
@@ -47,8 +57,15 @@ const formatDate = (dateString: string) => {
 						</div>
 					</div>
 					<div class="p-1rem">
-						<h3 class="text-1rem font-600 m-0 mb-0.5rem line-clamp-2">{{ video.title }}</h3>
-						<p v-if="video.description" class="text-0.875rem text-gray-600 dark:text-gray-400 mb-0.5rem line-clamp-2">{{ video.description }}</p>
+						<h3 class="text-1rem font-600 m-0 mb-0.5rem line-clamp-2">
+							{{ video.title }}
+						</h3>
+						<p
+							v-if="video.description"
+							class="text-0.875rem text-gray-600 dark:text-gray-400 mb-0.5rem line-clamp-2"
+						>
+							{{ video.description }}
+						</p>
 						<div class="flex items-center gap-0.5rem text-0.75rem text-gray-600 dark:text-gray-400">
 							<Icon name="mdi:calendar" class="w-1rem h-1rem" />
 							<span>{{ formatDate(video.publishedAt) }}</span>

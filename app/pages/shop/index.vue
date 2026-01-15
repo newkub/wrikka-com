@@ -2,25 +2,29 @@
 useSeoMeta({
 	title: "Shop",
 	description: "My shop and digital goods",
-})
+});
 
 interface ShopItem {
-	id: string
-	name: string
-	description: string
-	coverUrl: string
-	price: string
-	url: string
+	id: string;
+	name: string;
+	description: string;
+	coverUrl: string;
+	price: string;
+	url: string;
 }
 
-const { data: items } = await useFetch<ShopItem[]>("/api/shop")
+const { data: items } = await useFetch<ShopItem[]>("/api/shop");
 </script>
 
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">Shop</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">My shop and digital goods</p>
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+				Shop
+			</h1>
+			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+				My shop and digital goods
+			</p>
 		</div>
 
 		<div v-if="items && items.length > 0" class="max-w-6xl mx-auto px-1.5rem">
@@ -41,11 +45,20 @@ const { data: items } = await useFetch<ShopItem[]>("/api/shop")
 						/>
 					</div>
 					<div class="p-1.5rem">
-						<h3 class="text-1.125rem font-600 m-0 mb-0.5rem">{{ item.name }}</h3>
-						<p class="text-gray-600 dark:text-gray-400 mb-1rem text-0.875rem line-clamp-2">{{ item.description }}</p>
+						<h3 class="text-1.125rem font-600 m-0 mb-0.5rem">
+							{{ item.name }}
+						</h3>
+						<p class="text-gray-600 dark:text-gray-400 mb-1rem text-0.875rem line-clamp-2">
+							{{ item.description }}
+						</p>
 						<div class="flex items-center justify-between">
-							<span class="text-1.25rem font-700 text-blue-600 dark:text-blue-400">{{ item.price }}</span>
-							<Icon name="mdi:cart" class="w-1.25rem h-1.25rem text-gray-600 dark:text-gray-400" />
+							<span
+								class="text-1.25rem font-700 text-blue-600 dark:text-blue-400"
+							>{{ item.price }}</span>
+							<Icon
+								name="mdi:cart"
+								class="w-1.25rem h-1.25rem text-gray-600 dark:text-gray-400"
+							/>
 						</div>
 					</div>
 				</a>

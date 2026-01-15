@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-	variant?: "default" | "success" | "warning" | "error"
-	size?: "sm" | "md"
+	variant?: "default" | "success" | "warning" | "error";
+	size?: "sm" | "md";
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	variant: "default",
 	size: "md",
-})
+});
 </script>
 
 <template>

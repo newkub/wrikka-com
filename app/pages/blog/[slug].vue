@@ -46,6 +46,24 @@ useSeoMeta({
 </script>
 
 <template>
+	<template #metadata>
+		<BlogMetadata
+			v-if="post"
+			:date="post.date"
+			:category="post.category"
+			:tags="post.tags"
+			:author="post.author"
+			:reading-time="post.readingTime"
+			:updated-date="post.updatedDate"
+			:title="post.title"
+			:url="currentUrl"
+		/>
+	</template>
+
+	<template #toc>
+		<TableOfContents v-if="post" :content="renderedContent" />
+	</template>
+
 	<div v-if="pending" class="flex justify-center items-center py-4rem">
 		<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 border-t-blue-600 rounded-full"></div>
 	</div>
@@ -61,23 +79,6 @@ useSeoMeta({
 		</header>
 
 		<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
-
-		<template #metadata v-if="post">
-			<BlogMetadata
-				:date="post.date"
-				:category="post.category"
-				:tags="post.tags"
-				:author="post.author"
-				:reading-time="post.readingTime"
-				:updated-date="post.updatedDate"
-				:title="post.title"
-				:url="currentUrl"
-			/>
-		</template>
-
-		<template #toc v-if="post">
-			<TableOfContents :content="renderedContent" />
-		</template>
 	</article>
 
 	<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">

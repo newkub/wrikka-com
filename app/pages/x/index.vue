@@ -2,9 +2,11 @@
 useSeoMeta({
 	title: "X",
 	description: "Latest tweets from X",
-})
+});
 
-const { data: tweets, pending: tweetsPending } = await useFetch("/api/x/tweets")
+const { data: tweets, pending: tweetsPending } = await useFetch(
+	"/api/x/tweets",
+);
 
 const formatDate = (dateString: string) => {
 	return new Date(dateString).toLocaleDateString("en-US", {
@@ -13,32 +15,40 @@ const formatDate = (dateString: string) => {
 		day: "numeric",
 		hour: "2-digit",
 		minute: "2-digit",
-	})
-}
+	});
+};
 
 const formatNumber = (num: number) => {
 	if (num >= 1000000) {
-		return `${(num / 1000000).toFixed(1)}M`
+		return `${(num / 1000000).toFixed(1)}M`;
 	}
 	if (num >= 1000) {
-		return `${(num / 1000).toFixed(1)}K`
+		return `${(num / 1000).toFixed(1)}K`;
 	}
-	return num.toString()
-}
+	return num.toString();
+};
 </script>
 
 <template>
 	<div class="flex flex-col gap-2rem">
 		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">X</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400">Latest tweets from X</p>
+			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-gray-900 dark:text-gray-100">
+				X
+			</h1>
+			<p class="text-1.125rem text-gray-600 dark:text-gray-400">
+				Latest tweets from X
+			</p>
 		</div>
 
 		<div v-if="tweetsPending" class="flex justify-center items-center py-4rem">
-			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full"></div>
+			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full">
+			</div>
 		</div>
 
-		<div v-else-if="tweets && tweets.length > 0" class="max-w-4xl mx-auto px-1.5rem">
+		<div
+			v-else-if="tweets && tweets.length > 0"
+			class="max-w-4xl mx-auto px-1.5rem"
+		>
 			<div class="flex flex-col gap-1.5rem">
 				<a
 					v-for="tweet in tweets"
@@ -56,11 +66,17 @@ const formatNumber = (num: number) => {
 							class="w-3rem h-3rem rounded-full border-2 border-gray-200 dark:border-gray-700"
 						/>
 						<div class="flex-1">
-							<h3 class="text-1rem font-600 m-0 mb-0.25rem">{{ tweet.user.name }}</h3>
-							<p class="text-0.75rem text-gray-600 dark:text-gray-400 m-0">@{{ tweet.user.username }}</p>
+							<h3 class="text-1rem font-600 m-0 mb-0.25rem">
+								{{ tweet.user.name }}
+							</h3>
+							<p class="text-0.75rem text-gray-600 dark:text-gray-400 m-0">
+								@{{ tweet.user.username }}
+							</p>
 						</div>
 					</div>
-					<p class="text-0.875rem text-gray-900 dark:text-gray-100 mb-1rem whitespace-pre-wrap">{{ tweet.text }}</p>
+					<p class="text-0.875rem text-gray-900 dark:text-gray-100 mb-1rem whitespace-pre-wrap">
+						{{ tweet.text }}
+					</p>
 					<div v-if="tweet.media && tweet.media.length > 0" class="mb-1rem">
 						<div class="grid grid-cols-1 gap-0.5rem">
 							<img

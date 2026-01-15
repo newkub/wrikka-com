@@ -5,7 +5,8 @@ export const useAchievements = () => {
 		{
 			id: "1",
 			title: "Senior Developer Promotion",
-			description: "Promoted to Senior Full Stack Developer after demonstrating exceptional technical skills and leadership abilities.",
+			description:
+				"Promoted to Senior Full Stack Developer after demonstrating exceptional technical skills and leadership abilities.",
 			date: "2023-01",
 			icon: "🏆",
 		},
@@ -26,7 +27,8 @@ export const useAchievements = () => {
 		{
 			id: "4",
 			title: "Project Lead",
-			description: "Successfully led a team of 5 developers to deliver a major e-commerce platform on time and within budget.",
+			description:
+				"Successfully led a team of 5 developers to deliver a major e-commerce platform on time and within budget.",
 			date: "2021-11",
 			icon: "👥",
 		},

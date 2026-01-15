@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
 	titleTemplate: "%s - Wrikka",
-})
+});
 </script>
 
 <template>

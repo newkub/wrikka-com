@@ -1,19 +1,19 @@
 export default defineEventHandler(async (event) => {
-	const config = useRuntimeConfig()
-	const body = await readBody(event)
+	const config = useRuntimeConfig();
+	const body = await readBody(event);
 
 	if (!body.name || !body.email || !body.subject || !body.message) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: "All fields are required",
-		})
+		});
 	}
 
 	if (!body.email.includes("@") || !body.email.includes(".")) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: "Invalid email address",
-		})
+		});
 	}
 
 	try {
@@ -48,24 +48,23 @@ ${body.message}
 Sent from ${body.email}
 				`,
 			}),
-		})
+		});
 
 		if (!response.ok) {
 			throw createError({
 				statusCode: response.status,
 				statusMessage: "Failed to send email",
-			})
+			});
 		}
 
 		return {
 			success: true,
 			message: "Message sent successfully",
-		}
-	}
-	catch {
+		};
+	} catch {
 		throw createError({
 			statusCode: 500,
 			statusMessage: "Failed to send email",
-		})
+		});
 	}
-})
+});

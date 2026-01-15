@@ -1,13 +1,13 @@
 <script setup lang="ts">
 interface Props {
-	title?: string
-	metadata?: Record<string, any>
+	title?: string;
+	metadata?: Record<string, any>;
 }
 
 const props = withDefaults(defineProps<Props>(), {
 	title: "",
 	metadata: () => ({}),
-})
+});
 </script>
 
 <template>

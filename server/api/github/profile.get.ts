@@ -1,12 +1,12 @@
 export default defineEventHandler(async () => {
-	const config = useRuntimeConfig()
-	const githubUsername = config.public.githubUsername
+	const config = useRuntimeConfig();
+	const githubUsername = config.public.githubUsername;
 
 	if (!githubUsername) {
 		throw createError({
 			statusCode: 400,
 			statusMessage: "GitHub username is not configured",
-		})
+		});
 	}
 
 	try {
@@ -15,16 +15,16 @@ export default defineEventHandler(async () => {
 				Authorization: `Bearer ${config.githubToken}`,
 				Accept: "application/vnd.github.v3+json",
 			},
-		})
+		});
 
 		if (!response.ok) {
 			throw createError({
 				statusCode: response.status,
 				statusMessage: `GitHub API error: ${response.statusText}`,
-			})
+			});
 		}
 
-		const data = await response.json()
+		const data = await response.json();
 
 		return {
 			login: data.login,
@@ -40,12 +40,11 @@ export default defineEventHandler(async () => {
 			public_repos: data.public_repos,
 			created_at: data.created_at,
 			twitter_username: data.twitter_username,
-		}
-	}
-	catch {
+		};
+	} catch {
 		throw createError({
 			statusCode: 500,
 			statusMessage: "Failed to fetch GitHub profile",
-		})
+		});
 	}
-})
+});
