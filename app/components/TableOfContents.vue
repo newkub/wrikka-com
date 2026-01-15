@@ -106,8 +106,7 @@ const scrollToHeading = (id: string) => {
 				:class="[
 					'text-muted-foreground',
 					{
-						'text-primary font-600':
-							activeHeading === heading.id,
+						'text-primary font-600': activeHeading === heading.id,
 						'pl-0': heading.level === 2,
 						'pl-1rem': heading.level === 3,
 						'pl-2rem': heading.level === 4,

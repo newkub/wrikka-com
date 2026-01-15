@@ -11,27 +11,27 @@ Read and write files with Bun's file system API.
 ## Read a File
 
 ```typescript
-const content = await Bun.file('example.txt').text();
+const content = await Bun.file("example.txt").text();
 console.log(content);
 ```
 
 ## Write a File
 
 ```typescript
-await Bun.write('output.txt', 'Hello, World!');
+await Bun.write("output.txt", "Hello, World!");
 ```
 
 ## Read JSON
 
 ```typescript
-const data = await Bun.file('data.json').json();
+const data = await Bun.file("data.json").json();
 console.log(data);
 ```
 
 ## Check if a File Exists
 
 ```typescript
-const exists = await Bun.file('example.txt').exists();
+const exists = await Bun.file("example.txt").exists();
 ```
 
 ## Features

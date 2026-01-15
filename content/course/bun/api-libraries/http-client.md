@@ -11,7 +11,7 @@ Make HTTP requests with fetch and web standards.
 ## Make a GET Request
 
 ```typescript
-const response = await fetch('https://api.example.com/data');
+const response = await fetch("https://api.example.com/data");
 const data = await response.json();
 console.log(data);
 ```
@@ -19,12 +19,12 @@ console.log(data);
 ## Make a POST Request
 
 ```typescript
-const response = await fetch('https://api.example.com/data', {
-  method: 'POST',
-  headers: {
-    'Content-Type': 'application/json',
-  },
-  body: JSON.stringify({ message: 'Hello' }),
+const response = await fetch("https://api.example.com/data", {
+	method: "POST",
+	headers: {
+		"Content-Type": "application/json",
+	},
+	body: JSON.stringify({ message: "Hello" }),
 });
 
 const data = await response.json();

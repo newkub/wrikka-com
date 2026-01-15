@@ -32,10 +32,12 @@ Add a `vercel.json`:
 
 ```json
 {
-  "builds": [{
-    "src": "*.ts",
-    "use": "@vercel/bun"
-  }]
+	"builds": [
+		{
+			"src": "*.ts",
+			"use": "@vercel/bun"
+		}
+	]
 }
 ```
 

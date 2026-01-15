@@ -21,7 +21,10 @@ const codeBlocks = computed(() => {
 
 const renderWithCodeBlocks = (content: string) => {
 	// Replace code blocks with placeholders
-	return content.replace(/```(\w+)?(?:\[([^\]]+)\])?\n([\s\S]*?)```/g, '___CODEBLOCK___');
+	return content.replace(
+		/```(\w+)?(?:\[([^\]]+)\])?\n([\s\S]*?)```/g,
+		"___CODEBLOCK___",
+	);
 };
 </script>
 
@@ -240,5 +243,4 @@ const renderWithCodeBlocks = (content: string) => {
 .markdown-content :deep(.shiki code) {
 	color: rgb(243 244 246);
 }
-
 </style>

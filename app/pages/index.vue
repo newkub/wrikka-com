@@ -119,7 +119,9 @@ interface GitHubProfile {
 							<Icon name="mdi:star" class="w-1.25rem h-1.25rem text-warning" />
 							<span class="text-0.875rem text-muted-foreground">Stars</span>
 						</div>
-						<span class="font-600 text-1.125rem">{{ stats?.totalStars ?? 0 }}</span>
+						<span class="font-600 text-1.125rem">{{
+							stats?.totalStars ?? 0
+						}}</span>
 					</a>
 					<a
 						:href="profile.html_url"
@@ -128,10 +130,15 @@ interface GitHubProfile {
 						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
 					>
 						<div class="flex items-center gap-0.5rem">
-							<Icon name="mdi:source-repository" class="w-1.25rem h-1.25rem text-primary" />
+							<Icon
+								name="mdi:source-repository"
+								class="w-1.25rem h-1.25rem text-primary"
+							/>
 							<span class="text-0.875rem text-muted-foreground">Repos</span>
 						</div>
-						<span class="font-600 text-1.125rem">{{ stats?.totalRepos ?? 0 }}</span>
+						<span class="font-600 text-1.125rem">{{
+							stats?.totalRepos ?? 0
+						}}</span>
 					</a>
 					<a
 						:href="`https://github.com/${profile.login}?tab=followers`"
@@ -140,7 +147,10 @@ interface GitHubProfile {
 						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
 					>
 						<div class="flex items-center gap-0.5rem">
-							<Icon name="mdi:account-group" class="w-1.25rem h-1.25rem text-success" />
+							<Icon
+								name="mdi:account-group"
+								class="w-1.25rem h-1.25rem text-success"
+							/>
 							<span class="text-0.875rem text-muted-foreground">Followers</span>
 						</div>
 						<span class="font-600 text-1.125rem">{{ profile.followers }}</span>
@@ -152,7 +162,10 @@ interface GitHubProfile {
 						class="flex items-center justify-between px-1rem py-0.75rem bg-surface rounded-0.375rem border border-border transition-all-0.2s hover:-translate-y-1px hover:shadow-md no-underline text-foreground"
 					>
 						<div class="flex items-center gap-0.5rem">
-							<Icon name="mdi:account-multiple" class="w-1.25rem h-1.25rem text-accent" />
+							<Icon
+								name="mdi:account-multiple"
+								class="w-1.25rem h-1.25rem text-accent"
+							/>
 							<span class="text-0.875rem text-muted-foreground">Following</span>
 						</div>
 						<span class="font-600 text-1.125rem">{{ profile.following }}</span>

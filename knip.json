@@ -6,5 +6,9 @@
 		"server/api/**/*.ts",
 		"nuxt.config.ts"
 	],
-	"project": ["app/**/*.{js,ts,vue}", "server/**/*.{js,ts}", "shared/**/*.{js,ts}"]
+	"project": [
+		"app/**/*.{js,ts,vue}",
+		"server/**/*.{js,ts}",
+		"shared/**/*.{js,ts}"
+	]
 }

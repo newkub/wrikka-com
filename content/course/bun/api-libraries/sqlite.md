@@ -11,7 +11,7 @@ Built-in SQLite database support.
 ## Create a Database
 
 ```typescript
-const db = new Bun.Database('mydb.sqlite');
+const db = new Bun.Database("mydb.sqlite");
 ```
 
 ## Create a Table
@@ -29,14 +29,14 @@ db.run(`
 ## Insert Data
 
 ```typescript
-const stmt = db.prepare('INSERT INTO users (name, email) VALUES (?, ?)');
-stmt.run('John Doe', 'john@example.com');
+const stmt = db.prepare("INSERT INTO users (name, email) VALUES (?, ?)");
+stmt.run("John Doe", "john@example.com");
 ```
 
 ## Query Data
 
 ```typescript
-const stmt = db.prepare('SELECT * FROM users');
+const stmt = db.prepare("SELECT * FROM users");
 const users = stmt.all();
 console.log(users);
 ```

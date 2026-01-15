@@ -53,14 +53,20 @@ const formatReadingTime = (minutes: number) => {
 		</div>
 
 		<!-- Title - Sticky -->
-		<div v-if="title" class="sticky top-0 bg-background py-0.5rem -mt-0.5rem z-10">
+		<div
+			v-if="title"
+			class="sticky top-0 bg-background py-0.5rem -mt-0.5rem z-10"
+		>
 			<h2 class="text-1.5rem font-700 mb-0.75rem text-foreground">
 				{{ title }}
 			</h2>
 		</div>
 
 		<!-- Excerpt -->
-		<p v-if="excerpt" class="text-0.875rem text-muted-foreground mb-1rem leading-relaxed">
+		<p
+			v-if="excerpt"
+			class="text-0.875rem text-muted-foreground mb-1rem leading-relaxed"
+		>
 			{{ excerpt }}
 		</p>
 
@@ -76,8 +82,7 @@ const formatReadingTime = (minutes: number) => {
 						name="mdi:share-variant"
 						class="w-1rem h-1rem text-muted-foreground"
 					/>
-					<span class="text-0.875rem font-600 text-foreground"
-					>Share</span>
+					<span class="text-0.875rem font-600 text-foreground">Share</span>
 				</div>
 				<div class="flex flex-wrap gap-0.5rem pl-1.5rem">
 					<a
@@ -92,7 +97,8 @@ const formatReadingTime = (minutes: number) => {
 						Twitter
 					</a>
 					<a
-						:href="'https://www.facebook.com/sharer/sharer.php?u=' + encodeURIComponent(url)"
+						:href="'https://www.facebook.com/sharer/sharer.php?u='
+						+ encodeURIComponent(url)"
 						target="_blank"
 						rel="noopener noreferrer"
 						class="flex items-center gap-0.25rem px-0.75rem py-0.5rem bg-surface border border-border rounded-0.375rem text-0.875rem text-foreground hover:bg-muted transition-all-0.2s no-underline"

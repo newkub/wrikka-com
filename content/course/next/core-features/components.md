@@ -14,7 +14,7 @@ Create components in Next.js.
 ```typescript
 // components/MyComponent.tsx
 export default function MyComponent() {
-  return <div>My Component</div>
+	return <div>My Component</div>;
 }
 ```
 
@@ -22,35 +22,35 @@ export default function MyComponent() {
 
 ```typescript
 interface Props {
-  title: string;
-  count: number;
+	title: string;
+	count: number;
 }
 
 export default function MyComponent({ title, count = 0 }: Props) {
-  return (
-    <div>
-      <h2>{title}</h2>
-      <p>Count: {count}</p>
-    </div>
-  )
+	return (
+		<div>
+			<h2>{title}</h2>
+			<p>Count: {count}</p>
+		</div>
+	);
 }
 ```
 
 ## Client Components
 
 ```typescript
-'use client'
+"use client";
 
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function Counter() {
-  const [count, setCount] = useState(0)
+	const [count, setCount] = useState(0);
 
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  )
+	return (
+		<button onClick={() => setCount(count + 1)}>
+			Count: {count}
+		</button>
+	);
 }
 ```
 
@@ -59,9 +59,9 @@ export default function Counter() {
 ```typescript
 // Default is server component
 export default async function ServerComponent() {
-  const data = await fetch('https://api.example.com/data')
-  const json = await data.json()
+	const data = await fetch("https://api.example.com/data");
+	const json = await data.json();
 
-  return <div>{json.message}</div>
+	return <div>{json.message}</div>;
 }
 ```

@@ -12,33 +12,33 @@ Built-in HTTP server for building web applications.
 
 ```typescript
 Bun.serve({
-  port: 3000,
-  fetch(req) {
-    return new Response('Hello, World!');
-  },
+	port: 3000,
+	fetch(req) {
+		return new Response("Hello, World!");
+	},
 });
 
-console.log('Server running on http://localhost:3000');
+console.log("Server running on http://localhost:3000");
 ```
 
 ## Handle Routes
 
 ```typescript
 Bun.serve({
-  port: 3000,
-  async fetch(req) {
-    const url = new URL(req.url);
-    
-    if (url.pathname === '/') {
-      return new Response('Home page');
-    }
-    
-    if (url.pathname === '/api') {
-      return Response.json({ message: 'API endpoint' });
-    }
-    
-    return new Response('Not found', { status: 404 });
-  },
+	port: 3000,
+	async fetch(req) {
+		const url = new URL(req.url);
+
+		if (url.pathname === "/") {
+			return new Response("Home page");
+		}
+
+		if (url.pathname === "/api") {
+			return Response.json({ message: "API endpoint" });
+		}
+
+		return new Response("Not found", { status: 404 });
+	},
 });
 ```
 

@@ -13,19 +13,19 @@ Use Vue's reactivity system.
 
 ```vue
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref } from "vue";
 
-const count = ref(0)
+const count = ref(0);
 
 function increment() {
-  count.value++
+	count.value++;
 }
 </script>
 
 <template>
-  <button @click="increment">
-    Count: {{ count }}
-  </button>
+	<button @click="increment">
+		Count: {{ count }}
+	</button>
 </template>
 ```
 
@@ -33,22 +33,22 @@ function increment() {
 
 ```vue
 <script setup lang="ts">
-import { reactive } from 'vue'
+import { reactive } from "vue";
 
 const state = reactive({
-  count: 0,
-  name: 'Vue'
-})
+	count: 0,
+	name: "Vue",
+});
 
 function increment() {
-  state.count++
+	state.count++;
 }
 </script>
 
 <template>
-  <button @click="increment">
-    Count: {{ state.count }}
-  </button>
+	<button @click="increment">
+		Count: {{ state.count }}
+	</button>
 </template>
 ```
 
@@ -56,15 +56,15 @@ function increment() {
 
 ```vue
 <script setup lang="ts">
-import { ref, computed } from 'vue'
+import { computed, ref } from "vue";
 
-const count = ref(0)
-const doubled = computed(() => count.value * 2)
+const count = ref(0);
+const doubled = computed(() => count.value * 2);
 </script>
 
 <template>
-  <p>Count: {{ count }}</p>
-  <p>Doubled: {{ doubled }}</p>
+	<p>Count: {{ count }}</p>
+	<p>Doubled: {{ doubled }}</p>
 </template>
 ```
 
@@ -72,12 +72,12 @@ const doubled = computed(() => count.value * 2)
 
 ```vue
 <script setup lang="ts">
-import { ref, watch } from 'vue'
+import { ref, watch } from "vue";
 
-const count = ref(0)
+const count = ref(0);
 
 watch(count, (newValue, oldValue) => {
-  console.log(`Count changed from ${oldValue} to ${newValue}`)
-})
+	console.log(`Count changed from ${oldValue} to ${newValue}`);
+});
 </script>
 ```

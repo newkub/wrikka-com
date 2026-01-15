@@ -12,32 +12,37 @@ Configure UnoCSS in your project.
 ## Create uno.config.ts
 
 ```typescript
-import { defineConfig, presetUno, presetAttributify, presetIcons } from 'unocss'
+import {
+	defineConfig,
+	presetAttributify,
+	presetIcons,
+	presetUno,
+} from "unocss";
 
 export default defineConfig({
-  presets: [
-    presetUno(),
-    presetAttributify(),
-    presetIcons({
-      scale: 1.2,
-      warn: true,
-    }),
-  ],
-})
+	presets: [
+		presetUno(),
+		presetAttributify(),
+		presetIcons({
+			scale: 1.2,
+			warn: true,
+		}),
+	],
+});
 ```
 
 ## Vite
 
 ```typescript
 // vite.config.ts
-import UnoCSS from 'unocss/vite'
-import { defineConfig } from 'vite'
+import UnoCSS from "unocss/vite";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-  plugins: [
-    UnoCSS(),
-  ],
-})
+	plugins: [
+		UnoCSS(),
+	],
+});
 ```
 
 ## Nuxt
@@ -45,28 +50,28 @@ export default defineConfig({
 ```typescript
 // nuxt.config.ts
 export default defineNuxtConfig({
-  modules: [
-    '@unocss/nuxt',
-  ],
-  unoCss: {
-    presets: [
-      presetUno(),
-      presetAttributify(),
-      presetIcons(),
-    ],
-  },
-})
+	modules: [
+		"@unocss/nuxt",
+	],
+	unoCss: {
+		presets: [
+			presetUno(),
+			presetAttributify(),
+			presetIcons(),
+		],
+	},
+});
 ```
 
 ## Next.js
 
 ```typescript
 // next.config.js
-import UnoCSS from '@unocss/next'
+import UnoCSS from "@unocss/next";
 
 export default {
-  plugins: [
-    UnoCSS({ or: 'src/app/**/*.{js,jsx,ts,tsx}' }),
-  ],
-}
+	plugins: [
+		UnoCSS({ or: "src/app/**/*.{js,jsx,ts,tsx}" }),
+	],
+};
 ```

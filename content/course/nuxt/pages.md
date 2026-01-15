@@ -57,7 +57,7 @@ Create pages in Nuxt using the pages directory.
 
 ```vue
 <template>
-  <NuxtLink to="/">Home</NuxtLink>
-  <NuxtLink to="/about">About</NuxtLink>
+	<NuxtLink to="/">Home</NuxtLink>
+	<NuxtLink to="/about">About</NuxtLink>
 </template>
 ```

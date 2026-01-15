@@ -14,11 +14,11 @@ Bun's built-in APIs are faster than external libraries:
 
 ```typescript
 // Fast
-const content = await Bun.file('data.txt').text();
+const content = await Bun.file("data.txt").text();
 
 // Slower
-import { readFileSync } from 'fs';
-const content = readFileSync('data.txt', 'utf8');
+import { readFileSync } from "fs";
+const content = readFileSync("data.txt", "utf8");
 ```
 
 ## Minimize I/O
@@ -26,9 +26,9 @@ const content = readFileSync('data.txt', 'utf8');
 Batch file operations and use streams for large files:
 
 ```typescript
-const stream = Bun.file('large.txt').stream();
+const stream = Bun.file("large.txt").stream();
 for await (const chunk of stream) {
-  processChunk(chunk);
+	processChunk(chunk);
 }
 ```
 
@@ -37,7 +37,7 @@ for await (const chunk of stream) {
 Offload CPU-intensive tasks to workers:
 
 ```typescript
-const worker = new Worker('./compute.ts');
+const worker = new Worker("./compute.ts");
 worker.postMessage(data);
 ```
 

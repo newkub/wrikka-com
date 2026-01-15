@@ -14,13 +14,13 @@ Use UnoCSS presets for common CSS frameworks.
 The default preset with utility classes similar to Tailwind CSS.
 
 ```typescript
-import { presetUno } from 'unocss'
+import { presetUno } from "unocss";
 
 export default defineConfig({
-  presets: [
-    presetUno(),
-  ],
-})
+	presets: [
+		presetUno(),
+	],
+});
 ```
 
 ## Preset Attributify
@@ -28,13 +28,13 @@ export default defineConfig({
 Convert class names to attributes.
 
 ```typescript
-import { presetAttributify } from 'unocss'
+import { presetAttributify } from "unocss";
 
 export default defineConfig({
-  presets: [
-    presetAttributify(),
-  ],
-})
+	presets: [
+		presetAttributify(),
+	],
+});
 ```
 
 Usage:
@@ -52,16 +52,16 @@ Usage:
 Use icons from Iconify.
 
 ```typescript
-import { presetIcons } from 'unocss'
+import { presetIcons } from "unocss";
 
 export default defineConfig({
-  presets: [
-    presetIcons({
-      scale: 1.2,
-      warn: true,
-    }),
-  ],
-})
+	presets: [
+		presetIcons({
+			scale: 1.2,
+			warn: true,
+		}),
+	],
+});
 ```
 
 Usage:

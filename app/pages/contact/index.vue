@@ -157,8 +157,7 @@ const submitForm = async () => {
 						<div class="bg-primary/10 border border-primary/20 rounded-0.375rem p-1rem mb-1rem">
 							<p class="text-0.875rem text-gray-600 dark:text-gray-400 m-0">
 								<Icon name="mdi:email" class="w-1rem h-1rem mr-0.25rem" />
-								Your message will be sent to <span
-									class="font-600 text-primary"
+								Your message will be sent to <span class="font-600 text-primary"
 								>mewkubise@gmail.com</span>
 							</p>
 						</div>

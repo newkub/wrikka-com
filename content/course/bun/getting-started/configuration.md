@@ -13,21 +13,21 @@ Configure Bun with bun.config.ts and environment variables.
 Configure Bun using `bun.config.ts` in your project root:
 
 ```typescript
-import { defineConfig } from 'bun';
+import { defineConfig } from "bun";
 
 export default defineConfig({
-  // Test configuration
-  test: {
-    root: './tests',
-    preload: ['./tests/setup.ts'],
-  },
-  
-  // Build configuration
-  build: {
-    entrypoints: ['./src/index.ts'],
-    outdir: './dist',
-    target: 'browser',
-  },
+	// Test configuration
+	test: {
+		root: "./tests",
+		preload: ["./tests/setup.ts"],
+	},
+
+	// Build configuration
+	build: {
+		entrypoints: ["./src/index.ts"],
+		outdir: "./dist",
+		target: "browser",
+	},
 });
 ```
 

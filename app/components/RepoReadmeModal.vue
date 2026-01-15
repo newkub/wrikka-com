@@ -38,7 +38,10 @@ const { formatTimeAgo } = useDate();
 				>
 					<div class="flex items-center justify-between p-1rem border-b border-border">
 						<div class="flex items-center gap-0.75rem">
-							<Icon name="mdi:book-open-variant" class="w-1.25rem h-1.25rem text-primary" />
+							<Icon
+								name="mdi:book-open-variant"
+								class="w-1.25rem h-1.25rem text-primary"
+							/>
 							<h3 class="text-1.25rem font-600 m-0">{{ repoName }}</h3>
 						</div>
 						<button
@@ -53,7 +56,10 @@ const { formatTimeAgo } = useDate();
 							{{ readme }}
 						</div>
 						<div v-else class="text-center py-4rem text-muted-foreground">
-							<Icon name="mdi:book-open-variant-outline" class="w-4rem h-4rem mx-auto mb-1rem opacity-50" />
+							<Icon
+								name="mdi:book-open-variant-outline"
+								class="w-4rem h-4rem mx-auto mb-1rem opacity-50"
+							/>
 							<p class="text-1rem">No README available</p>
 						</div>
 					</div>

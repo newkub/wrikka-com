@@ -31,6 +31,7 @@ cargo --version
 ## What's Included
 
 Rust includes:
+
 - **rustc**: The Rust compiler
 - **cargo**: Package manager and build system
 - **rustup**: Toolchain installer

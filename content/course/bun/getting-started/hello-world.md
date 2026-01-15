@@ -13,7 +13,7 @@ Create and run your first Bun application.
 Create a file called `index.ts`:
 
 ```typescript
-console.log('Hello, World!');
+console.log("Hello, World!");
 ```
 
 Run it with:
@@ -28,13 +28,13 @@ You can also create a web server:
 
 ```typescript
 Bun.serve({
-  port: 3000,
-  fetch(req) {
-    return new Response('Hello, World!');
-  },
+	port: 3000,
+	fetch(req) {
+		return new Response("Hello, World!");
+	},
 });
 
-console.log('Server running on http://localhost:3000');
+console.log("Server running on http://localhost:3000");
 ```
 
 ## TypeScript Support

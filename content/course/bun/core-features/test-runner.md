@@ -12,11 +12,11 @@ Built-in test runner with Jest-compatible API.
 
 ```typescript
 // math.test.ts
-import { expect, test } from 'bun:test';
-import { add } from './math';
+import { expect, test } from "bun:test";
+import { add } from "./math";
 
-test('add function', () => {
-  expect(add(1, 2)).toBe(3);
+test("add function", () => {
+	expect(add(1, 2)).toBe(3);
 });
 ```
 

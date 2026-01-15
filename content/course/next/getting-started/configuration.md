@@ -14,11 +14,11 @@ Configure Next.js in your project.
 ```javascript
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: true,
-  swcMinify: true,
-}
+	reactStrictMode: true,
+	swcMinify: true,
+};
 
-module.exports = nextConfig
+module.exports = nextConfig;
 ```
 
 ## TypeScript

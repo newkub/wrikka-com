@@ -13,7 +13,7 @@ Create components in React.
 
 ```typescript
 export default function MyComponent() {
-  return <div>My Component</div>
+	return <div>My Component</div>;
 }
 ```
 
@@ -21,50 +21,50 @@ export default function MyComponent() {
 
 ```typescript
 interface Props {
-  title: string;
-  count?: number;
+	title: string;
+	count?: number;
 }
 
 export default function MyComponent({ title, count = 0 }: Props) {
-  return (
-    <div>
-      <h2>{title}</h2>
-      <p>Count: {count}</p>
-    </div>
-  )
+	return (
+		<div>
+			<h2>{title}</h2>
+			<p>Count: {count}</p>
+		</div>
+	);
 }
 ```
 
 ## State
 
 ```typescript
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function Counter() {
-  const [count, setCount] = useState(0)
+	const [count, setCount] = useState(0);
 
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  )
+	return (
+		<button onClick={() => setCount(count + 1)}>
+			Count: {count}
+		</button>
+	);
 }
 ```
 
 ## Effects
 
 ```typescript
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export default function DataFetcher() {
-  const [data, setData] = useState(null)
+	const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch('https://api.example.com/data')
-      .then(res => res.json())
-      .then(setData)
-  }, [])
+	useEffect(() => {
+		fetch("https://api.example.com/data")
+			.then(res => res.json())
+			.then(setData);
+	}, []);
 
-  return <div>{JSON.stringify(data)}</div>
+	return <div>{JSON.stringify(data)}</div>;
 }
 ```

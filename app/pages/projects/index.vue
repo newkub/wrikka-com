@@ -24,7 +24,9 @@ const groupOptions = [
 
 const isGroupSelected = (group: string) => selectedGroups.value.has(group);
 
-const hasActiveFilters = computed(() => selectedGroups.value.size > 0 || searchQuery.value.length > 0);
+const hasActiveFilters = computed(() =>
+	selectedGroups.value.size > 0 || searchQuery.value.length > 0
+);
 </script>
 
 <template>
@@ -42,7 +44,8 @@ const hasActiveFilters = computed(() => selectedGroups.value.size > 0 || searchQ
 			<div class="flex flex-col gap-1rem">
 				<div class="flex flex-wrap items-center gap-1rem">
 					<div class="flex items-center gap-0.5rem">
-						<span class="text-0.875rem font-600 text-muted-foreground">Group by:</span>
+						<span class="text-0.875rem font-600 text-muted-foreground"
+						>Group by:</span>
 						<div class="flex gap-0.5rem">
 							<button
 								v-for="option in groupOptions"

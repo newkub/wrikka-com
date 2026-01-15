@@ -35,9 +35,9 @@ export const useGroupedRepos = (repos: Ref<Repo[]>) => {
 			const query = searchQuery.value.toLowerCase();
 			filteredRepos = filteredRepos.filter(
 				(repo) =>
-					repo.name.toLowerCase().includes(query) ||
-					repo.description?.toLowerCase().includes(query) ||
-					repo.topics?.some((topic) => topic.toLowerCase().includes(query)),
+					repo.name.toLowerCase().includes(query)
+					|| repo.description?.toLowerCase().includes(query)
+					|| repo.topics?.some((topic) => topic.toLowerCase().includes(query)),
 			);
 		}
 

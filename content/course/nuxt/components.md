@@ -16,7 +16,7 @@ Nuxt auto-imports components from the `components/` directory.
 ```vue
 <!-- components/MyComponent.vue -->
 <template>
-  <div>My Component</div>
+	<div>My Component</div>
 </template>
 ```
 
@@ -30,20 +30,20 @@ Nuxt auto-imports components from the `components/` directory.
 ```vue
 <script setup lang="ts">
 interface Props {
-  title: string;
-  count: number;
+	title: string;
+	count: number;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  count: 0,
-})
+	count: 0,
+});
 </script>
 
 <template>
-  <div>
-    <h2>{{ title }}</h2>
-    <p>Count: {{ count }}</p>
-  </div>
+	<div>
+		<h2>{{ title }}</h2>
+		<p>Count: {{ count }}</p>
+	</div>
 </template>
 ```
 
@@ -52,14 +52,14 @@ const props = withDefaults(defineProps<Props>(), {
 ```vue
 <script setup lang="ts">
 const emit = defineEmits<{
-  update: [value: string];
+	update: [value: string];
 }>();
 </script>
 
 <template>
-  <button @click="emit('update', 'new value')">
-    Update
-  </button>
+	<button @click="emit('update', 'new value')">
+		Update
+	</button>
 </template>
 ```
 
@@ -68,17 +68,17 @@ const emit = defineEmits<{
 ```vue
 <!-- Parent.vue -->
 <MyComponent>
-  <template #header>
-    <h2>Header</h2>
-  </template>
-  <template #default>
-    Content
-  </template>
+	<template #header>
+		<h2>Header</h2>
+	</template>
+	<template #default>
+		Content
+	</template>
 </MyComponent>
 
 <!-- MyComponent.vue -->
 <template>
-  <slot name="header"></slot>
-  <slot></slot>
+	<slot name="header"></slot>
+	<slot></slot>
 </template>
 ```

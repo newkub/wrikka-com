@@ -14,11 +14,11 @@ const emit = defineEmits<{
 const modalRef = ref<HTMLElement | null>(null);
 
 onClickOutside(modalRef, () => {
-	emit('close');
+	emit("close");
 });
 
-onKeyStroke('Escape', () => {
-	emit('close');
+onKeyStroke("Escape", () => {
+	emit("close");
 });
 </script>
 

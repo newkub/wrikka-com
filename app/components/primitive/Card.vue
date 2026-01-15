@@ -17,8 +17,7 @@ const props = withDefaults(defineProps<Props>(), {
 		:class="[
 			'rounded-0.5rem transition-all-0.2s',
 			{
-				'bg-surface border border-border':
-					variant === 'default',
+				'bg-surface border border-border': variant === 'default',
 				'border-2 border-border': variant === 'outline',
 				'border border-transparent': variant === 'ghost',
 			},

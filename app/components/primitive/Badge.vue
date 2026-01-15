@@ -19,7 +19,8 @@ const props = withDefaults(defineProps<Props>(), {
 				'bg-success text-success-foreground': variant === 'success',
 				'bg-warning text-warning-foreground': variant === 'warning',
 				'bg-destructive text-destructive-foreground': variant === 'error',
-				'border border-border bg-transparent text-foreground': variant === 'outline',
+				'border border-border bg-transparent text-foreground':
+					variant === 'outline',
 			},
 			{
 				'px-0.25rem py-0.125rem text-0.75rem': size === 'sm',

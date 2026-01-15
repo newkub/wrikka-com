@@ -52,9 +52,9 @@ const { data: items } = await useFetch<ShopItem[]>("/api/shop");
 							{{ item.description }}
 						</p>
 						<div class="flex items-center justify-between">
-							<span
-								class="text-1.25rem font-700 text-primary"
-							>{{ item.price }}</span>
+							<span class="text-1.25rem font-700 text-primary">{{
+								item.price
+							}}</span>
 							<Icon
 								name="mdi:cart"
 								class="w-1.25rem h-1.25rem text-muted-foreground"

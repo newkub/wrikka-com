@@ -12,54 +12,56 @@ Use React hooks for state and side effects.
 ## useState
 
 ```typescript
-import { useState } from 'react'
+import { useState } from "react";
 
 export default function Counter() {
-  const [count, setCount] = useState(0)
+	const [count, setCount] = useState(0);
 
-  return (
-    <button onClick={() => setCount(count + 1)}>
-      Count: {count}
-    </button>
-  )
+	return (
+		<button onClick={() => setCount(count + 1)}>
+			Count: {count}
+		</button>
+	);
 }
 ```
 
 ## useEffect
 
 ```typescript
-import { useEffect, useState } from 'react'
+import { useEffect, useState } from "react";
 
 export default function DataFetcher() {
-  const [data, setData] = useState(null)
+	const [data, setData] = useState(null);
 
-  useEffect(() => {
-    fetch('https://api.example.com/data')
-      .then(res => res.json())
-      .then(setData)
-  }, [])
+	useEffect(() => {
+		fetch("https://api.example.com/data")
+			.then(res => res.json())
+			.then(setData);
+	}, []);
 
-  return <div>{JSON.stringify(data)}</div>
+	return <div>{JSON.stringify(data)}</div>;
 }
 ```
 
 ## useContext
 
 ```typescript
-import { createContext, useContext } from 'react'
+import { createContext, useContext } from "react";
 
-const ThemeContext = createContext('light')
+const ThemeContext = createContext("light");
 
-export default function ThemeProvider({ children }: { children: React.ReactNode }) {
-  return (
-    <ThemeContext.Provider value="dark">
-      {children}
-    </ThemeContext.Provider>
-  )
+export default function ThemeProvider(
+	{ children }: { children: React.ReactNode },
+) {
+	return (
+		<ThemeContext.Provider value="dark">
+			{children}
+		</ThemeContext.Provider>
+	);
 }
 
 export function useTheme() {
-  return useContext(ThemeContext)
+	return useContext(ThemeContext);
 }
 ```
 
@@ -67,11 +69,11 @@ export function useTheme() {
 
 ```typescript
 function useCounter(initialValue = 0) {
-  const [count, setCount] = useState(initialValue)
+	const [count, setCount] = useState(initialValue);
 
-  const increment = () => setCount(count + 1)
-  const decrement = () => setCount(count - 1)
+	const increment = () => setCount(count + 1);
+	const decrement = () => setCount(count - 1);
 
-  return { count, increment, decrement }
+	return { count, increment, decrement };
 }
 ```

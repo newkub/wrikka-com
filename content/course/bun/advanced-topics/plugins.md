@@ -12,19 +12,19 @@ Extend Bun with custom plugins.
 
 ```typescript
 // my-plugin.ts
-import { plugin } from 'bun';
+import { plugin } from "bun";
 
 plugin({
-  name: 'my-plugin',
-  setup(build) {
-    build.onLoad({ filter: /\.custom$/ }, async (args) => {
-      const contents = await Bun.file(args.path).text();
-      return {
-        contents: `export default ${JSON.stringify(contents)}`,
-        loader: 'js',
-      };
-    });
-  },
+	name: "my-plugin",
+	setup(build) {
+		build.onLoad({ filter: /\.custom$/ }, async (args) => {
+			const contents = await Bun.file(args.path).text();
+			return {
+				contents: `export default ${JSON.stringify(contents)}`,
+				loader: "js",
+			};
+		});
+	},
 });
 ```
 

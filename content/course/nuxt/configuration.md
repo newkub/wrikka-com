@@ -13,34 +13,34 @@ Configure Nuxt in your project.
 
 ```typescript
 export default defineNuxtConfig({
-  // App configuration
-  app: {
-    head: {
-      title: 'My App',
-      meta: [
-        { charset: 'utf-8' },
-        { name: 'viewport', content: 'width=device-width, initial-scale=1' },
-      ],
-    },
-  },
+	// App configuration
+	app: {
+		head: {
+			title: "My App",
+			meta: [
+				{ charset: "utf-8" },
+				{ name: "viewport", content: "width=device-width, initial-scale=1" },
+			],
+		},
+	},
 
-  // Modules
-  modules: [
-    '@nuxtjs/tailwindcss',
-    '@pinia/nuxt',
-    '@vueuse/nuxt',
-  ],
+	// Modules
+	modules: [
+		"@nuxtjs/tailwindcss",
+		"@pinia/nuxt",
+		"@vueuse/nuxt",
+	],
 
-  // CSS
-  css: ['~/assets/css/main.css'],
+	// CSS
+	css: ["~/assets/css/main.css"],
 
-  // Runtime config
-  runtimeConfig: {
-    public: {
-      apiBase: '/api',
-    },
-  },
-})
+	// Runtime config
+	runtimeConfig: {
+		public: {
+			apiBase: "/api",
+		},
+	},
+});
 ```
 
 ## TypeScript
@@ -48,9 +48,9 @@ export default defineNuxtConfig({
 ```typescript
 // Enable TypeScript support
 export default defineNuxtConfig({
-  typescript: {
-    strict: true,
-    typeCheck: true,
-  },
-})
+	typescript: {
+		strict: true,
+		typeCheck: true,
+	},
+});
 ```

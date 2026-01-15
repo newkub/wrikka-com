@@ -1,4 +1,4 @@
-import { LANGUAGE_COLORS, LANGUAGE_ICONS, DEFAULT_LANGUAGE_COLOR, DEFAULT_LANGUAGE_ICON } from "../constants/language";
+import { DEFAULT_LANGUAGE_COLOR, DEFAULT_LANGUAGE_ICON, LANGUAGE_COLORS, LANGUAGE_ICONS } from "../constants/language";
 
 export function useLanguage() {
 	return {

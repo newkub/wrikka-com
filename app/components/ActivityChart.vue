@@ -61,16 +61,11 @@ const getColor = (level: number) => {
 		<div class="flex items-center gap-0.5rem mt-0.5rem text-0.75rem text-muted-foreground">
 			<span>Less</span>
 			<div class="flex gap-0.125rem">
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-muted">
-				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/20">
-				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/40">
-				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/60">
-				</div>
-				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/80">
-				</div>
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-muted"></div>
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/20"></div>
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/40"></div>
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/60"></div>
+				<div class="w-0.75rem h-0.75rem rounded-sm bg-success/80"></div>
 			</div>
 			<span>More</span>
 		</div>

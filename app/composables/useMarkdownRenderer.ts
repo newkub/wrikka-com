@@ -1,5 +1,5 @@
 import MarkdownIt from "markdown-it";
-import { bundledLanguages, createHighlighter, type Highlighter, type BundledLanguage, type BundledTheme } from "shiki";
+import { type BundledLanguage, bundledLanguages, type BundledTheme, createHighlighter, type Highlighter } from "shiki";
 
 interface CodeBlock {
 	code: string;

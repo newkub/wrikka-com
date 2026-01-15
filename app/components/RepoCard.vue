@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import Card from "./primitive/Card.vue";
 import Badge from "./primitive/Badge.vue";
-import RepoStats from "./RepoStats.vue";
-import RepoCommits from "./RepoCommits.vue";
+import Card from "./primitive/Card.vue";
 import RepoActions from "./RepoActions.vue";
+import RepoCommits from "./RepoCommits.vue";
 import RepoReadmeModal from "./RepoReadmeModal.vue";
+import RepoStats from "./RepoStats.vue";
 
 interface Props {
 	repo: {
@@ -53,7 +53,8 @@ const showReadmeModal = ref(false);
 				</div>
 				<div class="flex items-center gap-0.5rem shrink-0">
 					<Badge v-if="repo.fork" size="sm">Fork</Badge>
-					<Badge v-if="repo.archived" variant="warning" size="sm">Archived</Badge>
+					<Badge v-if="repo.archived" variant="warning" size="sm"
+					>Archived</Badge>
 				</div>
 			</div>
 

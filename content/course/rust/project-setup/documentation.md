@@ -11,7 +11,7 @@ Generate documentation with rustdoc.
 
 ## Documentation Comments
 
-```rust
+````rust
 /// Adds two numbers together.
 ///
 /// # Examples
@@ -23,7 +23,7 @@ Generate documentation with rustdoc.
 pub fn add(a: i32, b: i32) -> i32 {
     a + b
 }
-```
+````
 
 ## Module Documentation
 

@@ -13,23 +13,23 @@ Run JavaScript in background threads.
 ```typescript
 // worker.ts
 self.onmessage = (e) => {
-  const result = heavyComputation(e.data);
-  self.postMessage(result);
+	const result = heavyComputation(e.data);
+	self.postMessage(result);
 };
 
 function heavyComputation(n: number): number {
-  // Simulate heavy computation
-  return n * n;
+	// Simulate heavy computation
+	return n * n;
 }
 ```
 
 ## Use the Worker
 
 ```typescript
-const worker = new Worker('./worker.ts');
+const worker = new Worker("./worker.ts");
 
 worker.onmessage = (e) => {
-  console.log('Result:', e.data);
+	console.log("Result:", e.data);
 };
 
 worker.postMessage(10);
