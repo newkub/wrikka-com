@@ -22,6 +22,7 @@ export default defineEventHandler(async (_event) => {
 				date: data.date || new Date().toISOString(),
 				category: data.category || null,
 				tags: data.tags || [],
+				cover: data.cover || data.image || null,
 			};
 		});
 
