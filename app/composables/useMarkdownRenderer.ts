@@ -1,8 +1,24 @@
 import MarkdownIt from "markdown-it";
-import { createHighlighter } from "shiki";
+import { createHighlighter, bundledLanguages } from "shiki";
 
 let highlighter: any = null;
 let md: MarkdownIt | null = null;
+
+function addCopyButton(html: string, code: string): string {
+	// Add CopyButton component to the code block
+	const copyButtonHtml = `
+		<CopyButton code="${encodeURIComponent(code)}" />
+	`;
+
+	// Find the pre tag and insert the copy button
+	return html.replace(
+		/<pre([^>]*)>/,
+		`<pre$1 class="group relative">`
+	).replace(
+		/<\/pre>/,
+		`${copyButtonHtml}</pre>`
+	);
+}
 
 async function initMarkdown() {
 	if (highlighter && md) {
@@ -11,76 +27,7 @@ async function initMarkdown() {
 
 	highlighter = await createHighlighter({
 		themes: ["vitesse-light", "vitesse-dark"],
-		langs: [
-			"javascript",
-			"typescript",
-			"python",
-			"bash",
-			"json",
-			"markdown",
-			"html",
-			"css",
-			"scss",
-			"vue",
-			"react",
-			"jsx",
-			"tsx",
-			"java",
-			"c",
-			"cpp",
-			"csharp",
-			"go",
-			"rust",
-			"php",
-			"ruby",
-			"sql",
-			"yaml",
-			"toml",
-			"xml",
-			"dockerfile",
-			"git",
-			"regex",
-			"shell",
-			"powershell",
-			"lua",
-			"r",
-			"swift",
-			"kotlin",
-			"dart",
-			"elixir",
-			"haskell",
-			"scala",
-			"clojure",
-			"fsharp",
-			"ocaml",
-			"erlang",
-			"elm",
-			"purescript",
-			"idris",
-			"agda",
-			"coq",
-			"lean",
-			"julia",
-			"matlab",
-			"perl",
-			"tcl",
-			"vim",
-			"viml",
-			"emacs-lisp",
-			"lisp",
-			"scheme",
-			"racket",
-			"clojurescript",
-			"elm",
-			"purescript",
-			"reason",
-			"ocaml",
-			"fstar",
-			"coq",
-			"lean",
-			"idris",
-			"agda",
-		],
+		langs: Object.keys(bundledLanguages),
 	});
 
 	md = MarkdownIt({
@@ -93,41 +40,59 @@ async function initMarkdown() {
 
 			if (!lang) {
 				// If no language specified, try to auto-detect or use text
-				return highlighter.codeToHtml(code, {
+				const html = highlighter.codeToHtml(code, {
 					lang: "text",
 					theme,
 				});
+				return addCopyButton(html, code);
 			}
 
+			// Map common aliases to supported languages
+			const langMap: Record<string, string> = {
+				react: "jsx",
+				git: "git-commit",
+				ts: "typescript",
+				js: "javascript",
+				tsx: "tsx",
+				jsx: "jsx",
+			};
+			const mappedLang = langMap[lang.toLowerCase()] || lang.toLowerCase();
+
 			const loadedLangs = highlighter.getLoadedLanguages();
-			const normalizedLang = lang.toLowerCase();
 
 			// Check if language is loaded
-			if (loadedLangs.includes(normalizedLang)) {
-				return highlighter.codeToHtml(code, {
-					lang: normalizedLang,
+			if (loadedLangs.includes(mappedLang)) {
+				let html: string;
+
+				// Use regular highlighter for now (twoslash requires special setup)
+				html = highlighter.codeToHtml(code, {
+					lang: mappedLang,
 					theme,
 				});
+
+				return addCopyButton(html, code);
 			}
 
 			// Try to find a similar language
 			const similarLang = loadedLangs.find((l: string) => {
 				const lLower = l.toLowerCase();
-				return lLower.includes(normalizedLang) || normalizedLang.includes(lLower);
+				return lLower.includes(mappedLang) || mappedLang.includes(lLower);
 			});
 
 			if (similarLang) {
-				return highlighter.codeToHtml(code, {
+				const html = highlighter.codeToHtml(code, {
 					lang: similarLang,
 					theme,
 				});
+				return addCopyButton(html, code);
 			}
 
 			// Fallback to text/plain
-			return highlighter.codeToHtml(code, {
+			const html = highlighter.codeToHtml(code, {
 				lang: "text",
 				theme,
 			});
+			return addCopyButton(html, code);
 		},
 	});
 

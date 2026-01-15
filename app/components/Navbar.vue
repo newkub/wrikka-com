@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import NavLink from "./primitive/NavLink.vue";
 const route = useRoute();
 const colorMode = useColorMode();
 
@@ -32,35 +33,27 @@ const toggleTheme = () => {
 			</div>
 
 			<div class="hidden md:flex items-center gap-1.5rem">
-				<NuxtLink
+				<NavLink
 					v-for="item in navigation"
 					:key="item.path"
 					:to="item.path"
-					class="flex items-center gap-0.5rem px-0.75rem py-0.5rem rounded-0.375rem no-underline text-gray-900 dark:text-gray-100 transition-all-0.2s font-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-					:class="{
-						'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20':
-							isActive(item.path),
-					}"
+					:icon="item.icon"
+					:active="isActive(item.path)"
 				>
-					<Icon :name="item.icon" class="w-1rem h-1rem" />
 					{{ item.name }}
-				</NuxtLink>
+				</NavLink>
 			</div>
 
 			<div class="flex items-center gap-1rem md:hidden">
-				<NuxtLink
+				<NavLink
 					v-for="item in navigation"
 					:key="item.path"
 					:to="item.path"
-					class="flex items-center gap-0.5rem px-0.75rem py-0.5rem rounded-0.375rem no-underline text-gray-900 dark:text-gray-100 transition-all-0.2s font-500 hover:text-blue-600 dark:hover:text-blue-400 hover:bg-gray-100 dark:hover:bg-gray-800"
-					:class="{
-						'text-blue-600 dark:text-blue-400 bg-blue-50 dark:bg-blue-900/20':
-							isActive(item.path),
-					}"
+					:icon="item.icon"
+					:active="isActive(item.path)"
 				>
-					<Icon :name="item.icon" class="w-1rem h-1rem" />
 					{{ item.name }}
-				</NuxtLink>
+				</NavLink>
 			</div>
 
 			<button

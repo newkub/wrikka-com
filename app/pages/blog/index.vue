@@ -11,9 +11,13 @@ interface BlogPost {
 	date: string;
 	category: string | null;
 	tags: string[];
+	cover?: string;
 }
 
 const { data: posts } = await useFetch<BlogPost[]>("/api/blog/posts");
+
+const searchQuery = ref("");
+const selectedCategory = ref<string | null>(null);
 
 const formatDate = (dateString: string) => {
 	return new Date(dateString).toLocaleDateString("en-US", {
@@ -22,6 +26,36 @@ const formatDate = (dateString: string) => {
 		day: "numeric",
 	});
 };
+
+const filteredPosts = computed(() => {
+	if (!posts.value) return [];
+
+	let filtered = posts.value;
+
+	// Filter by search query
+	if (searchQuery.value) {
+		const query = searchQuery.value.toLowerCase();
+		filtered = filtered.filter(
+			(post) =>
+				post.title.toLowerCase().includes(query) ||
+				post.excerpt.toLowerCase().includes(query) ||
+				post.tags.some((tag) => tag.toLowerCase().includes(query))
+		);
+	}
+
+	// Filter by category
+	if (selectedCategory.value) {
+		filtered = filtered.filter((post) => post.category === selectedCategory.value);
+	}
+
+	return filtered;
+});
+
+const categories = computed(() => {
+	if (!posts.value) return [];
+	const cats = new Set(posts.value.map((post) => post.category).filter(Boolean) as string[]);
+	return Array.from(cats).sort();
+});
 </script>
 
 <template>
@@ -35,29 +69,87 @@ const formatDate = (dateString: string) => {
 			</p>
 		</div>
 
+		<!-- Search and Filter -->
+		<div class="flex flex-col md:flex-row gap-1rem items-center justify-between">
+			<div class="relative flex-1 max-w-md w-full">
+				<Icon
+					name="mdi:magnify"
+					class="absolute left-0.75rem top-1/2 -translate-y-1/2 w-1.25rem h-1.25rem text-gray-400"
+				/>
+				<input
+					v-model="searchQuery"
+					type="text"
+					placeholder="Search posts..."
+					class="w-full pl-2.75rem pr-1rem py-0.75rem bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem text-gray-900 dark:text-gray-100 placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500"
+				/>
+			</div>
+
+			<div class="flex items-center gap-0.5rem flex-wrap">
+				<button
+					@click="selectedCategory = null"
+					:class="[
+						'px-0.75rem py-0.5rem rounded-0.25rem text-0.875rem font-500 transition-all-0.2s',
+						selectedCategory === null
+							? 'bg-blue-600 text-white'
+							: 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600',
+					]"
+				>
+					All
+				</button>
+				<button
+					v-for="category in categories"
+					:key="category"
+					@click="selectedCategory = category"
+					:class="[
+						'px-0.75rem py-0.5rem rounded-0.25rem text-0.875rem font-500 transition-all-0.2s',
+						selectedCategory === category
+							? 'bg-blue-600 text-white'
+							: 'bg-gray-200 dark:bg-gray-700 text-gray-900 dark:text-gray-100 hover:bg-gray-300 dark:hover:bg-gray-600',
+					]"
+				>
+					{{ category }}
+				</button>
+			</div>
+		</div>
+
+		<!-- Blog Posts Grid -->
 		<div
-			v-if="posts && posts.length > 0"
-			class="grid grid-cols-[repeat(auto-fill,minmax(300px,1fr))] gap-1.5rem md:grid-cols-1"
+			v-if="filteredPosts && filteredPosts.length > 0"
+			class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-1.5rem"
 		>
 			<article
-				v-for="post in posts"
+				v-for="post in filteredPosts"
 				:key="post.slug"
 				class="bg-gray-100 dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-0.5rem overflow-hidden transition-all-0.2s hover:-translate-y-2px hover:shadow-lg"
 			>
 				<NuxtLink
 					:to="`/blog/${post.slug}`"
-					class="block p-1.5rem no-underline text-gray-900 dark:text-gray-100"
+					class="block no-underline text-gray-900 dark:text-gray-100"
 				>
-					<h2 class="text-1.25rem font-600 mb-0.75rem">{{ post.title }}</h2>
-					<p class="text-gray-600 dark:text-gray-400 mb-1rem leading-1.6">
-						{{ post.excerpt }}
-					</p>
-					<div class="flex items-center gap-1rem text-0.875rem text-gray-600 dark:text-gray-400">
-						<time :datetime="post.date">{{ formatDate(post.date) }}</time>
-						<span
-							v-if="post.category"
-							class="bg-blue-600 text-white px-0.5rem py-0.25rem rounded-0.25rem text-0.75rem font-500"
-						>{{ post.category }}</span>
+					<!-- Cover Image -->
+					<div
+						v-if="post.cover"
+						class="w-full h-48 bg-gray-200 dark:bg-gray-700 overflow-hidden"
+					>
+						<img
+							:src="post.cover"
+							:alt="post.title"
+							class="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+						/>
+					</div>
+
+					<div class="p-1.5rem">
+						<h2 class="text-1.25rem font-600 mb-0.75rem">{{ post.title }}</h2>
+						<p class="text-gray-600 dark:text-gray-400 mb-1rem leading-1.6 line-clamp-3">
+							{{ post.excerpt }}
+						</p>
+						<div class="flex items-center gap-1rem text-0.875rem text-gray-600 dark:text-gray-400">
+							<time :datetime="post.date">{{ formatDate(post.date) }}</time>
+							<span
+								v-if="post.category"
+								class="bg-blue-600 text-white px-0.5rem py-0.25rem rounded-0.25rem text-0.75rem font-500"
+							>{{ post.category }}</span>
+						</div>
 					</div>
 				</NuxtLink>
 			</article>

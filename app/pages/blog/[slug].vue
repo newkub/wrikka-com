@@ -1,8 +1,4 @@
 <script setup lang="ts">
-definePageMeta({
-	layout: "blog",
-})
-
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -16,6 +12,7 @@ interface BlogPostDetail {
 	author?: string
 	readingTime?: number
 	updatedDate?: string
+	cover?: string
 }
 
 const { data: post, pending } = await useFetch<BlogPostDetail>(`/api/blog/${slug}`)
@@ -46,45 +43,60 @@ useSeoMeta({
 </script>
 
 <template>
-	<template #metadata>
-		<BlogMetadata
-			v-if="post"
-			:date="post.date"
-			:category="post.category"
-			:tags="post.tags"
-			:author="post.author"
-			:reading-time="post.readingTime"
-			:updated-date="post.updatedDate"
-			:title="post.title"
-			:url="currentUrl"
-		/>
-	</template>
+	<NuxtLayout name="blog">
+		<template #metadata>
+			<BlogMetadata
+				v-if="post"
+				:date="post.date"
+				:category="post.category"
+				:tags="post.tags"
+				:author="post.author"
+				:reading-time="post.readingTime"
+				:updated-date="post.updatedDate"
+				:title="post.title"
+				:url="currentUrl"
+			/>
+		</template>
 
-	<template #toc>
-		<TableOfContents v-if="post" :content="renderedContent" />
-	</template>
+		<template #toc>
+			<div class="space-y-1.5rem">
+				<img
+					v-if="post?.cover"
+					:src="post.cover"
+					:alt="post.title"
+					class="w-full rounded-0.5rem shadow-md"
+				/>
+				<TableOfContents v-if="post" :content="renderedContent" />
+			</div>
+		</template>
 
-	<div v-if="pending" class="flex justify-center items-center py-4rem">
-		<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 border-t-blue-600 rounded-full"></div>
-	</div>
+		<div v-if="pending" class="flex justify-center items-center py-4rem">
+			<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 border-t-blue-600 rounded-full"></div>
+		</div>
 
-	<article v-else-if="post" class="blog-post">
-		<header class="mb-2rem">
-			<NuxtLink to="/blog" class="inline-flex items-center gap-0.5rem text-blue-600 dark:text-blue-400 no-underline mb-1rem hover:underline">
-				<Icon name="mdi:arrow-left" class="w-1rem h-1rem" />
-				<span>Back to Blog</span>
-			</NuxtLink>
-			<h1 class="text-2.5rem font-700 mb-1rem">{{ post.title }}</h1>
-			<p class="text-1.125rem text-gray-600 dark:text-gray-400 mb-1rem leading-1.6">{{ post.excerpt }}</p>
-		</header>
+		<article v-else-if="post" class="blog-post">
+			<header class="mb-2rem">
+				<h1 class="text-2.5rem font-700 mb-1rem">{{ post.title }}</h1>
+				<p class="text-1.125rem text-gray-600 dark:text-gray-400 mb-1rem leading-1.6">{{ post.excerpt }}</p>
+			</header>
 
-		<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
-	</article>
+			<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
+		</article>
 
-	<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
-		<p>Blog post not found</p>
-		<NuxtLink to="/blog" class="text-blue-600 dark:text-blue-400 no-underline hover:underline">Back to Blog</NuxtLink>
-	</div>
+		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
+			<p>Blog post not found</p>
+			<NuxtLink to="/blog" class="text-blue-600 dark:text-blue-400 no-underline hover:underline">Back to Blog</NuxtLink>
+		</div>
+
+		<!-- Fixed Back to Blog Button -->
+		<NuxtLink
+			to="/blog"
+			class="fixed left-0 top-1/2 -translate-y-1/2 text-gray-600 dark:text-gray-400 hover:text-blue-600 dark:hover:text-blue-400 p-1rem transition-all-0.2s z-50"
+			title="Back to Blog"
+		>
+			<Icon name="mdi:arrow-left" class="w-1.5rem h-1.5rem" />
+		</NuxtLink>
+	</NuxtLayout>
 </template>
 
 <style>

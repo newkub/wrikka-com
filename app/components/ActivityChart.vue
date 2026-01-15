@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import LoadingSpinner from "./primitive/LoadingSpinner.vue";
+
 interface ActivityData {
 	weeks: number[][];
 	totalContributions: number;
@@ -31,8 +33,7 @@ const getColor = (level: number) => {
 
 <template>
 	<div v-if="pending" class="flex justify-center items-center py-2rem">
-		<div class="animate-spin w-2rem h-2rem border-4 border-gray-200 dark:border-gray-700 border-t-blue-600 dark:border-t-blue-400 rounded-full">
-		</div>
+		<LoadingSpinner size="md" />
 	</div>
 
 	<div v-else-if="activity" class="flex flex-col gap-0.5rem">

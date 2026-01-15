@@ -46,6 +46,9 @@ export default defineNuxtConfig({
 		serverBundle: {
 			collections: ["mdi", "carbon"],
 		},
+		customCollections: {
+			mdi: () => import("@iconify-json/mdi/icons.json").then((i) => i.default),
+		},
 	},
 	alias: {
 		"#shared": "./shared",
