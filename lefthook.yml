@@ -3,7 +3,6 @@ pre-commit:
     - name: format
       run: bun run format {staged_files}
 
-
 pre-rebase:
   jobs:
     - name: fetch-origin
