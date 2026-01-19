@@ -37,3 +37,4 @@ export const useProfilePage = async (username: string) => {
 		calendarError,
 	};
 };
+

@@ -46,3 +46,4 @@ export const useBlogSearch = (posts: Ref<BlogPost[]>) => {
 		clearFilters,
 	};
 };
+

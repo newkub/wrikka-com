@@ -1,10 +1,10 @@
 <script setup lang="ts">
-import NavLink from "./primitive/NavLink.vue";
 const route = useRoute();
 const colorMode = useColorMode();
 
 const navigation = [
 	{ name: "Blog", path: "/blog", icon: "mdi:file-document-outline" },
+	{ name: "Docs", path: "/docs", icon: "mdi:book-open-variant-outline" },
 	{ name: "Project", path: "/projects", icon: "mdi:folder-outline" },
 	{ name: "Course", path: "/course", icon: "mdi:school-outline" },
 	{ name: "Facebook", path: "/facebook", icon: "mdi:facebook" },
@@ -21,7 +21,7 @@ const toggleTheme = () => {
 </script>
 
 <template>
-	<nav class="sticky top-0 z-100 backdrop-blur-8px border-b border-border bg-background/80">
+	<nav class="sticky top-0 z-50 backdrop-blur border-b border-border bg-background/80">
 		<div class="max-w-1200px mx-auto px-1.5rem py-1rem flex items-center justify-between gap-2rem md:px-1rem md:py-0.75rem md:gap-1rem">
 			<div class="flex items-center">
 				<NuxtLink
@@ -34,7 +34,7 @@ const toggleTheme = () => {
 			</div>
 
 			<div class="hidden md:flex items-center gap-1.5rem">
-				<NavLink
+				<PrimitiveNavLink
 					v-for="item in navigation"
 					:key="item.path"
 					:to="item.path"
@@ -42,11 +42,11 @@ const toggleTheme = () => {
 					:active="isActive(item.path)"
 				>
 					{{ item.name }}
-				</NavLink>
+				</PrimitiveNavLink>
 			</div>
 
 			<div class="flex items-center gap-1rem md:hidden">
-				<NavLink
+				<PrimitiveNavLink
 					v-for="item in navigation"
 					:key="item.path"
 					:to="item.path"
@@ -54,7 +54,7 @@ const toggleTheme = () => {
 					:active="isActive(item.path)"
 				>
 					{{ item.name }}
-				</NavLink>
+				</PrimitiveNavLink>
 			</div>
 
 			<button
@@ -73,3 +73,5 @@ const toggleTheme = () => {
 		</div>
 	</nav>
 </template>
+
+

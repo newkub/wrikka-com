@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import LoadingSpinner from "./primitive/LoadingSpinner.vue";
-
 interface ActivityData {
 	weeks: number[][];
 	totalContributions: number;
@@ -71,3 +69,5 @@ const getColor = (level: number) => {
 		</div>
 	</div>
 </template>
+
+

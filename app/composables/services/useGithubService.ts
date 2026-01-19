@@ -15,3 +15,4 @@ export const useGithubService = () => {
 
 	return { getProfile, getContributionCalendar };
 };
+

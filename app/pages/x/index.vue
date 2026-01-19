@@ -123,3 +123,5 @@ const formatNumber = (num: number) => {
 		</div>
 	</div>
 </template>
+
+

@@ -1,19 +1,21 @@
-export interface ContentItem {
-	_path?: string;
-	_dir?: string;
-	_partial?: boolean;
-	title?: string;
-	description?: string;
-	icon?: string;
-	tags?: string[];
-	body?: string;
-	[key: string]: any;
+import type { ContentItem, QueryBuilder } from '#shared/types/content'
+
+function normalizePath(path: string) {
+	if (!path) return '/' as const
+	return path.startsWith('/') ? path : `/${path}`
 }
 
-export interface QueryBuilder {
-	where: (query: any) => QueryBuilder;
-	find: () => Promise<ContentItem[]>;
-	findOne: () => Promise<ContentItem | null>;
+function isPathMatch(itemPath: string | undefined, queryPath: string) {
+	if (!itemPath) return false
+	const p = normalizePath(queryPath)
+	if (p === '/') return true
+	return itemPath === p || itemPath.startsWith(`${p}/`)
+}
+
+function isOnePathMatch(itemPath: string | undefined, queryPath: string) {
+	if (!itemPath) return false
+	const p = normalizePath(queryPath)
+	return itemPath === p || itemPath === `${p}/index`
 }
 
 export function queryContent(path: string): QueryBuilder {
@@ -55,6 +57,7 @@ export function queryContent(path: string): QueryBuilder {
 					if (!data.value) return [];
 
 					return data.value.filter((item) => {
+						if (!isPathMatch(item._path, path)) return false
 						for (const key in query) {
 							if (key === "_partial") {
 								if (query[key] && !item._partial) return false;
@@ -90,7 +93,7 @@ export function queryContent(path: string): QueryBuilder {
 									_partial: false,
 								};
 
-								if (item._path === path) {
+								if (isOnePathMatch(item._path, path)) {
 									return item;
 								}
 							}
@@ -135,7 +138,7 @@ export function queryContent(path: string): QueryBuilder {
 				}
 			});
 
-			return data.value || [];
+			return (data.value || []).filter((item) => isPathMatch(item._path, path));
 		},
 		findOne: async () => {
 			const { data } = await useAsyncData(`content:${path}:one`, async () => {
@@ -155,7 +158,7 @@ export function queryContent(path: string): QueryBuilder {
 							_partial: false,
 						};
 
-						if (item._path === path) {
+						if (isOnePathMatch(item._path, path)) {
 							return item;
 						}
 					}
@@ -171,3 +174,4 @@ export function queryContent(path: string): QueryBuilder {
 		},
 	};
 }
+

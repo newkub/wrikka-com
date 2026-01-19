@@ -1,4 +1,4 @@
-import type { Repo } from "../../shared/types/repos";
+import type { Repo } from "#shared/types/repos";
 
 export type GroupBy = "date" | "language" | "topics";
 
@@ -161,3 +161,4 @@ export const useGroupedRepos = (repos: Ref<Repo[]>) => {
 		clearFilters,
 	};
 };
+

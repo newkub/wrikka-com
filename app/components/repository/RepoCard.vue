@@ -1,38 +1,15 @@
 <script setup lang="ts">
-import Badge from "./primitive/Badge.vue";
-import Card from "./primitive/Card.vue";
-import RepoActions from "./RepoActions.vue";
-import RepoCommits from "./RepoCommits.vue";
-import RepoReadmeModal from "./RepoReadmeModal.vue";
-import RepoStats from "./RepoStats.vue";
+import type { Repo } from '#shared/types/repos'
+import Card from '~/components/primitive/Card.vue'
+import Badge from '~/components/primitive/Badge.vue'
+import RepoStats from './RepoStats.vue'
+import RepoCommits from './RepoCommits.vue'
+import RepoActions from './RepoActions.vue'
+import RepoReadmeModal from './RepoReadmeModal.vue'
 
-interface Props {
-	repo: {
-		id: number;
-		name: string;
-		full_name: string;
-		description: string | null;
-		html_url: string;
-		language: string | null;
-		stargazers_count: number;
-		forks_count: number;
-		open_issues_count?: number;
-		pulls_count?: number;
-		updated_at: string;
-		topics: string[];
-		fork: boolean;
-		archived: boolean;
-		readme?: string | null;
-		commits?: Array<{
-			sha: string;
-			message: string;
-			date: string;
-			url: string;
-		}>;
-	};
-}
-
-const props = defineProps<Props>();
+const props = defineProps<{
+	repo: Repo
+}>()
 
 const showReadmeModal = ref(false);
 </script>
@@ -123,3 +100,5 @@ const showReadmeModal = ref(false);
 		@close="showReadmeModal = false"
 	/>
 </template>
+
+

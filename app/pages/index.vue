@@ -1,50 +1,15 @@
 <script setup lang="ts">
+import type { GithubProfile, GitHubStats } from '#shared/types/github'
+
 useSeoMeta({
 	title: "Home",
 	description: "My personal portfolio and projects",
 });
 
-const { data: profile, pending: profilePending } = await useFetch<
-	GitHubProfile
->("/api/github/profile");
-const { data: readme, pending: readmePending } = await useFetch(
-	"/api/github/readme",
-);
-const { data: repos, pending: reposPending } = await useFetch(
-	"/api/github/repos",
-);
-const { data: stats, pending: statsPending } = await useFetch<GitHubStats>(
-	"/api/github/stats",
-);
-
-const formatDate = (dateString: string) => {
-	return new Date(dateString).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "long",
-		day: "numeric",
-	});
-};
-
-interface GitHubStats {
-	totalStars: number;
-	totalRepos: number;
-	reposByLanguage: Record<string, any[]>;
-	repos: any[];
-}
-
-interface GitHubProfile {
-	login: string;
-	name: string | null;
-	bio: string | null;
-	company: string | null;
-	location: string | null;
-	blog: string | null;
-	twitter_username: string | null;
-	avatar_url: string;
-	html_url: string;
-	followers: number;
-	following: number;
-}
+const { data: profile, pending: profilePending } = await useFetch<GithubProfile>("/api/github/profile");
+const { data: readme, pending: readmePending } = await useFetch("/api/github/readme");
+const { data: repos, pending: reposPending } = await useFetch("/api/github/repos");
+const { data: stats, pending: statsPending } = await useFetch<GitHubStats>("/api/github/stats");
 </script>
 
 <template>
@@ -203,7 +168,7 @@ interface GitHubProfile {
 						Repositories ({{ stats.totalRepos }})
 					</h2>
 					<div class="grid grid-cols-1 gap-1.5rem md:grid-cols-2 lg:grid-cols-3">
-						<RepoCard
+						<RepositoryRepoCard
 							v-for="repo in stats.repos"
 							:key="repo.id"
 							:repo="repo"
@@ -231,3 +196,5 @@ interface GitHubProfile {
 		</div>
 	</div>
 </template>
+
+

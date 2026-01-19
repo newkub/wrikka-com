@@ -30,33 +30,32 @@ const hasActiveFilters = computed(() =>
 </script>
 
 <template>
-	<div class="flex flex-col gap-2rem">
-		<div class="text-center py-2rem">
-			<h1 class="text-2.5rem font-700 mb-0.5rem md:text-2rem text-foreground">
-				Projects
-			</h1>
-			<p class="text-1.125rem text-muted-foreground">
-				My personal projects and contributions
-			</p>
+	<div class="min-h-100vh">
+		<div class="text-center py-16 px-6 pb-12 bg-gradient-to-br from-primary/5 to-background border-b border-border mb-12">
+			<div class="max-w-800px mx-auto">
+				<div class="inline-flex items-center gap-2 px-4 py-2 bg-primary/10 text-primary rounded-full text-sm font-500 mb-6">
+					<Icon name="mdi:rocket-launch" size="20" />
+					<span>Projects</span>
+				</div>
+				<h1 class="text-3rem font-700 mb-4 leading-1.2 text-foreground">My Projects</h1>
+				<p class="text-1.25rem text-muted-foreground leading-1.6">Explore my personal projects and contributions</p>
+			</div>
 		</div>
 
-		<div v-if="repos && repos.length > 0" class="flex flex-col gap-1.5rem">
-			<div class="flex flex-col gap-1rem">
-				<div class="flex flex-wrap items-center gap-1rem">
-					<div class="flex items-center gap-0.5rem">
-						<span class="text-0.875rem font-600 text-muted-foreground"
-						>Group by:</span>
-						<div class="flex gap-0.5rem">
+		<div v-if="repos && repos.length > 0" class="px-6 pb-12 max-w-1400px mx-auto">
+			<div class="bg-card border border-border rounded-1rem p-6 mb-8">
+				<div class="flex flex-wrap gap-6 items-center mb-4">
+					<div class="flex items-center gap-3">
+						<span class="text-sm font-600 text-muted-foreground">Group by:</span>
+						<div class="flex gap-2">
 							<button
 								v-for="option in groupOptions"
 								:key="option.value"
 								@click="groupBy = option.value as any"
 								:class="[
-									'px-0.75rem py-0.5rem rounded-lg text-0.875rem font-500 transition-all-0.2s',
-									'border border-transparent',
-									groupBy === option.value
-										? 'bg-primary text-primary-foreground'
-										: 'bg-muted text-foreground hover:bg-surface-elevated',
+									'px-4 py-2 rounded-lg text-sm font-500 border border-transparent bg-muted text-foreground cursor-pointer transition-all-0.2s',
+									'hover:bg-accent hover:text-accent-foreground',
+									groupBy === option.value ? 'bg-primary text-primary-foreground' : ''
 								]"
 							>
 								{{ option.label }}
@@ -64,33 +63,34 @@ const hasActiveFilters = computed(() =>
 						</div>
 					</div>
 
-					<div class="flex-1 min-w-0">
-						<div class="relative">
+					<div class="flex items-center gap-4 flex-1 min-w-0">
+						<div class="relative flex-1 min-w-0">
 							<Icon
 								name="mdi:magnify"
-								class="absolute left-0.75rem top-1/2 -translate-y-1/2 w-1rem h-1rem text-muted-foreground"
+								class="absolute left-3 top-1/2 -translate-y-1/2 w-1rem h-1rem text-muted-foreground"
 							/>
 							<input
 								v-model="searchQuery"
 								type="text"
 								placeholder="Search repositories..."
-								class="w-full pl-2.5rem pr-1rem py-0.5rem rounded-lg border border-border bg-surface text-foreground text-0.875rem focus:outline-none focus:ring-2 focus:ring-primary"
+								class="w-full pl-10 pr-4 py-2 rounded-lg border border-border bg-background text-foreground text-sm transition-all-0.2s focus:outline-none focus:border-primary focus:ring-2 focus:ring-primary/10"
 							/>
 						</div>
-					</div>
 
-					<button
-						v-if="hasActiveFilters"
-						@click="clearFilters"
-						class="px-0.75rem py-0.5rem rounded-lg text-0.875rem font-500 bg-destructive/10 text-destructive-foreground hover:bg-destructive/20 transition-all-0.2s"
-					>
-						Clear Filters
-					</button>
+						<button
+							v-if="hasActiveFilters"
+							@click="clearFilters"
+							class="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-500 bg-destructive/10 text-destructive-foreground border-none cursor-pointer transition-all-0.2s hover:bg-destructive/20"
+						>
+							<Icon name="mdi:close" size="16" />
+							<span>Clear Filters</span>
+						</button>
+					</div>
 				</div>
 
 				<div
 					v-if="availableGroups.length > 0"
-					class="flex flex-wrap gap-0.5rem"
+					class="flex flex-wrap gap-2"
 				>
 					<Badge
 						v-for="group in availableGroups"
@@ -99,9 +99,8 @@ const hasActiveFilters = computed(() =>
 						size="sm"
 						:class="[
 							'cursor-pointer transition-all-0.2s',
-							isGroupSelected(group)
-								? 'bg-primary text-primary-foreground'
-								: 'hover:bg-muted',
+							'hover:bg-accent',
+							isGroupSelected(group) ? 'bg-primary text-primary-foreground' : ''
 						]"
 						@click="toggleGroup(group)"
 					>
@@ -112,25 +111,23 @@ const hasActiveFilters = computed(() =>
 
 			<div
 				v-if="groupedRepos.length > 0"
-				class="flex flex-col gap-1.5rem"
+				class="flex flex-col gap-8"
 			>
 				<div
 					v-for="group in groupedRepos"
 					:key="group.label"
-					class="flex flex-col gap-1rem"
+					class="flex flex-col gap-4"
 				>
-					<div class="flex items-center gap-0.75rem">
+					<div class="flex items-center gap-3">
 						<Icon
 							name="mdi:folder"
 							class="w-1.25rem h-1.25rem text-primary"
 						/>
-						<h2 class="text-1.25rem font-600 m-0 text-foreground">
-							{{ group.label }}
-						</h2>
+						<h2 class="text-1.25rem font-600 m-0 text-foreground">{{ group.label }}</h2>
 						<Badge size="sm" variant="outline">{{ group.count }}</Badge>
 					</div>
 
-					<div class="grid grid-cols-1 gap-1.5rem md:grid-cols-2 lg:grid-cols-3">
+					<div class="grid grid-cols-[repeat(auto-fill,minmax(320px,1fr))] gap-6">
 						<RepoCard
 							v-for="repo in group.repos"
 							:key="repo.id"
@@ -140,13 +137,18 @@ const hasActiveFilters = computed(() =>
 				</div>
 			</div>
 
-			<div v-else class="text-center py-4rem text-muted-foreground">
-				<p>No repositories found matching your filters</p>
+			<div v-else class="flex flex-col items-center justify-center py-16 px-6 text-center">
+				<Icon name="mdi:folder-open-outline" size="64" class="text-muted-foreground mb-4" />
+				<p class="text-1.125rem text-muted-foreground">No repositories found matching your filters</p>
 			</div>
 		</div>
 
-		<div v-else class="text-center py-4rem text-gray-600 dark:text-gray-400">
-			<p>No projects found</p>
+		<div v-else class="flex flex-col items-center justify-center py-16 px-6 text-center">
+			<Icon name="mdi:folder-off-outline" size="64" class="text-muted-foreground mb-4" />
+			<p class="text-1.125rem text-muted-foreground">No projects found</p>
 		</div>
 	</div>
 </template>
+
+
+

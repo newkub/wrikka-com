@@ -11,3 +11,4 @@ export const useBlog = () => {
 
 	return { fetchPosts, fetchPostBySlug };
 };
+

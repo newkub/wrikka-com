@@ -1,4 +1,4 @@
-import type { GithubProfile } from "../../../shared/types/github";
+import type { GithubProfile } from "#shared/types/github";
 import { useGithubService } from "../services/useGithubService";
 
 export const useGithubProfile = async (username: string) => {
@@ -12,3 +12,4 @@ export const useGithubProfile = async (username: string) => {
 		refresh,
 	};
 };
+

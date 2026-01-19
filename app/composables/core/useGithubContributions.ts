@@ -1,4 +1,4 @@
-import type { GithubContributionCalendar } from "../../../shared/types/github";
+import type { GithubContributionCalendar } from "#shared/types/github";
 import { useGithubService } from "../services/useGithubService";
 
 export const useGithubContributions = async (username: string) => {
@@ -12,3 +12,4 @@ export const useGithubContributions = async (username: string) => {
 		refresh,
 	};
 };
+

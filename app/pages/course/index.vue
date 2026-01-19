@@ -7,8 +7,6 @@ useSeoMeta({
 });
 
 const { data: courses } = await useFetch<Course[]>("/api/course");
-
-console.log("Courses data:", courses);
 </script>
 
 <template>
@@ -27,7 +25,7 @@ console.log("Courses data:", courses);
 				v-for="course in courses"
 				:key="course.id"
 				:to="course.path"
-				class="group flex flex-col gap-1rem p-1.5rem rounded-0.75rem border border-border bg-surface hover:border-primary hover:shadow-lg transition-all-0.2s"
+				class="group flex flex-col gap-1rem p-1.5rem rounded-0.75rem border border-border bg-surface hover:border-primary hover:shadow-lg transition-all-0.2s cursor-pointer no-underline text-foreground"
 			>
 				<div class="flex items-center gap-0.75rem">
 					<Icon
@@ -56,3 +54,5 @@ console.log("Courses data:", courses);
 		</div>
 	</div>
 </template>
+
+

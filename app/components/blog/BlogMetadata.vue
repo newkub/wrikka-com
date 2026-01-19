@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import IconText from "./primitive/IconText.vue";
-import ShareButton from "./primitive/ShareButton.vue";
 interface Props {
 	date?: string;
 	category?: string | null;
@@ -168,3 +166,5 @@ const formatReadingTime = (minutes: number) => {
 		</div>
 	</div>
 </template>
+
+

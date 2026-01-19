@@ -8,7 +8,7 @@ useHead({
 
 <template>
 	<div class="min-h-100vh flex flex-col bg-background">
-		<Navbar />
+		<LayoutNavbar />
 		<main class="flex-1 px-1.5rem py-2rem max-w-1200px w-full mx-auto md:px-1rem md:py-1.5rem">
 			<slot />
 		</main>
@@ -21,3 +21,5 @@ useHead({
 		</footer>
 	</div>
 </template>
+
+

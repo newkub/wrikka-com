@@ -6,24 +6,12 @@ const slug = route.params.slug as string;
 const course = await queryContent(`/course/${slug}`).findOne();
 const conceptGroups = await useCourseLessons(slug);
 
-const isOpen = ref(false);
-const selectedConcept = ref<Lesson & { content: string } | null>(null);
+console.log('conceptGroups:', conceptGroups);
 
-const openModal = async (concept: Lesson) => {
-	try {
-		const page = await queryContent(concept.contentPath).findOne();
-		const content = page?.body || '';
-		selectedConcept.value = { ...concept, content };
-		isOpen.value = true;
-	} catch (error) {
-		console.error('Error loading concept content:', error);
-	}
-};
-
-const closeModal = () => {
-	isOpen.value = false;
-	selectedConcept.value = null;
-};
+useSeoMeta({
+	title: course?.title || "Course",
+	description: course?.description || "",
+});
 </script>
 
 <template>
@@ -60,18 +48,10 @@ const closeModal = () => {
 						:heading="concept.title"
 						:content="concept.description"
 						:icon="concept.icon"
-						@click="openModal(concept)"
+						:to="concept.routePath"
 					/>
 				</div>
 			</div>
 		</div>
-
-		<CourseModal
-			v-if="selectedConcept"
-			:open="isOpen"
-			:heading="selectedConcept.title"
-			:content="selectedConcept.content"
-			@close="closeModal"
-		/>
 	</div>
 </template>

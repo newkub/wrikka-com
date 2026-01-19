@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import TableOfContents from '~/components/content/TableOfContents.vue'
+
 const route = useRoute()
 const slug = route.params.slug as string
 
@@ -44,24 +46,61 @@ useSeoMeta({
 
 <template>
 	<NuxtLayout name="blog">
-		<template #metadata>
-			<BlogMetadata
-				v-if="post"
-				:date="post.date"
-				:category="post.category"
-				:tags="post.tags"
-				:author="post.author"
-				:reading-time="post.readingTime"
-				:updated-date="post.updatedDate"
-				:title="post.title"
-				:url="currentUrl"
-				:cover="post.cover"
-				:excerpt="post.excerpt"
-			/>
+		<template #hero>
+			<div v-if="post" class="h-screen flex items-center justify-center px-1.5rem">
+				<div class="grid grid-cols-1 lg:grid-cols-2 gap-4rem max-w-7xl mx-auto items-center">
+					<!-- Cover Image - Left -->
+					<div v-if="post.cover" class="order-1 lg:order-1">
+						<img
+							:src="post.cover"
+							:alt="post.title"
+							class="w-full max-w-2xl mx-auto rounded-1rem shadow-2xl"
+						/>
+					</div>
+
+					<!-- Title, Description, Metadata - Right -->
+					<div class="order-2 lg:order-2 text-left">
+						<!-- Title -->
+						<h1 class="text-3rem md:text-4rem font-800 mb-1rem text-foreground leading-tight">
+							{{ post.title }}
+						</h1>
+
+						<!-- Description/Excerpt -->
+						<p v-if="post.excerpt" class="text-1.25rem text-muted-foreground mb-1.5rem leading-relaxed">
+							{{ post.excerpt }}
+						</p>
+
+						<!-- Metadata -->
+						<div class="flex flex-wrap items-center gap-1.5rem text-0.875rem text-muted-foreground mb-1rem">
+							<span v-if="post.date">
+								{{ formatDate(post.date) }}
+							</span>
+							<span v-if="post.readingTime">
+								• {{ Math.round(post.readingTime) }} min read
+							</span>
+							<span v-if="post.category">
+								• {{ post.category }}
+							</span>
+						</div>
+
+						<!-- Tags -->
+						<div v-if="post.tags && post.tags.length > 0" class="flex flex-wrap gap-0.5rem">
+							<Badge
+								v-for="tag in post.tags"
+								:key="tag"
+								variant="default"
+								size="sm"
+							>
+								{{ tag }}
+							</Badge>
+						</div>
+					</div>
+				</div>
+			</div>
 		</template>
 
 		<template #toc>
-			<TableOfContents v-if="post" :content="renderedContent" />
+			<TableOfContents v-if="post" :content="post.content" />
 		</template>
 
 		<div v-if="pending" class="flex justify-center items-center py-4rem">
@@ -69,7 +108,7 @@ useSeoMeta({
 		</div>
 
 		<article v-else-if="post" class="blog-post">
-			<div class="prose prose-invert max-w-none" v-html="renderedContent"></div>
+			<MarkdownRenderer :content="post.content" />
 		</article>
 
 		<div v-else class="text-center py-4rem text-muted-foreground">
@@ -91,7 +130,7 @@ useSeoMeta({
 <style>
 .prose {
 	color: rgb(17, 24, 39);
-	max-width: 65ch;
+	max-width: 85ch;
 }
 .prose :where(p):not(:where([class~="not-prose"] *)) {
 	margin-top: 1.25em;

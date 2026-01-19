@@ -57,6 +57,10 @@ export default defineNuxtConfig({
 		"/youtube": { prerender: true },
 		"/x": { prerender: true },
 
+		// Docs routes - ISR with longer revalidation time
+		"/docs": { isr: 3600 },
+		"/docs/**": { isr: 7200 },
+
 		// Blog routes - ISR with different revalidation times
 		"/blog": { isr: 3600 }, // Blog listing - revalidate every 1 hour
 		"/blog/**": { isr: 7200 }, // Individual blog posts - revalidate every 2 hours

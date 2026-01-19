@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { ref } from "vue";
-
 const props = defineProps<{
 	code: string;
 }>();
@@ -39,3 +37,5 @@ const copyCode = async () => {
 		/>
 	</button>
 </template>
+
+

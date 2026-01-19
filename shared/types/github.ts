@@ -1,3 +1,5 @@
+import type { Repo } from '#shared/types/repos'
+
 export interface GithubEvent {
 	id: string;
 	type: string;
@@ -32,4 +34,18 @@ export interface GithubContributionCalendar {
 	weeks: number[][];
 	totalContributions: number;
 	years: number[];
+}
+
+export interface GitHubStats {
+	totalStars: number;
+	totalRepos: number;
+	reposByLanguage: Record<string, Repo[]>;
+	repos: Repo[];
+}
+
+export interface GitHubCommit {
+	sha: string;
+	message: string;
+	date: string;
+	url: string;
 }

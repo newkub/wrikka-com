@@ -14,6 +14,7 @@ export interface Lesson {
 	icon: string;
 	group: string;
 	contentPath: string;
+	routePath: string;
 }
 
 export interface LessonGroup {
@@ -62,6 +63,7 @@ export const useCourseLessons = async (courseId: string) => {
 			icon: lesson.icon,
 			group: groupLabel,
 			contentPath: lesson._path || "",
+			routePath: lesson._path || "",
 		}));
 
 		if (concepts.length > 0) {
@@ -77,3 +79,4 @@ export const useCourseLessons = async (courseId: string) => {
 
 	return grouped;
 };
+

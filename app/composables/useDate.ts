@@ -1,16 +1,10 @@
+import { formatDate as formatDateUtil } from '~/utils/date'
+
 export function useDate() {
 	return {
-		formatDate,
+		formatDate: formatDateUtil,
 		formatTimeAgo,
 	};
-}
-
-export function formatDate(dateString: string): string {
-	return new Date(dateString).toLocaleDateString("en-US", {
-		year: "numeric",
-		month: "short",
-		day: "numeric",
-	});
 }
 
 export function formatTimeAgo(dateString: string): string {
@@ -35,3 +29,4 @@ export function formatTimeAgo(dateString: string): string {
 	}
 	return "just now";
 }
+

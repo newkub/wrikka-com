@@ -11,6 +11,11 @@ export default defineConfig({
 		presetWind4({
 			preflights: {
 				reset: true,
+				preflights: {
+					theme: {
+						mode: "on-demand",
+					},
+				},
 			},
 		}),
 	],
@@ -19,6 +24,9 @@ export default defineConfig({
 		transformerDirectives(),
 		transformerCompileClass(),
 	],
+	cache: {
+		persist: false,
+	},
 	theme: {
 		colors: {
 			primary: {
