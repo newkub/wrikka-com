@@ -8,13 +8,13 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-	(e: 'update:open', value: boolean): void;
-	(e: 'close'): void;
+	(e: "update:open", value: boolean): void;
+	(e: "close"): void;
 }>();
 
 const handleClose = () => {
-	emit('update:open', false);
-	emit('close');
+	emit("update:open", false);
+	emit("close");
 };
 </script>
 
@@ -43,5 +43,3 @@ const handleClose = () => {
 		</div>
 	</Modal>
 </template>
-
-

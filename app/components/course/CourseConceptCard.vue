@@ -8,7 +8,7 @@ interface Props {
 
 const props = defineProps<Props>();
 
-console.log('CourseConceptCard props:', props);
+console.log("CourseConceptCard props:", props);
 </script>
 
 <template>
@@ -31,5 +31,3 @@ console.log('CourseConceptCard props:', props);
 		</p>
 	</NuxtLink>
 </template>
-
-

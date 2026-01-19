@@ -1,5 +1,4 @@
 <script setup lang="ts">
-
 useHead({
 	titleTemplate: "%s - Wrikka",
 });
@@ -10,5 +9,3 @@ useHead({
 		<NuxtPage />
 	</NuxtLayout>
 </template>
-
-

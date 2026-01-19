@@ -12,4 +12,3 @@ export const useGithubProfile = async (username: string) => {
 		refresh,
 	};
 };
-

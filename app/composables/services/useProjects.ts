@@ -5,4 +5,3 @@ export const useProjects = () => {
 
 	return { projects, pending, error };
 };
-

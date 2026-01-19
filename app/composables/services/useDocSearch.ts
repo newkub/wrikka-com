@@ -1,43 +1,43 @@
-import type { ContentItem } from '#shared/types/content'
+import type { ContentItem } from "#shared/types/content";
 
 export const useDocSearch = (docs: Ref<ContentItem[]>) => {
-	const searchQuery = ref('')
-	const isSearchOpen = ref(false)
+	const searchQuery = ref("");
+	const isSearchOpen = ref(false);
 
 	const filteredDocs = computed(() => {
-		if (!searchQuery.value) return docs.value
+		if (!searchQuery.value) return docs.value;
 
-		const query = searchQuery.value.toLowerCase()
+		const query = searchQuery.value.toLowerCase();
 		return docs.value.filter(doc => {
-			const titleMatch = doc.title?.toLowerCase().includes(query) || false
-			const descriptionMatch = doc.description?.toLowerCase().includes(query) || false
-			const tagsMatch = doc.tags?.some((tag: string) => tag.toLowerCase().includes(query)) || false
-			const categoryMatch = doc.category?.toLowerCase().includes(query) || false
+			const titleMatch = doc.title?.toLowerCase().includes(query) || false;
+			const descriptionMatch = doc.description?.toLowerCase().includes(query) || false;
+			const tagsMatch = doc.tags?.some((tag: string) => tag.toLowerCase().includes(query)) || false;
+			const categoryMatch = doc.category?.toLowerCase().includes(query) || false;
 
-			return titleMatch || descriptionMatch || tagsMatch || categoryMatch
-		})
-	})
+			return titleMatch || descriptionMatch || tagsMatch || categoryMatch;
+		});
+	});
 
 	const openSearch = () => {
-		isSearchOpen.value = true
-	}
+		isSearchOpen.value = true;
+	};
 
 	const closeSearch = () => {
-		isSearchOpen.value = false
-		searchQuery.value = ''
-	}
+		isSearchOpen.value = false;
+		searchQuery.value = "";
+	};
 
 	const toggleSearch = () => {
 		if (isSearchOpen.value) {
-			closeSearch()
+			closeSearch();
 		} else {
-			openSearch()
+			openSearch();
 		}
-	}
+	};
 
 	const clearSearch = () => {
-		searchQuery.value = ''
-	}
+		searchQuery.value = "";
+	};
 
 	return {
 		searchQuery,
@@ -47,6 +47,5 @@ export const useDocSearch = (docs: Ref<ContentItem[]>) => {
 		closeSearch,
 		toggleSearch,
 		clearSearch,
-	}
-}
-
+	};
+};

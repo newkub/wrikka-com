@@ -7,5 +7,3 @@ const props = defineProps<{
 <template>
 	<TableOfContents :content="content" />
 </template>
-
-

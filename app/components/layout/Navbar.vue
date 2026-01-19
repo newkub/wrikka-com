@@ -73,5 +73,3 @@ const toggleTheme = () => {
 		</div>
 	</nav>
 </template>
-
-

@@ -21,5 +21,3 @@ useHead({
 		</footer>
 	</div>
 </template>
-
-

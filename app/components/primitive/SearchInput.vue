@@ -1,34 +1,38 @@
 <script setup lang="ts">
 const props = defineProps<{
-	modelValue: string
-	placeholder?: string
-}>()
+	modelValue: string;
+	placeholder?: string;
+}>();
 
 const emit = defineEmits<{
-	(e: 'update:modelValue', value: string): void
-	(e: 'clear'): void
-}>()
+	(e: "update:modelValue", value: string): void;
+	(e: "clear"): void;
+}>();
 
-const input = ref<HTMLInputElement>()
+const input = ref<HTMLInputElement>();
 
 const handleInput = (e: Event) => {
-	const target = e.target as HTMLInputElement
-	emit('update:modelValue', target.value)
-}
+	const target = e.target as HTMLInputElement;
+	emit("update:modelValue", target.value);
+};
 
 const clear = () => {
-	emit('update:modelValue', '')
-	emit('clear')
-}
+	emit("update:modelValue", "");
+	emit("clear");
+};
 
 defineExpose({
 	focus: () => input.value?.focus(),
-})
+});
 </script>
 
 <template>
 	<div class="flex flex-1 items-center gap-3 relative">
-		<Icon name="mdi:magnify" size="20" class="text-muted-foreground flex-shrink-0" />
+		<Icon
+			name="mdi:magnify"
+			size="20"
+			class="text-muted-foreground flex-shrink-0"
+		/>
 		<input
 			ref="input"
 			:model-value="modelValue"
@@ -47,5 +51,3 @@ defineExpose({
 		</button>
 	</div>
 </template>
-
-

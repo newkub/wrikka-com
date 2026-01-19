@@ -116,5 +116,3 @@ const scrollToHeading = (id: string) => {
 		</nav>
 	</div>
 </template>
-
-

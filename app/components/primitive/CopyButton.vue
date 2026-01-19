@@ -37,5 +37,3 @@ const copyCode = async () => {
 		/>
 	</button>
 </template>
-
-

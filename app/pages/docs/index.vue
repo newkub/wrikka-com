@@ -1,17 +1,22 @@
 <script setup lang="ts">
 definePageMeta({
-	layout: 'docs',
-})
+	layout: "docs",
+});
 
-const { data: docSets } = await useAsyncData('docs-index', async () => {
-	const { queryContent } = await import('~/composables/useContent')
-	const items = await queryContent('/docs').find()
+const { data: docSets } = await useAsyncData("docs-index", async () => {
+	const { queryContent } = await import("~/composables/useContent");
+	const items = await queryContent("/docs").find();
 	return items
-		.filter((item: any) => item._path !== '/docs/index')
-		.filter((item: any) => typeof item._path === 'string' && item._path.endsWith('/index'))
-		.filter((item: any) => typeof item._path === 'string' && item._path.split('/').filter(Boolean).length === 3)
-		.sort((a: any, b: any) => (a.order || 0) - (b.order || 0))
-})
+		.filter((item: any) => item._path !== "/docs/index")
+		.filter((item: any) =>
+			typeof item._path === "string" && item._path.endsWith("/index")
+		)
+		.filter((item: any) =>
+			typeof item._path === "string"
+			&& item._path.split("/").filter(Boolean).length === 3
+		)
+		.sort((a: any, b: any) => (a.order || 0) - (b.order || 0));
+});
 </script>
 
 <template>
@@ -22,8 +27,12 @@ const { data: docSets } = await useAsyncData('docs-index', async () => {
 					<Icon name="mdi:book-open-variant" size="20" />
 					<span>Documentation</span>
 				</div>
-				<h1 class="text-3rem font-700 mb-4 leading-1.2 text-foreground">เอกสารและคู่มือ</h1>
-				<p class="text-1.25rem text-muted-foreground leading-1.6">เลือกชุดเอกสารก่อน แล้วค่อยเลือกหัวข้อในชุดนั้น</p>
+				<h1 class="text-3rem font-700 mb-4 leading-1.2 text-foreground">
+					เอกสารและคู่มือ
+				</h1>
+				<p class="text-1.25rem text-muted-foreground leading-1.6">
+					เลือกชุดเอกสารก่อน แล้วค่อยเลือกหัวข้อในชุดนั้น
+				</p>
 			</div>
 		</div>
 
@@ -34,7 +43,11 @@ const { data: docSets } = await useAsyncData('docs-index', async () => {
 				:to="(setDoc._path || '').replace(/\/index$/, '')"
 				class="relative flex flex-col p-8 bg-card border border-border rounded-1rem no-underline transition-all-0.3s overflow-hidden group hover:border-primary hover:-translate-y-1 hover:shadow-[0_20px_40px_-12px_hsl(var(--foreground)/0.15)]"
 			>
-				<div class="absolute top-0 left-0 right-0 h-0.75rem bg-gradient-to-r from-primary to-primary/50 group-hover:scale-x-100 origin-left transition-transform-0.3s" style="transform: scaleX(0);"></div>
+				<div
+					class="absolute top-0 left-0 right-0 h-0.75rem bg-gradient-to-r from-primary to-primary/50 group-hover:scale-x-100 origin-left transition-transform-0.3s"
+					style="transform: scaleX(0)"
+				>
+				</div>
 				<div class="flex items-center justify-between mb-6">
 					<div class="w-14 h-14 flex items-center justify-center bg-gradient-to-br from-primary/10 to-primary/5 text-primary rounded-1.5rem transition-all-0.3s group-hover:scale-105 group-hover:from-primary/20 group-hover:to-primary/10">
 						<Icon name="mdi:folder" size="32" />
@@ -44,14 +57,14 @@ const { data: docSets } = await useAsyncData('docs-index', async () => {
 					</div>
 				</div>
 				<div class="flex-1">
-					<h2 class="text-1.25rem font-600 text-foreground mb-3 leading-1.4">{{ setDoc.title }}</h2>
-					<p class="text-0.95rem text-muted-foreground leading-1.6">{{ setDoc.description }}</p>
+					<h2 class="text-1.25rem font-600 text-foreground mb-3 leading-1.4">
+						{{ setDoc.title }}
+					</h2>
+					<p class="text-0.95rem text-muted-foreground leading-1.6">
+						{{ setDoc.description }}
+					</p>
 				</div>
 			</NuxtLink>
 		</div>
 	</NuxtLayout>
 </template>
-
-
-
-

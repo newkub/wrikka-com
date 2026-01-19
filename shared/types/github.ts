@@ -1,4 +1,4 @@
-import type { Repo } from '#shared/types/repos'
+import type { Repo } from "#shared/types/repos";
 
 export interface GithubEvent {
 	id: string;

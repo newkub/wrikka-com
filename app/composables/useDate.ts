@@ -1,4 +1,4 @@
-import { formatDate as formatDateUtil } from '~/utils/date'
+import { formatDate as formatDateUtil } from "~/utils/date";
 
 export function useDate() {
 	return {
@@ -29,4 +29,3 @@ export function formatTimeAgo(dateString: string): string {
 	}
 	return "just now";
 }
-

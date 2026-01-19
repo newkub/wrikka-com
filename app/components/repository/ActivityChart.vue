@@ -69,5 +69,3 @@ const getColor = (level: number) => {
 		</div>
 	</div>
 </template>
-
-

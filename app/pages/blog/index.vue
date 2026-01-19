@@ -164,5 +164,3 @@ const categories = computed(() => {
 		</div>
 	</div>
 </template>
-
-

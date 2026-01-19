@@ -9,5 +9,3 @@ const props = defineProps<{
 <template>
 	<CodeBlock :code="code" :language="language" :filename="filename" />
 </template>
-
-

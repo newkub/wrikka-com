@@ -69,19 +69,19 @@ export default defineEventHandler(async () => {
 		}
 
 		// Fallback to local projects.json
-		const fs = await import('node:fs');
-		const path = await import('node:path');
-		const projectsPath = path.join(process.cwd(), 'content', 'projects.json');
-		const projectsData = JSON.parse(fs.readFileSync(projectsPath, 'utf-8'));
+		const fs = await import("node:fs");
+		const path = await import("node:path");
+		const projectsPath = path.join(process.cwd(), "content", "projects.json");
+		const projectsData = JSON.parse(fs.readFileSync(projectsPath, "utf-8"));
 		const projects = projectsData.default || [];
 
 		const repos = projects.map((project: any) => ({
 			id: parseInt(project.id),
-			name: project.title.toLowerCase().replace(/\s+/g, '-'),
-			full_name: `${githubUsername || 'wrikka'}/${project.title.toLowerCase().replace(/\s+/g, '-')}`,
+			name: project.title.toLowerCase().replace(/\s+/g, "-"),
+			full_name: `${githubUsername || "wrikka"}/${project.title.toLowerCase().replace(/\s+/g, "-")}`,
 			description: project.description,
 			html_url: project.github || project.demo,
-			language: project.tags?.[0] || 'TypeScript',
+			language: project.tags?.[0] || "TypeScript",
 			stargazers_count: 0,
 			forks_count: 0,
 			updated_at: new Date().toISOString(),

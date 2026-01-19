@@ -23,5 +23,3 @@ const props = withDefaults(defineProps<Props>(), {
 		<slot />
 	</NuxtLink>
 </template>
-
-

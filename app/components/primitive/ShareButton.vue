@@ -43,5 +43,3 @@ const labels = {
 		{{ labels[platform] }}
 	</a>
 </template>
-
-

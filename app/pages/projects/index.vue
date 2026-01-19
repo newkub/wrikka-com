@@ -37,16 +37,24 @@ const hasActiveFilters = computed(() =>
 					<Icon name="mdi:rocket-launch" size="20" />
 					<span>Projects</span>
 				</div>
-				<h1 class="text-3rem font-700 mb-4 leading-1.2 text-foreground">My Projects</h1>
-				<p class="text-1.25rem text-muted-foreground leading-1.6">Explore my personal projects and contributions</p>
+				<h1 class="text-3rem font-700 mb-4 leading-1.2 text-foreground">
+					My Projects
+				</h1>
+				<p class="text-1.25rem text-muted-foreground leading-1.6">
+					Explore my personal projects and contributions
+				</p>
 			</div>
 		</div>
 
-		<div v-if="repos && repos.length > 0" class="px-6 pb-12 max-w-1400px mx-auto">
+		<div
+			v-if="repos && repos.length > 0"
+			class="px-6 pb-12 max-w-1400px mx-auto"
+		>
 			<div class="bg-card border border-border rounded-1rem p-6 mb-8">
 				<div class="flex flex-wrap gap-6 items-center mb-4">
 					<div class="flex items-center gap-3">
-						<span class="text-sm font-600 text-muted-foreground">Group by:</span>
+						<span class="text-sm font-600 text-muted-foreground"
+						>Group by:</span>
 						<div class="flex gap-2">
 							<button
 								v-for="option in groupOptions"
@@ -55,7 +63,9 @@ const hasActiveFilters = computed(() =>
 								:class="[
 									'px-4 py-2 rounded-lg text-sm font-500 border border-transparent bg-muted text-foreground cursor-pointer transition-all-0.2s',
 									'hover:bg-accent hover:text-accent-foreground',
-									groupBy === option.value ? 'bg-primary text-primary-foreground' : ''
+									groupBy === option.value
+										? 'bg-primary text-primary-foreground'
+										: '',
 								]"
 							>
 								{{ option.label }}
@@ -100,7 +110,9 @@ const hasActiveFilters = computed(() =>
 						:class="[
 							'cursor-pointer transition-all-0.2s',
 							'hover:bg-accent',
-							isGroupSelected(group) ? 'bg-primary text-primary-foreground' : ''
+							isGroupSelected(group)
+								? 'bg-primary text-primary-foreground'
+								: '',
 						]"
 						@click="toggleGroup(group)"
 					>
@@ -123,7 +135,9 @@ const hasActiveFilters = computed(() =>
 							name="mdi:folder"
 							class="w-1.25rem h-1.25rem text-primary"
 						/>
-						<h2 class="text-1.25rem font-600 m-0 text-foreground">{{ group.label }}</h2>
+						<h2 class="text-1.25rem font-600 m-0 text-foreground">
+							{{ group.label }}
+						</h2>
 						<Badge size="sm" variant="outline">{{ group.count }}</Badge>
 					</div>
 
@@ -137,18 +151,31 @@ const hasActiveFilters = computed(() =>
 				</div>
 			</div>
 
-			<div v-else class="flex flex-col items-center justify-center py-16 px-6 text-center">
-				<Icon name="mdi:folder-open-outline" size="64" class="text-muted-foreground mb-4" />
-				<p class="text-1.125rem text-muted-foreground">No repositories found matching your filters</p>
+			<div
+				v-else
+				class="flex flex-col items-center justify-center py-16 px-6 text-center"
+			>
+				<Icon
+					name="mdi:folder-open-outline"
+					size="64"
+					class="text-muted-foreground mb-4"
+				/>
+				<p class="text-1.125rem text-muted-foreground">
+					No repositories found matching your filters
+				</p>
 			</div>
 		</div>
 
-		<div v-else class="flex flex-col items-center justify-center py-16 px-6 text-center">
-			<Icon name="mdi:folder-off-outline" size="64" class="text-muted-foreground mb-4" />
+		<div
+			v-else
+			class="flex flex-col items-center justify-center py-16 px-6 text-center"
+		>
+			<Icon
+				name="mdi:folder-off-outline"
+				size="64"
+				class="text-muted-foreground mb-4"
+			/>
 			<p class="text-1.125rem text-muted-foreground">No projects found</p>
 		</div>
 	</div>
 </template>
-
-
-

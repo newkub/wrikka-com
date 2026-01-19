@@ -39,5 +39,3 @@ const decodedCode = computed(() => {
 		<div class="overflow-x-auto rounded-lg" v-html="decodedCode" />
 	</div>
 </template>
-
-

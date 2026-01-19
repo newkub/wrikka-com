@@ -1,21 +1,21 @@
-import type { ContentItem, QueryBuilder } from '#shared/types/content'
+import type { ContentItem, QueryBuilder } from "#shared/types/content";
 
 function normalizePath(path: string) {
-	if (!path) return '/' as const
-	return path.startsWith('/') ? path : `/${path}`
+	if (!path) return "/" as const;
+	return path.startsWith("/") ? path : `/${path}`;
 }
 
 function isPathMatch(itemPath: string | undefined, queryPath: string) {
-	if (!itemPath) return false
-	const p = normalizePath(queryPath)
-	if (p === '/') return true
-	return itemPath === p || itemPath.startsWith(`${p}/`)
+	if (!itemPath) return false;
+	const p = normalizePath(queryPath);
+	if (p === "/") return true;
+	return itemPath === p || itemPath.startsWith(`${p}/`);
 }
 
 function isOnePathMatch(itemPath: string | undefined, queryPath: string) {
-	if (!itemPath) return false
-	const p = normalizePath(queryPath)
-	return itemPath === p || itemPath === `${p}/index`
+	if (!itemPath) return false;
+	const p = normalizePath(queryPath);
+	return itemPath === p || itemPath === `${p}/index`;
 }
 
 export function queryContent(path: string): QueryBuilder {
@@ -57,7 +57,7 @@ export function queryContent(path: string): QueryBuilder {
 					if (!data.value) return [];
 
 					return data.value.filter((item) => {
-						if (!isPathMatch(item._path, path)) return false
+						if (!isPathMatch(item._path, path)) return false;
 						for (const key in query) {
 							if (key === "_partial") {
 								if (query[key] && !item._partial) return false;
@@ -174,4 +174,3 @@ export function queryContent(path: string): QueryBuilder {
 		},
 	};
 }
-

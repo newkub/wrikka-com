@@ -4,5 +4,3 @@
 <template>
 	<ShareButtons />
 </template>
-
-

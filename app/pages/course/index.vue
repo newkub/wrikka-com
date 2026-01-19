@@ -54,5 +54,3 @@ const { data: courses } = await useFetch<Course[]>("/api/course");
 		</div>
 	</div>
 </template>
-
-

@@ -1,43 +1,51 @@
 <script setup lang="ts">
-const route = useRoute()
+const route = useRoute();
 const currentUrl = computed(() => {
 	if (process.client) {
-		return window.location.href
+		return window.location.href;
 	}
-	return ''
-})
+	return "";
+});
 
-const isCopied = ref(false)
+const isCopied = ref(false);
 
 const copyLink = async () => {
-	if (!currentUrl.value) return
+	if (!currentUrl.value) return;
 
 	try {
-		await navigator.clipboard.writeText(currentUrl.value)
-		isCopied.value = true
+		await navigator.clipboard.writeText(currentUrl.value);
+		isCopied.value = true;
 		setTimeout(() => {
-			isCopied.value = false
-		}, 2000)
+			isCopied.value = false;
+		}, 2000);
 	} catch (error) {
-		console.error('Failed to copy link:', error)
+		console.error("Failed to copy link:", error);
 	}
-}
+};
 
 const shareOnTwitter = () => {
-	const text = encodeURIComponent(`Check out this documentation: ${route.meta.title}`)
-	const url = encodeURIComponent(currentUrl.value)
-	window.open(`https://twitter.com/intent/tweet?text=${text}&url=${url}`, '_blank')
-}
+	const text = encodeURIComponent(
+		`Check out this documentation: ${route.meta.title}`,
+	);
+	const url = encodeURIComponent(currentUrl.value);
+	window.open(
+		`https://twitter.com/intent/tweet?text=${text}&url=${url}`,
+		"_blank",
+	);
+};
 
 const shareOnFacebook = () => {
-	const url = encodeURIComponent(currentUrl.value)
-	window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, '_blank')
-}
+	const url = encodeURIComponent(currentUrl.value);
+	window.open(`https://www.facebook.com/sharer/sharer.php?u=${url}`, "_blank");
+};
 
 const shareOnLinkedIn = () => {
-	const url = encodeURIComponent(currentUrl.value)
-	window.open(`https://www.linkedin.com/sharing/share-offsite/?url=${url}`, '_blank')
-}
+	const url = encodeURIComponent(currentUrl.value);
+	window.open(
+		`https://www.linkedin.com/sharing/share-offsite/?url=${url}`,
+		"_blank",
+	);
+};
 </script>
 
 <template>
@@ -48,7 +56,9 @@ const shareOnLinkedIn = () => {
 			:title="isCopied ? 'Copied!' : 'Copy link'"
 		>
 			<Icon :name="isCopied ? 'mdi:check' : 'mdi:content-copy'" size="18" />
-			<span class="whitespace-nowrap">{{ isCopied ? 'Copied!' : 'Copy link' }}</span>
+			<span class="whitespace-nowrap">{{
+				isCopied ? "Copied!" : "Copy link"
+			}}</span>
 		</button>
 		<button
 			@click="shareOnTwitter"
@@ -76,5 +86,3 @@ const shareOnLinkedIn = () => {
 		</button>
 	</div>
 </template>
-
-

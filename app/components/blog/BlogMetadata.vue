@@ -166,5 +166,3 @@ const formatReadingTime = (minutes: number) => {
 		</div>
 	</div>
 </template>
-
-

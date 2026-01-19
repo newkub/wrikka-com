@@ -18,4 +18,3 @@ export function getLanguageColor(language: string | null): string {
 	const langLower = language.toLowerCase();
 	return LANGUAGE_COLORS[langLower] || DEFAULT_LANGUAGE_COLOR;
 }
-

@@ -18,5 +18,3 @@ const props = withDefaults(defineProps<Props>(), {
 		}"
 	/>
 </template>
-
-

@@ -1,11 +1,11 @@
 <script setup lang="ts">
-const { render, extractCodeBlocks } = await useMarkdownRenderer()
+const { render, extractCodeBlocks } = await useMarkdownRenderer();
 
 interface Props {
-	content: string
+	content: string;
 }
 
-const props = defineProps<Props>()
+const props = defineProps<Props>();
 
 const renderedContent = computed(() => {
 	if (!props.content) return "";
@@ -37,6 +37,3 @@ const renderWithCodeBlocks = (content: string) => {
 		<div v-html="renderedContent" class="markdown-body"></div>
 	</div>
 </template>
-
-
-

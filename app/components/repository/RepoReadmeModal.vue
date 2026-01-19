@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Modal from '~/components/primitive/Modal.vue'
+import Modal from "~/components/primitive/Modal.vue";
 
 interface Props {
 	show: boolean;
@@ -12,15 +12,15 @@ interface Props {
 const props = defineProps<Props>();
 
 const emit = defineEmits<{
-	(e: 'update:show', value: boolean): void;
-	(e: 'close'): void;
+	(e: "update:show", value: boolean): void;
+	(e: "close"): void;
 }>();
 
 const { formatTimeAgo } = useDate();
 
 const handleClose = () => {
-	emit('update:show', false);
-	emit('close');
+	emit("update:show", false);
+	emit("close");
 };
 </script>
 
@@ -71,5 +71,3 @@ const handleClose = () => {
 		</div>
 	</Modal>
 </template>
-
-

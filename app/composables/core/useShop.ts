@@ -29,4 +29,3 @@ export const useShop = () => {
 		items,
 	};
 };
-

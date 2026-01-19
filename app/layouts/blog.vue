@@ -5,7 +5,7 @@ interface BlogLayoutProps {
 }
 
 const props = withDefaults(defineProps<BlogLayoutProps>(), {
-	title: '',
+	title: "",
 	metadata: () => ({}),
 });
 </script>
@@ -34,5 +34,3 @@ const props = withDefaults(defineProps<BlogLayoutProps>(), {
 		</div>
 	</div>
 </template>
-
-

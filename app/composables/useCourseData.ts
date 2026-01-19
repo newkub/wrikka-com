@@ -79,4 +79,3 @@ export const useCourseLessons = async (courseId: string) => {
 
 	return grouped;
 };
-

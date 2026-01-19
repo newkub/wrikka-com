@@ -70,5 +70,3 @@ const { data: items } = await useFetch<ShopItem[]>("/api/shop");
 		</div>
 	</div>
 </template>
-
-

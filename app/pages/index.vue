@@ -1,15 +1,23 @@
 <script setup lang="ts">
-import type { GithubProfile, GitHubStats } from '#shared/types/github'
+import type { GithubProfile, GitHubStats } from "#shared/types/github";
 
 useSeoMeta({
 	title: "Home",
 	description: "My personal portfolio and projects",
 });
 
-const { data: profile, pending: profilePending } = await useFetch<GithubProfile>("/api/github/profile");
-const { data: readme, pending: readmePending } = await useFetch("/api/github/readme");
-const { data: repos, pending: reposPending } = await useFetch("/api/github/repos");
-const { data: stats, pending: statsPending } = await useFetch<GitHubStats>("/api/github/stats");
+const { data: profile, pending: profilePending } = await useFetch<
+	GithubProfile
+>("/api/github/profile");
+const { data: readme, pending: readmePending } = await useFetch(
+	"/api/github/readme",
+);
+const { data: repos, pending: reposPending } = await useFetch(
+	"/api/github/repos",
+);
+const { data: stats, pending: statsPending } = await useFetch<GitHubStats>(
+	"/api/github/stats",
+);
 </script>
 
 <template>
@@ -196,5 +204,3 @@ const { data: stats, pending: statsPending } = await useFetch<GitHubStats>("/api
 		</div>
 	</div>
 </template>
-
-

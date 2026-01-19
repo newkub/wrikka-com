@@ -1,7 +1,7 @@
 <script setup lang="ts">
-import { useTheme } from '~/composables/core/useTheme'
+import { useTheme } from "~/composables/core/useTheme";
 
-const { isDark, toggleTheme } = useTheme()
+const { isDark, toggleTheme } = useTheme();
 </script>
 
 <template>
@@ -15,5 +15,3 @@ const { isDark, toggleTheme } = useTheme()
 		<Icon v-else name="mdi:weather-night" size="20" />
 	</button>
 </template>
-
-

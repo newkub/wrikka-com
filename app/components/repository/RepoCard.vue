@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import type { Repo } from '#shared/types/repos'
-import Card from '~/components/primitive/Card.vue'
-import Badge from '~/components/primitive/Badge.vue'
-import RepoStats from './RepoStats.vue'
-import RepoCommits from './RepoCommits.vue'
-import RepoActions from './RepoActions.vue'
-import RepoReadmeModal from './RepoReadmeModal.vue'
+import type { Repo } from "#shared/types/repos";
+import Badge from "~/components/primitive/Badge.vue";
+import Card from "~/components/primitive/Card.vue";
+import RepoActions from "./RepoActions.vue";
+import RepoCommits from "./RepoCommits.vue";
+import RepoReadmeModal from "./RepoReadmeModal.vue";
+import RepoStats from "./RepoStats.vue";
 
 const props = defineProps<{
-	repo: Repo
-}>()
+	repo: Repo;
+}>();
 
 const showReadmeModal = ref(false);
 </script>
@@ -100,5 +100,3 @@ const showReadmeModal = ref(false);
 		@close="showReadmeModal = false"
 	/>
 </template>
-
-

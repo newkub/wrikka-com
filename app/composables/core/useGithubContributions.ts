@@ -12,4 +12,3 @@ export const useGithubContributions = async (username: string) => {
 		refresh,
 	};
 };
-

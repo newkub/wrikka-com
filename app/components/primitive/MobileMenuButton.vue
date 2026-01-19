@@ -1,11 +1,11 @@
 <script setup lang="ts">
 defineProps<{
-	ariaLabel?: string
-}>()
+	ariaLabel?: string;
+}>();
 
 const emit = defineEmits<{
-	click: []
-}>()
+	click: [];
+}>();
 </script>
 
 <template>
@@ -17,5 +17,3 @@ const emit = defineEmits<{
 		<Icon name="mdi:menu" size="24" />
 	</button>
 </template>
-
-
