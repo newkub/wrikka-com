@@ -1,19 +1,15 @@
 pre-commit:
-  jobs:
-    - name: format
-      run: bun run format {staged_files}
+  parallel: false
+  commands:
+    format:
+      run: bun run format
+    lint:
+      run: bun run lint
 
-pre-rebase:
-  jobs:
-    - name: fetch-origin
-      run: git fetch origin
-
-post-receive:
-  jobs:
-    - name: open repo
-      run: gh repo view --web
-
-post-checkout:
-  jobs:
-    - name: install
-      run: bun install
+pre-push:
+  parallel: false
+  commands:
+    test:
+      run: bun run test
+    build:
+      run: bun run build
