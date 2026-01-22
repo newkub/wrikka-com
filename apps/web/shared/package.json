@@ -1,0 +1,26 @@
+{
+	"name": "shared",
+	"version": "0.0.1",
+	"private": true,
+	"type": "module",
+	"main": "./index.ts",
+	"exports": {
+		".": {
+			"types": "./index.ts",
+			"import": "./index.ts",
+			"require": "./index.ts"
+		}
+	},
+	"scripts": {
+		"build": "tsc",
+		"format": "dprint fmt",
+		"lint": "oxlint --fix",
+		"test": "vitest run"
+	},
+	"devDependencies": {
+		"dprint": "^0.51.1",
+		"oxlint": "^1.41.0",
+		"oxlint-tsgolint": "^0.11.1",
+		"vitest": "^2.1.9"
+	}
+}
