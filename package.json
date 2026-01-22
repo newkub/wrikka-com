@@ -5,7 +5,8 @@
   "globalConcurrency": 32,
   "workspaces": [
     "apps/*",
-    "packages/*"
+    "packages/*",
+    "plugins/**"
   ],
   "resolutions": {
     "vite": "^7.3.1"
