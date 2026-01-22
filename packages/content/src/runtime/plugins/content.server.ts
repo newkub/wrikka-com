@@ -1,10 +1,12 @@
+import { defineNuxtPlugin } from '#app'
+
 export default defineNuxtPlugin(() => {
   // Auto-import queryContent function on server
   const queryContent = async (path: string) => {
-    const { queryContent } = await import('~/modules/content/composables/useContent')
+    const { queryContent } = await import('~/app/composables/useContent')
     return queryContent(path)
   }
-  
+
   return {
     provide: {
       queryContent
