@@ -1,5 +1,5 @@
 {
-	"name": "content",
+	"name": "@wrikka/content",
 	"type": "module",
 	"version": "0.0.1",
 	"main": "./dist/module.mjs",
@@ -7,6 +7,18 @@
 		".": {
 			"import": "./dist/module.mjs",
 			"require": "./dist/module.mjs"
+		},
+		"./runtime": {
+			"import": "./src/runtime/index.ts",
+			"types": "./src/runtime/index.ts"
+		},
+		"./runtime/*": {
+			"import": "./src/runtime/*",
+			"types": "./src/runtime/*"
+		},
+		"./runtime/shared/types": {
+			"import": "./src/runtime/shared/types/index.ts",
+			"types": "./src/runtime/shared/types/index.ts"
 		}
 	},
 	"scripts": {

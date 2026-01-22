@@ -42,8 +42,9 @@ export default defineNuxtConfig({
 		"@nuxt/icon",
 		"@scalar/nuxt",
 		"@nuxtjs/google-fonts",
-		"../../packages/content/src/module",
+		"@wrikka/content",
 	],
+	content: {},
 	icon: {
 		serverBundle: {
 			collections: ["mdi", "logos"],

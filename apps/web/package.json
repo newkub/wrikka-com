@@ -5,7 +5,7 @@
 	"type": "module",
 	"scripts": {
 		"dev": "nuxt dev",
-		"build": "cross-env NODE_OPTIONS=--max-old-space-size=8192 nuxt build",
+		"build": "nuxt build",
 		"preview": "nuxt preview",
 		"generate": "nuxt generate",
 		"format": "dprint fmt",
@@ -22,7 +22,7 @@
 		"@shikijs/markdown-it": "^3.21.0",
 		"@shikijs/themes": "^3.21.0",
 		"@vueuse/nuxt": "^14.1.0",
-		"content": "workspace:*",
+		"@wrikka/content": "workspace:*",
 		"glob": "^13.0.0",
 		"gray-matter": "^4.0.3",
 		"markdown-it": "^14.1.0",
