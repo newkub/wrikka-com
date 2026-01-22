@@ -20,7 +20,7 @@
     "lint": "turbo lint",
     "test": "turbo test",
     "build": "turbo build",
-    "verify": "turbo verify",
+    "verify": "turbo lint && turbo test && turbo build",
     "devtools": "turbo devtools"
   },
   "devDependencies": {
