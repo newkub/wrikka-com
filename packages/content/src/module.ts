@@ -1,4 +1,4 @@
-import { addComponentsDir, addImportsDir, createResolver, defineNuxtModule } from "@nuxt/kit";
+import { addComponentsDir, addImportsDir, addPlugin, createResolver, defineNuxtModule } from "@nuxt/kit";
 
 export default defineNuxtModule({
 	meta: {
@@ -22,5 +22,9 @@ export default defineNuxtModule({
 			path: resolver.resolve("./runtime/components"),
 			prefix: "Content",
 		});
+
+		// Register plugins
+		addPlugin(resolver.resolve("./runtime/plugins/content.client"));
+		addPlugin(resolver.resolve("./runtime/plugins/content.server"));
 	},
 });
