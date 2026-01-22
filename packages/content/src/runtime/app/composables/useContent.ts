@@ -1,5 +1,5 @@
 import { useAsyncData } from "nuxt/app";
-import type { ContentItem, QueryBuilder } from "../../types";
+import type { ContentItem, QueryBuilder } from "../../shared/types";
 
 function normalizePath(path: string) {
 	if (!path) return "/" as const;

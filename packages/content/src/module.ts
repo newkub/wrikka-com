@@ -12,7 +12,7 @@ export default defineNuxtModule({
 		nuxt.options.alias["#content"] = resolver.resolve("./runtime");
 
 		// Register types
-		nuxt.options.alias["#content/types"] = resolver.resolve("./runtime/types");
+		nuxt.options.alias["#content/types"] = resolver.resolve("./runtime/shared/types/index");
 
 		// Register composables
 		addImportsDir(resolver.resolve("./runtime/composables"));

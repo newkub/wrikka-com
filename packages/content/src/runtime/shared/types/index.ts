@@ -1,13 +1,15 @@
 export interface ContentItem {
-	_path?: string;
-	_dir?: string;
-	_partial?: boolean;
+	_path: string;
+	_dir: string;
+	_partial: boolean;
 	title?: string;
 	description?: string;
+	order?: number;
 	icon?: string;
 	tags?: string[];
-	body?: string;
-	order?: number;
+	body?: any;
+	updatedAt?: string;
+	category?: string;
 	[key: string]: any;
 }
 

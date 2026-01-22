@@ -6,6 +6,9 @@
 .cache
 dist
 
+# Turbo
+.turbo
+
 # Node dependencies
 node_modules
 
